@@ -9,7 +9,7 @@ const Container = styled.div<IContainer>(({ theme, isActive }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  background: isActive ? theme.color.light_gary : theme.color.black,
+  background: isActive ? theme.color.white : theme.color.black,
 }));
 
 const StyledButton = styled.button({
@@ -24,7 +24,7 @@ function Button() {
   const onClick = useCallback(() => setIsActive((prev) => !prev), []);
 
   return (
-    <Container isActive={isActive} color={theme.color.black_two}>
+    <Container isActive={isActive} color={theme.color.white}>
       <StyledButton onClick={onClick} />
     </Container>
   );
