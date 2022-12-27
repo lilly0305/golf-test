@@ -4,7 +4,9 @@ import { Button } from '../components';
 
 function Home() {
   return (
-    <div><Button /></div>
+    <div>
+      <Button />
+    </div>
   );
 }
 

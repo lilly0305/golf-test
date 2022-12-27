@@ -2,7 +2,7 @@ import { Theme } from '@emotion/react';
 
 export const image = {};
 
-export const theme: Theme = {
+export const AppTheme: Theme = {
   color: {
     white: '#ffffff',
     black: '#111111',
@@ -22,8 +22,9 @@ export const theme: Theme = {
     inActive: '#D9D9D9',
     modal_background: 'rgba(0, 0, 0, 0.5)',
   },
+  image: typeof image,
 };
 
-export type ITheme = typeof theme;
+export type ITheme = typeof AppTheme;
 
-export default theme;
+export default AppTheme;
