@@ -1,10 +1,14 @@
 import React, { memo } from 'react';
+import { ThemeProvider } from '@emotion/react';
+
+import theme from './theme';
+import Home from './screen/Home';
 
 function App() {
   return (
-    <div>
-      <h1>1</h1>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Home />
+    </ThemeProvider>
   );
 }
 
