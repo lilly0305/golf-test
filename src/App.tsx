@@ -1,17 +1,7 @@
-import './App.css';
-import Button from './Button';
+import React, { memo } from 'react';
 
 function App() {
-  const alarm =() => {
-    alert("button")
-  }
-  return (
-    <div className="App">
-      <Button width={100} onClick={alarm}>
-          <div>This is Button</div>
-        </Button>
-    </div>
-  );
+  return <div><h1>1</h1></div>
 }
 
-export default App;
+export default memo(App)

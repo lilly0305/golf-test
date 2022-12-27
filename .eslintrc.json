@@ -1,0 +1,45 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "airbnb",
+    "airbnb/hooks"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", "tsx"] }],
+    "react/jsx-no-undef": "off",
+    "no-undef": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "comma-dangle": "off",
+    "react/react-in-jsx-scope": "off",
+    "linebreak-style": "off",
+    "import/prefer-default-export": "off",
+    "object-curly-newline": "off",
+    "no-shadow": "off",
+    "arrow-body-style": "off",
+    "global-require": "off",
+    "import/no-useless-path-segments": "off",
+    "indent": "off",
+    "implicit-arrow-linebreak": "off",
+    "operator-linebreak": "off",
+    "no-param-reassign": "off",
+    "array-callback-return": "off",
+    "no-console": "off"
+  }
+}
