@@ -12,6 +12,11 @@ declare module '@emotion/react' {
       white: string;
       base_black: string;
       point_color: string;
+      sub_point_color: string;
+      red_color: string;
+      placeholder_color: string;
+      divider_grey: string;
+      disabled_grey: string;
     };
     image: typeof image;
   }

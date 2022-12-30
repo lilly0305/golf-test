@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { memo } from 'react';
-import Header from '../components/header/Header';
+import { Header } from '../components';
 
 interface IHome {
   children: React.ReactNode;

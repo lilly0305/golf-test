@@ -1,11 +1,9 @@
-import styled from '@emotion/styled';
 import React, { memo } from 'react';
+import styled from '@emotion/styled';
 import { IsDefault, IsDesktop } from '../../utils/mediaquery/mediaQuery';
+import MobileHeader from './MobileHeader';
 
 const HeaderContainer = styled.header(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
   width: '100vw',
   height: 'fit-content',
   background: theme.color.point_color,
@@ -16,7 +14,7 @@ function Header() {
   return (
     <HeaderContainer>
       <IsDefault>
-        <div className="mobile-header">mobileHEader</div>
+        <MobileHeader />
       </IsDefault>
 
       <IsDesktop>
