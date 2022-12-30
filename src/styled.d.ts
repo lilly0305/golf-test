@@ -10,7 +10,8 @@ declare module '@emotion/react' {
   export interface Theme {
     color: {
       white: string;
-      black: string;
+      base_black: string;
+      point_color: string;
     };
     image: typeof image;
   }

@@ -9,7 +9,7 @@ const Container = styled.div<IContainer>(({ theme, isActive }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  background: isActive ? theme.color.white : theme.color.black,
+  background: isActive ? theme.color.white : theme.color.base_black,
 }));
 
 const StyledButton = styled.button({

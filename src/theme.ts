@@ -5,7 +5,8 @@ export const image = {};
 export const AppTheme: Theme = {
   color: {
     white: '#ffffff',
-    black: '#111111',
+    base_black: '#111827',
+    point_color: '#68B984',
   },
   image: typeof image,
 };

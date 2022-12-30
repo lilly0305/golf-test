@@ -23,3 +23,9 @@ export const IsMobile = ({ children }: IMediaQuery) => {
 
   return isMobile ? children : null;
 };
+
+export const IsDefault = ({ children }: IMediaQuery) => {
+  const isDefault = useMediaQuery({ maxWidth: 1023 });
+
+  return isDefault ? children : null;
+};
