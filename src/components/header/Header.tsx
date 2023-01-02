@@ -1,7 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
+
 import styled from '@emotion/styled';
+
 import { IsDefault, IsDesktop } from '../../utils/mediaquery/mediaQuery';
-import MobileHeader from './MobileHeader';
+import MobileHeader from './mobile/MobileHeader';
+import MobileNav from './mobile/MobileNav';
 
 const HeaderContainer = styled.header(({ theme }) => ({
   width: '100vw',
@@ -11,10 +14,15 @@ const HeaderContainer = styled.header(({ theme }) => ({
 }));
 
 function Header() {
+  const [active, setActive] = useState<boolean>(false);
+
   return (
     <HeaderContainer>
       <IsDefault>
-        <MobileHeader />
+        <div>
+          <MobileHeader active={active} setActive={setActive} />
+          <MobileNav />
+        </div>
       </IsDefault>
 
       <IsDesktop>

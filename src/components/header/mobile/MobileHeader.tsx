@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
@@ -36,11 +36,15 @@ const Line = styled.span<ILine>(({ theme, top = '0', opacity = 1, rotate }) => (
   transform: rotate,
 }));
 
-function MobileHeader() {
+interface IMobileHeader {
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function MobileHeader({ active, setActive }: IMobileHeader) {
   const theme = useTheme();
 
-  const [active, setActive] = useState(false);
-  const onClick = useCallback(() => setActive((prev) => !prev), []);
+  const onClick = useCallback(() => setActive((prev) => !prev), [setActive]);
 
   return (
     <MobileHeaderContainer>
