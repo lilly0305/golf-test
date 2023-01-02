@@ -1,7 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { CroppedFigure } from '@assets/styles/CommonStyles';
+import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 
 const MobileHeaderContainer = styled.div(() => ({
   display: 'flex',
@@ -49,17 +49,17 @@ function MobileHeader() {
         <Line active={active} top="50%" opacity={1} rotate={active ? 'rotate(45deg)' : '0'} />
         <Line
           active={active}
-          top={active ? '50%' : '100%'}
+          top={active ? '50%' : '97%'}
           opacity={1}
           rotate={active ? 'rotate(-45deg)' : '0'}
         />
       </Hamburger>
 
       <CroppedFigure width="74px" height="42px">
-        <img src={theme.image.logoWhite} alt="흰색 로고" />
+        <CroppedImage src={theme.image.logoWhite} alt="흰색 로고" />
       </CroppedFigure>
 
-      <i className="ri-draft-line" />
+      <RemixIcon className="ri-draft-line" />
     </MobileHeaderContainer>
   );
 }

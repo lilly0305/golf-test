@@ -58,6 +58,11 @@ const style = css`
   select {
     outline: none;
   }
+
+  .remix {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 function GlobalStyle() {

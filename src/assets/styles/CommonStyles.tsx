@@ -1,12 +1,31 @@
 import styled from '@emotion/styled';
 
+// 이미지 가운데 정렬 & overflow: hidden
 interface ICroppedFigure {
   width: string;
   height: string;
 }
-export const CroppedFigure = styled.figure<ICroppedFigure>(() => ({
+export const CroppedFigure = styled.figure<ICroppedFigure>(({ width, height }) => ({
   position: 'relative',
   overflow: 'hidden',
-  width: '73px',
-  height: '42px',
+  width: width,
+  height: height,
+}));
+
+export const CroppedImage = styled.img(() => ({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  inset: 0,
+  objectFit: 'cover',
+}));
+
+// remix icon
+interface IRemixIcon {
+  fontSize?: string;
+  color?: string;
+}
+export const RemixIcon = styled.i<IRemixIcon>(({ fontSize = '2.4rem', color = '#fff' }) => ({
+  fontSize: fontSize,
+  color: color,
 }));
