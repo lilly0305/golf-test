@@ -26,14 +26,24 @@ const StyledButton = styled.button<IStyledButton>(({ theme, active = true }) => 
 }));
 
 interface IButtons {
+  activeEvent: () => void;
   noCancelButton?: boolean;
+  activeName: string;
+  buttonType?: 'submit' | 'reset' | 'button' | undefined;
 }
-function Buttons({ noCancelButton = false }: IButtons) {
+function Buttons({
+  activeEvent,
+  noCancelButton = false,
+  activeName,
+  buttonType = 'button',
+}: IButtons) {
   return (
     <ButtonsContainer>
       {!noCancelButton && <StyledButton active={false}>취소</StyledButton>}
 
-      <StyledButton>로그인</StyledButton>
+      <StyledButton onClick={() => activeEvent()} type={buttonType}>
+        {activeName}
+      </StyledButton>
     </ButtonsContainer>
   );
 }

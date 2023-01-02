@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import PageHeader from '@components/PageHeader';
 import styled from '@emotion/styled';
 import InputGroup from '@components/inputs/InputGroup';
@@ -39,6 +39,8 @@ const Link = styled.a(() => ({
 }));
 
 function Login() {
+  const login = useCallback(() => console.log('로그인합니다.'), []);
+
   return (
     <Container>
       <PageHeader pageTitle="잇다 로그인" />
@@ -56,7 +58,7 @@ function Login() {
           placeHolder="비밀번호를 입력하세요"
         />
 
-        <Buttons noCancelButton />
+        <Buttons activeEvent={login} noCancelButton activeName="로그인" buttonType="submit" />
 
         <LoginInfo>로그인에 문제가 있으신가요?</LoginInfo>
 
@@ -70,4 +72,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default memo(Login);
