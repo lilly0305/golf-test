@@ -8,7 +8,7 @@ import MobileNav from './mobile/MobileNav';
 
 const HeaderContainer = styled.header(({ theme }) => ({
   width: '100vw',
-  height: '100vh',
+  maxheight: '100vh',
   color: theme.color.white,
 }));
 
@@ -20,7 +20,7 @@ function Header() {
       <IsDefault>
         <div>
           <MobileHeader active={active} setActive={setActive} />
-          <MobileNav />
+          <MobileNav active={active} />
         </div>
       </IsDefault>
 

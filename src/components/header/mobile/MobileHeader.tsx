@@ -1,4 +1,6 @@
 import React, { memo, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
@@ -61,9 +63,11 @@ function MobileHeader({ active, setActive }: IMobileHeader) {
         />
       </Hamburger>
 
-      <CroppedFigure width="74px" height="42px">
-        <CroppedImage src={theme.image.logoWhite} alt="흰색 로고" />
-      </CroppedFigure>
+      <Link to="/">
+        <CroppedFigure width="7.4rem" height="4.2rem">
+          <CroppedImage src={theme.image.logoWhite} alt="흰색 로고" />
+        </CroppedFigure>
+      </Link>
 
       <RemixIcon className="ri-draft-line" />
     </MobileHeaderContainer>

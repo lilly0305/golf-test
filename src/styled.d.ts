@@ -20,6 +20,13 @@ declare module '@emotion/react' {
       placeholder_color: string;
       divider_grey: string;
       disabled_grey: string;
+      grey_opacity_60: string;
+    };
+    fontWeight: {
+      light: number;
+      regular: number;
+      bold: number;
+      extraBold: number;
     };
   }
 }
