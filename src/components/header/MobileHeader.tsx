@@ -1,6 +1,7 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
+import { CroppedFigure } from '@assets/styles/CommonStyles';
 
 const MobileHeaderContainer = styled.div(() => ({
   display: 'flex',
@@ -24,37 +25,41 @@ interface ILine {
   rotate?: string;
   active: boolean;
 }
-const Line = styled.span<ILine>(({ theme, top = '0', opacity = 1, rotate, active = false }) => ({
+const Line = styled.span<ILine>(({ theme, top = '0', opacity = 1, rotate }) => ({
   position: 'absolute',
   width: '100%',
   height: '2px',
   transition: 'all 0.3s',
   background: theme.color.white,
-  top: active ? '50%' : top,
+  top: top,
   opacity: opacity,
-  transform: active ? rotate : '0',
-}));
-
-const StyledImage = styled.figure(() => ({
-  position: 'relative',
-  overflow: 'hidden',
+  transform: rotate,
 }));
 
 function MobileHeader() {
   const theme = useTheme();
+
   const [active, setActive] = useState(false);
+  const onClick = useCallback(() => setActive((prev) => !prev), []);
 
   return (
     <MobileHeaderContainer>
-      <Hamburger onClick={() => setActive((prev) => !prev)}>
+      <Hamburger onClick={onClick}>
         <Line active={active} opacity={active ? 0 : 1} />
-        <Line active={active} top="50%" opacity={1} rotate="rotate(45deg)" />
-        <Line active={active} top="100%" opacity={1} rotate="rotate(-45deg)" />
+        <Line active={active} top="50%" opacity={1} rotate={active ? 'rotate(45deg)' : '0'} />
+        <Line
+          active={active}
+          top={active ? '50%' : '100%'}
+          opacity={1}
+          rotate={active ? 'rotate(-45deg)' : '0'}
+        />
       </Hamburger>
 
-      <StyledImage>
-        <img src={theme.image.logoWhite} alt="수아는 귀여워" />
-      </StyledImage>
+      <CroppedFigure width="74px" height="42px">
+        <img src={theme.image.logoWhite} alt="흰색 로고" />
+      </CroppedFigure>
+
+      <i className="ri-draft-line" />
     </MobileHeaderContainer>
   );
 }

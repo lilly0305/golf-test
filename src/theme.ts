@@ -1,7 +1,7 @@
 import { Theme } from '@emotion/react';
 
 export const image = {
-  logoWhite: require('@assets/images/itda_logo_white.svg'),
+  logoWhite: require('@assets/images/itda_logo_white.png'),
 };
 
 export const AppTheme: Theme = {
