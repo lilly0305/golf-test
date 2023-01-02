@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { ThemeProvider } from '@emotion/react';
 
-import PublicRuter from './routes/PublicRuter';
 import { AppTheme } from './theme';
+import PublicRouter from './routes/PublicRouter';
 
 function App() {
   return (
     <ThemeProvider theme={AppTheme}>
-      <PublicRuter />
+      <PublicRouter />
     </ThemeProvider>
   );
 }

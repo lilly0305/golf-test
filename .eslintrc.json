@@ -19,6 +19,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "react/require-default-props": "off",
     "global-require": "off",
     "object-shorthand": "off",
     "react/function-component-definition": "off",

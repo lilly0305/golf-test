@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-// 이미지 가운데 정렬 & overflow: hidden
+// NOTE: 이미지 가운데 정렬 & overflow: hidden
 interface ICroppedFigure {
   width: string;
   height: string;
@@ -20,7 +20,7 @@ export const CroppedImage = styled.img(() => ({
   objectFit: 'cover',
 }));
 
-// remix icon
+// NOTE: remix icon
 interface IRemixIcon {
   fontSize?: string;
   color?: string;

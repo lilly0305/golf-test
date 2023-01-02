@@ -9,6 +9,7 @@ interface IMobileNavContainer {
 }
 const MobileNavContainer = styled.nav<IMobileNavContainer>(({ theme, active }) => ({
   position: 'fixed',
+  zIndex: 999,
   display: 'flex',
   transition: 'left 0.3s',
   flexDirection: 'column',
