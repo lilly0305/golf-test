@@ -8,8 +8,7 @@ import MobileNav from './mobile/MobileNav';
 
 const HeaderContainer = styled.header(({ theme }) => ({
   width: '100vw',
-  height: 'fit-content',
-  background: theme.color.point_color,
+  height: '100vh',
   color: theme.color.white,
 }));
 

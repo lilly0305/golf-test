@@ -3,12 +3,14 @@ import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 
-const MobileHeaderContainer = styled.div(() => ({
+const MobileHeaderContainer = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '0 1.6rem',
+  width: '100%',
   height: '5rem',
+  background: theme.color.point_color,
 }));
 
 const Hamburger = styled.div(() => ({
