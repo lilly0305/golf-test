@@ -19,6 +19,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "global-require": "off",
     "object-shorthand": "off",
     "react/function-component-definition": "off",
     "object-curly-newline": "off",
