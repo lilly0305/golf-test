@@ -29,3 +29,10 @@ export const IsDefault = ({ children }: IMediaQuery) => {
 
   return isDefault ? children : null;
 };
+
+const bp = {
+  mobile: 300,
+  tablet: 768,
+  desktop: 1024,
+};
+export const mq = (n: keyof typeof bp) => `@media (min-width: ${bp[n]}px)`;

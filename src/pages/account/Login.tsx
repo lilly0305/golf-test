@@ -5,10 +5,14 @@ import styled from '@emotion/styled';
 import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const Container = styled.div(() => ({
   width: '100%',
   paddingTop: '2rem',
+  [mq('desktop')]: {
+    paddingTop: '5rem',
+  },
 }));
 
 const LoginForm = styled.form(() => ({
