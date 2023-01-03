@@ -1,5 +1,4 @@
 import React, { memo, useCallback } from 'react';
-
 import styled from '@emotion/styled';
 
 import PageHeader from '@components/item/PageTitle';
@@ -50,6 +49,7 @@ function Login() {
   return (
     <Container>
       <PageHeader pageTitle="잇다 로그인" />
+
       <LoginForm>
         <InputGroup
           idName="id"
@@ -57,6 +57,7 @@ function Login() {
           inputType="text"
           placeHolder="아이디를 입력하세요"
         />
+
         <InputGroup
           idName="pw"
           labelName="비밀번호"
@@ -70,7 +71,9 @@ function Login() {
 
         <OtherPages>
           <Link href="/join">회원가입</Link>
+
           <Link href="/find-account">아이디/비밀번호 찾기</Link>
+
           <Link href="/customer">고객센터</Link>
         </OtherPages>
       </LoginForm>

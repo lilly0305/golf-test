@@ -53,7 +53,9 @@ function MobileHeader({ active, setActive }: IMobileHeader) {
     <MobileHeaderContainer>
       <Hamburger onClick={onClick}>
         <Line active={active} opacity={active ? 0 : 1} />
+
         <Line active={active} top="50%" opacity={1} rotate={active ? 'rotate(45deg)' : '0'} />
+
         <Line
           active={active}
           top={active ? '50%' : '97%'}

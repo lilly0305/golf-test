@@ -1,31 +1,31 @@
 [
   {
-    "id": 0,
+    "id": 1,
     "navTitle": "양도 받기",
     "linkTo": "/transferred"
   },
   {
-    "id": 1,
+    "id": 2,
     "navTitle": "양도 하기",
     "linkTo": "/transferring"
   },
   {
-    "id": 2,
+    "id": 3,
     "navTitle": "팀 찾기",
     "linkTo": "/team"
   },
   {
-    "id": 3,
+    "id": 4,
     "navTitle": "멤버 찾기",
     "linkTo": "/member"
   },
   {
-    "id": 4,
+    "id": 5,
     "navTitle": "골프장",
     "linkTo": "/golf-course"
   },
   {
-    "id": 5,
+    "id": 6,
     "navTitle": "고객센터",
     "linkTo": "/customer"
   }

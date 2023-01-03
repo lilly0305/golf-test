@@ -1,11 +1,9 @@
 import React, { memo, useState } from 'react';
-
 import styled from '@emotion/styled';
 
 import { IsDefault, IsDesktop } from '@utils/mediaquery/mediaQuery';
-import MobileHeader from './mobile/MobileHeader';
-import MobileNav from './mobile/MobileNav';
-import WebHeader from './web/WebHeader';
+import { MobileHeader, MobileNav } from './mobile';
+import { WebHeader } from './web';
 
 const HeaderContainer = styled.header(({ theme }) => ({
   width: '100vw',

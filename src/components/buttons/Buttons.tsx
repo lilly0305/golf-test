@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-
 import styled from '@emotion/styled';
 
 const ButtonsContainer = styled.div(() => ({
@@ -18,15 +17,16 @@ const StyledButton = styled.button<IStyledButton>(({ theme, active = true }) => 
   alignItems: 'center',
   justifyContent: 'center',
   flex: 1,
-  borderRadius: '4rem',
   height: '3.8rem',
-  color: theme.color.white,
-  fontWeight: theme.fontWeight.bold,
   background: active ? theme.color.point_color : theme.color.disabled_grey,
+  borderRadius: '4rem',
+  fontWeight: theme.fontWeight.bold,
+  color: theme.color.white,
 }));
 
 interface IButtons {
-  activeEvent: () => void;
+  // () => void
+  activeEvent?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   noCancelButton?: boolean;
   activeName: string;
   buttonType?: 'submit' | 'reset' | 'button' | undefined;
@@ -41,7 +41,7 @@ function Buttons({
     <ButtonsContainer>
       {!noCancelButton && <StyledButton active={false}>취소</StyledButton>}
 
-      <StyledButton onClick={() => activeEvent()} type={buttonType}>
+      <StyledButton onClick={activeEvent} type={buttonType}>
         {activeName}
       </StyledButton>
     </ButtonsContainer>

@@ -45,7 +45,9 @@ function PageTitle({ pageTitle }: IPageTitle) {
     <StyledPageTitle>
       <StyledHeader>
         {pageTitle}
+
         <Line first />
+
         <Line first={false} />
       </StyledHeader>
     </StyledPageTitle>

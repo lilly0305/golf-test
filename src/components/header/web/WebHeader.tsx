@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
+import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import styled from '@emotion/styled';
 import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
-import { useTheme } from '@emotion/react';
 import WebNav from './WebNav';
 
 const WebHeaderContainer = styled.div(({ theme }) => ({

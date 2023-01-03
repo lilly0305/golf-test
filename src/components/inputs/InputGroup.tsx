@@ -2,11 +2,7 @@ import React, { memo } from 'react';
 
 import styled from '@emotion/styled';
 
-// input-group
-interface IInputGroupContainer {
-  children: React.ReactNode;
-}
-const InputGroupContainer = styled.div<IInputGroupContainer>(() => ({
+const InputGroupContainer = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
@@ -33,6 +29,7 @@ function InputGroup({ idName, labelName, inputType, placeHolder }: IInputGroup) 
   return (
     <InputGroupContainer>
       <InputLabel htmlFor={idName}>{labelName}</InputLabel>
+
       <InputText id={idName} type={inputType} placeholder={placeHolder} />
     </InputGroupContainer>
   );

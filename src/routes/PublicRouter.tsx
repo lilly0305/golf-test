@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Routes, Route } from 'react-router-dom';
-
 import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
@@ -20,6 +19,7 @@ function PublicRouter() {
       <PageContainer>
         <Routes>
           <Route path="/" element={<Home>Home</Home>} />
+
           <Route path="/login" element={<Login />} />
         </Routes>
       </PageContainer>
