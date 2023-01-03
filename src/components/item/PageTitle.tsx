@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 
 import styled from '@emotion/styled';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const StyledPageTitle = styled.div(() => ({
   display: 'flex',
@@ -8,12 +9,18 @@ const StyledPageTitle = styled.div(() => ({
   justifyContent: 'center',
   width: '100%',
   padding: '3rem 0',
+  [mq('desktop')]: {
+    padding: '6rem 0',
+  },
 }));
 
 const StyledHeader = styled.h1(({ theme }) => ({
   position: 'relative',
   fontSize: '2.4rem',
   fontWeight: theme.fontWeight.extraBold,
+  [mq('desktop')]: {
+    fontSize: '2.8rem',
+  },
 }));
 
 interface ILine {
@@ -27,7 +34,7 @@ const Line = styled.span<ILine>(({ first, theme }) => ({
   top: first ? '-5%' : '-30%',
   left: first ? '60%' : '80%',
   zIndex: -20,
-  opacity: 0.8,
+  opacity: 0.7,
 }));
 
 interface IPageTitle {

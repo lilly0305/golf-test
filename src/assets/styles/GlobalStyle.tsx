@@ -1,5 +1,6 @@
 import React from 'react';
 import { css, Global } from '@emotion/react';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const style = css`
   @font-face {
@@ -21,6 +22,10 @@ const style = css`
     color: #111827;
     padding: 0;
     margin: 0;
+
+    ${mq('desktop')} {
+      font-size: 1.6rem;
+    }
   }
 
   * {
@@ -55,11 +60,6 @@ const style = css`
   input,
   select {
     outline: none;
-  }
-
-  .remix {
-    width: 24px;
-    height: 24px;
   }
 `;
 

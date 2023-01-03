@@ -13,7 +13,6 @@ const InputGroupContainer = styled.div<IInputGroupContainer>(() => ({
 }));
 
 const InputLabel = styled.label(() => ({
-  fontSize: '1.4rem',
   display: 'inline-block',
   width: '12rem',
 }));
@@ -21,7 +20,6 @@ const InputLabel = styled.label(() => ({
 const InputText = styled.input(({ theme }) => ({
   flex: 1,
   padding: '1rem 1.2rem',
-  fontSize: '1.4rem',
   border: `1px solid ${theme.color.divider_grey}`,
 }));
 

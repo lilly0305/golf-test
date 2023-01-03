@@ -11,7 +11,7 @@ const Container = styled.div(() => ({
   width: '100%',
   paddingTop: '2rem',
   [mq('desktop')]: {
-    paddingTop: '5rem',
+    paddingTop: '8rem',
   },
 }));
 
