@@ -19,7 +19,7 @@ function PublicRouter() {
 
       <PageContainer>
         <Routes>
-          <Route path="/" element={<Home>ddd</Home>} />
+          <Route path="/" element={<Home>Home</Home>} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </PageContainer>

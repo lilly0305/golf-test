@@ -2,40 +2,9 @@ import React, { memo } from 'react';
 
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
 
-const navList = [
-  {
-    id: 0,
-    navTitle: '양도 받기',
-    linkTo: '/transferred',
-  },
-  {
-    id: 1,
-    navTitle: '양도 하기',
-    linkTo: '/transferring',
-  },
-  {
-    id: 2,
-    navTitle: '팀 찾기',
-    linkTo: '/team',
-  },
-  {
-    id: 3,
-    navTitle: '멤버 찾기',
-    linkTo: '/member',
-  },
-  {
-    id: 4,
-    navTitle: '골프장',
-    linkTo: '/golf-course',
-  },
-  {
-    id: 5,
-    navTitle: '고객센터',
-    linkTo: '/customer',
-  },
-];
+import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
+import navList from '@components/header/navList.json';
 
 interface IMobileNavContainer {
   active: boolean;

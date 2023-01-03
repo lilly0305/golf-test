@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "navTitle": "양도 받기",
+    "linkTo": "/transferred"
+  },
+  {
+    "id": 1,
+    "navTitle": "양도 하기",
+    "linkTo": "/transferring"
+  },
+  {
+    "id": 2,
+    "navTitle": "팀 찾기",
+    "linkTo": "/team"
+  },
+  {
+    "id": 3,
+    "navTitle": "멤버 찾기",
+    "linkTo": "/member"
+  },
+  {
+    "id": 4,
+    "navTitle": "골프장",
+    "linkTo": "/golf-course"
+  },
+  {
+    "id": 5,
+    "navTitle": "고객센터",
+    "linkTo": "/customer"
+  }
+]
