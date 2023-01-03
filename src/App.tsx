@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { ThemeProvider } from '@emotion/react';
 
 import { AppTheme } from './theme';
-import PublicRouter from './routes/PublicRouter';
+import { PublicRouter } from './routes';
 
 function App() {
   return (

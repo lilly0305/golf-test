@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
-
 import { Routes, Route } from 'react-router-dom';
 
-import { Header } from '@components/index';
+import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
-import Login from '@pages/account/Login';
-import styled from '@emotion/styled';
+import { Header } from '@components/header';
+import { Login } from '@pages/account';
 
 const PageContainer = styled.div(() => ({
   width: '100%',

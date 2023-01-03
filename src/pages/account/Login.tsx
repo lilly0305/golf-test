@@ -1,6 +1,8 @@
 import React, { memo, useCallback } from 'react';
-import PageHeader from '@components/PageHeader';
+
 import styled from '@emotion/styled';
+
+import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
 

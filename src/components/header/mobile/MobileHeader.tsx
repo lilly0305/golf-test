@@ -44,7 +44,6 @@ interface IMobileHeader {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 function MobileHeader({ active, setActive }: IMobileHeader) {
   const theme = useTheme();
 
