@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 
 import styled from '@emotion/styled';
+import { GolfSearch } from '@components/search';
 
 const Container = styled.div(() => ({
   padding: 0,
@@ -8,11 +9,12 @@ const Container = styled.div(() => ({
   top: '5rem',
 }));
 
-interface IHome {
-  children: React.ReactNode;
-}
-function Home({ children }: IHome) {
-  return <Container>{children}</Container>;
+function Home() {
+  return (
+    <Container>
+      <GolfSearch />
+    </Container>
+  );
 }
 
 export default memo(Home);

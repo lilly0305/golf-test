@@ -44,6 +44,8 @@ const style = css`
 
   *::placeholder {
     font-family: 'NanumSquareNeo-Variable', sans-serif;
+    font-weight: normal;
+    color: #7d7d7d;
   }
 
   ul,
@@ -60,6 +62,8 @@ const style = css`
   input,
   select {
     outline: none;
+    font-weight: 700;
+    color: #111827;
   }
 `;
 

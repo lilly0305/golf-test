@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-
 import styled from '@emotion/styled';
 
 const InputGroupContainer = styled.div(() => ({
