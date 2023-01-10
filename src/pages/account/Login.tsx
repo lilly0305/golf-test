@@ -1,11 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 
 import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
 import { mq } from '@utils/mediaquery/mediaQuery';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -60,15 +60,15 @@ function Login() {
     },
   });
 
-  const onSubmit = handleSubmit(({ id, pw }) => {
-    console.log(id, pw);
-  });
+  const onSubmit: SubmitHandler<ILoginForm> = useCallback((data) => {
+    console.log(data);
+  }, []);
 
   return (
     <Container>
       <PageHeader pageTitle="잇다 로그인" />
 
-      <LoginForm onSubmit={onSubmit}>
+      <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           registerName="id"
           register={register}
