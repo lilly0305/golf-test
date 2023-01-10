@@ -19,6 +19,8 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    // NOTE: 내가 임의로 제거
+    "react/jsx-props-no-spreading": "off",
     // TODO: 배포시 제거
     "no-console": "off",
 

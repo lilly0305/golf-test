@@ -1,10 +1,11 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
 import { mq } from '@utils/mediaquery/mediaQuery';
+import { useForm } from 'react-hook-form';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -43,29 +44,53 @@ const Link = styled.a(() => ({
   padding: '0.4rem 0',
 }));
 
+interface ILoginForm {
+  id: string;
+  pw: string;
+}
 function Login() {
-  const login = useCallback(() => console.log('로그인합니다.'), []);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ILoginForm>({
+    defaultValues: {
+      id: '',
+      pw: '',
+    },
+  });
+
+  const onSubmit = handleSubmit(({ id, pw }) => {
+    console.log(id, pw);
+  });
 
   return (
     <Container>
       <PageHeader pageTitle="잇다 로그인" />
 
-      <LoginForm>
+      <LoginForm onSubmit={onSubmit}>
         <InputGroup
+          registerName="id"
+          register={register}
           idName="id"
           labelName="아이디"
           inputType="text"
           placeHolder="아이디를 입력하세요"
+          errors={errors}
+          rules={{ required: '아이디를 입력해주세요.' }}
         />
 
         <InputGroup
+          registerName="pw"
+          register={register}
           idName="pw"
           labelName="비밀번호"
           inputType="password"
           placeHolder="비밀번호를 입력하세요"
+          errors={errors}
         />
 
-        <Buttons activeEvent={login} noCancelButton activeName="로그인" buttonType="submit" />
+        <Buttons noCancelButton activeName="로그인" buttonType="submit" />
 
         <LoginInfo>로그인에 문제가 있으신가요?</LoginInfo>
 
