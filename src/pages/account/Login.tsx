@@ -6,6 +6,7 @@ import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { ILoginForm } from '@utils/types';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -43,12 +44,6 @@ const OtherPages = styled.div(() => ({
 const Link = styled.a(() => ({
   padding: '0.4rem 0',
 }));
-
-type loginType = 'id' | 'pw';
-
-type ILoginForm = {
-  [key in loginType]: string;
-};
 
 function Login() {
   const {
@@ -90,6 +85,7 @@ function Login() {
           inputType="password"
           placeHolder="비밀번호를 입력하세요"
           errors={errors}
+          rules={{ required: '비밀번호를 입력해주세요.' }}
         />
 
         <Buttons noCancelButton activeName="로그인" buttonType="submit" />

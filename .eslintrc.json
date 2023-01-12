@@ -21,6 +21,7 @@
   "rules": {
     // NOTE: 내가 임의로 제거
     "react/jsx-props-no-spreading": "off",
+    "dot-notation": "off",
     // TODO: 배포시 제거
     "no-console": "off",
 

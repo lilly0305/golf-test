@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
-import { Path, UseFormRegister, RegisterOptions, DeepMap, FieldError } from 'react-hook-form';
+import { Path, UseFormRegister, RegisterOptions, FieldErrorsImpl } from 'react-hook-form';
+import { ILoginForm, ISignUp } from '@utils/types';
 
 const InputGroupContainer = styled.div(() => ({
   display: 'flex',
@@ -32,23 +33,20 @@ const StyledInput = styled.input<IStyledInput>(({ theme, isError }) => ({
 const ErrorMessage = styled.p(({ theme }) => ({
   fontSize: '1.2rem',
   color: theme.color.red_color,
-  marginTop: '0.4rem',
+  marginTop: '0.2rem',
   marginLeft: '10rem',
+  height: '1.4rem',
 }));
 
-interface IFieldValues {
-  id: string;
-  pw: string;
-}
 interface IInputGroup {
   idName: string;
   labelName: string;
   inputType: 'text' | 'email' | 'number' | 'password';
   placeHolder: string;
   rules?: RegisterOptions;
-  registerName: Path<IFieldValues>;
-  register?: UseFormRegister<IFieldValues>;
-  errors?: Partial<DeepMap<IFieldValues, FieldError>>;
+  registerName: Path<ILoginForm | ISignUp>;
+  register?: UseFormRegister<ILoginForm | ISignUp>;
+  errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp>> | any;
 }
 function InputGroup({
   idName,
@@ -62,19 +60,19 @@ function InputGroup({
 }: IInputGroup) {
   return (
     <InputGroupContainer>
-      <ErrorMessage>{errors?.id ? errors?.id.message : null}</ErrorMessage>
-
       <Wrapper>
         <InputLabel htmlFor={idName}>{labelName}</InputLabel>
 
         <StyledInput
           {...(register && register(registerName, rules))}
-          isError={errors?.id && true}
+          isError={errors[registerName] && true}
           placeholder={placeHolder}
           type={inputType}
           id={idName}
         />
       </Wrapper>
+
+      <ErrorMessage>{errors[registerName]?.message}</ErrorMessage>
     </InputGroupContainer>
   );
 }
