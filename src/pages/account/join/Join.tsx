@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -9,6 +9,8 @@ import { ISignUp } from '@utils/types';
 import { InputGroup } from '@components/inputs';
 import { yupJoin } from '@utils/yupValidation';
 import { Buttons } from '@components/buttons';
+import SingleCheckInput from '@components/inputs/SingleCheckInput';
+import { IPolicyCheck, policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -32,6 +34,7 @@ const formOptions = {
 
 function Join() {
   const [confirmedPhone, setConfirmedPhone] = useState(false);
+  const [checkArr, setCheckArr] = useState<IPolicyCheck[]>([]);
 
   const {
     register,
@@ -44,6 +47,14 @@ function Join() {
   }, []);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
+
+  useEffect(() => {
+    setCheckArr(policyCheck);
+
+    // return () => {
+    //   second;
+    // };
+  }, []);
 
   return (
     <Container>
@@ -111,6 +122,21 @@ function Join() {
           disabled
           buttonEvent={confirmPhone}
         />
+
+        {checkArr?.map((check) => (
+          <SingleCheckInput
+            key={check.id}
+            register={register}
+            errors={errors}
+            registerName="check"
+            idName={check.idName}
+            labelName={check.name}
+            checked={check.checked}
+            required={check.required}
+            checkArr={checkArr}
+            setCheckArr={setCheckArr}
+          />
+        ))}
 
         <Buttons noCancelButton activeName="회원가입" buttonType="submit" />
       </JoinForm>

@@ -4,8 +4,9 @@ import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
 import { Header } from '@components/header';
-import { Join, Login } from '@pages/account';
+import { Login } from '@pages/account';
 import { mq } from '@utils/mediaquery/mediaQuery';
+import { Join } from '@pages/account/join';
 
 const PageContainer = styled.div(() => ({
   width: '100%',

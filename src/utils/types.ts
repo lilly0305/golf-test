@@ -9,4 +9,5 @@ export interface ISignUp {
   pw: string;
   confirmPw: string;
   phone: string;
+  check: string;
 }
