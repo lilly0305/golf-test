@@ -20,6 +20,7 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     // NOTE: 내가 임의로 제거
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "react/jsx-props-no-spreading": "off",
     "dot-notation": "off",
     // TODO: 배포시 제거

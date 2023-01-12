@@ -3,21 +3,14 @@ import styled from '@emotion/styled';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
-import { mq } from '@utils/mediaquery/mediaQuery';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ILoginForm } from '@utils/types';
 import { yupLogin } from '@utils/yupValidation';
+import PageTitle from '@components/item/PageTitle';
 
-const Container = styled.div(() => ({
-  width: '100%',
-  paddingTop: '2rem',
-  [mq('desktop')]: {
-    paddingTop: '8rem',
-  },
-}));
+const Container = styled.div(() => ({}));
 
 const LoginForm = styled.form(() => ({
   display: 'flex',
@@ -69,7 +62,7 @@ function Login() {
 
   return (
     <Container>
-      <PageHeader pageTitle="잇다 로그인" />
+      <PageTitle pageTitle="잇다 로그인" />
 
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <InputGroup

@@ -4,9 +4,9 @@ import styled from '@emotion/styled';
 import { GolfSearch } from '@components/search';
 
 const Container = styled.div(() => ({
-  padding: 0,
+  width: '100%',
   margin: 0,
-  top: '5rem',
+  padding: 0,
 }));
 
 function Home() {

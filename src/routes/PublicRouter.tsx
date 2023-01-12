@@ -4,11 +4,16 @@ import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
 import { Header } from '@components/header';
-import { Login } from '@pages/account';
+import { Join, Login } from '@pages/account';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const PageContainer = styled.div(() => ({
   width: '100%',
-  padding: '0 1.6rem',
+  padding: '2rem 1.6rem 0',
+  top: '5rem',
+  [mq('desktop')]: {
+    paddingTop: '3rem',
+  },
 }));
 
 function PublicRouter() {
@@ -21,6 +26,7 @@ function PublicRouter() {
           <Route path="/" element={<Home />} />
 
           <Route path="/login" element={<Login />} />
+          <Route path="/join" element={<Join />} />
         </Routes>
       </PageContainer>
     </div>

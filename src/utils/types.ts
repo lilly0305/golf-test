@@ -4,7 +4,9 @@ export interface ILoginForm {
 }
 
 export interface ISignUp {
+  nickname: string;
   id: string;
   pw: string;
-  name: string;
+  confirmPw: string;
+  phone: string;
 }
