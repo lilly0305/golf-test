@@ -1,12 +1,15 @@
 import React, { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import PageHeader from '@components/item/PageTitle';
 import InputGroup from '@components/inputs/InputGroup';
 import Buttons from '@components/buttons/Buttons';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ILoginForm } from '@utils/types';
+import { yupLogin } from '@utils/yupValidation';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -45,17 +48,20 @@ const Link = styled.a(() => ({
   padding: '0.4rem 0',
 }));
 
+const formOptions = {
+  resolver: yupResolver(yupLogin),
+  defaultValues: {
+    id: '',
+    pw: '',
+  },
+};
+
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ILoginForm>({
-    defaultValues: {
-      id: '',
-      pw: '',
-    },
-  });
+  } = useForm<ILoginForm>(formOptions);
 
   const onSubmit: SubmitHandler<ILoginForm> = useCallback((data) => {
     console.log(data);
@@ -74,7 +80,6 @@ function Login() {
           inputType="text"
           placeHolder="아이디를 입력하세요"
           errors={errors}
-          rules={{ required: '아이디를 입력해주세요.' }}
         />
 
         <InputGroup
@@ -85,7 +90,6 @@ function Login() {
           inputType="password"
           placeHolder="비밀번호를 입력하세요"
           errors={errors}
-          rules={{ required: '비밀번호를 입력해주세요.' }}
         />
 
         <Buttons noCancelButton activeName="로그인" buttonType="submit" />
