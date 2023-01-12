@@ -19,9 +19,11 @@ interface IFieldValues {
   pw: string;
 }
 
-//  flex: 1;
-// padding: '1rem 1.2rem';
-// border: 1px solid ${theme.color.divider_grey};
+const StyledInput = styled.input(({ theme }) => ({
+  flex: 1,
+  padding: '1rem 1.2rem',
+  border: `1px solid ${theme.color.divider_grey}`,
+}));
 
 interface IInputGroup {
   idName: string;
@@ -47,11 +49,11 @@ IInputGroup) {
     <InputGroupContainer>
       <InputLabel htmlFor={idName}>{labelName}</InputLabel>
 
-      <input
-        type={inputType}
-        {...(register && register(registerName, rules))}
-        id={idName}
+      <StyledInput
         placeholder={placeHolder}
+        type={inputType}
+        id={idName}
+        {...(register && register(registerName, rules))}
       />
     </InputGroupContainer>
   );
