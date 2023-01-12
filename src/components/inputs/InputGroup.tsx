@@ -5,26 +5,41 @@ import { Path, UseFormRegister, RegisterOptions, DeepMap, FieldError } from 'rea
 
 const InputGroupContainer = styled.div(() => ({
   display: 'flex',
-  alignItems: 'center',
+  flexDirection: 'column',
   width: '100%',
 }));
 
 const InputLabel = styled.label(() => ({
   display: 'inline-block',
-  width: '12rem',
+  minWidth: '10rem',
+}));
+
+const Wrapper = styled.div(() => ({
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+}));
+
+interface IStyledInput {
+  isError?: boolean;
+}
+const StyledInput = styled.input<IStyledInput>(({ theme, isError }) => ({
+  width: '100%',
+  padding: '1rem 1.2rem',
+  border: `1px solid ${isError ? theme.color.red_color : theme.color.divider_grey}`,
+}));
+
+const ErrorMessage = styled.p(({ theme }) => ({
+  fontSize: '1.2rem',
+  color: theme.color.red_color,
+  marginTop: '0.4rem',
+  marginLeft: '10rem',
 }));
 
 interface IFieldValues {
   id: string;
   pw: string;
 }
-
-const StyledInput = styled.input(({ theme }) => ({
-  flex: 1,
-  padding: '1rem 1.2rem',
-  border: `1px solid ${theme.color.divider_grey}`,
-}));
-
 interface IInputGroup {
   idName: string;
   labelName: string;
@@ -33,7 +48,7 @@ interface IInputGroup {
   rules?: RegisterOptions;
   registerName: Path<IFieldValues>;
   register?: UseFormRegister<IFieldValues>;
-  errors?: Partial<DeepMap<IFieldValues, FieldError>> | undefined;
+  errors?: Partial<DeepMap<IFieldValues, FieldError>>;
 }
 function InputGroup({
   idName,
@@ -43,18 +58,23 @@ function InputGroup({
   rules,
   registerName,
   register,
-}: // errors,
-IInputGroup) {
+  errors,
+}: IInputGroup) {
   return (
     <InputGroupContainer>
-      <InputLabel htmlFor={idName}>{labelName}</InputLabel>
+      <ErrorMessage>{errors?.id ? errors?.id.message : null}</ErrorMessage>
 
-      <StyledInput
-        placeholder={placeHolder}
-        type={inputType}
-        id={idName}
-        {...(register && register(registerName, rules))}
-      />
+      <Wrapper>
+        <InputLabel htmlFor={idName}>{labelName}</InputLabel>
+
+        <StyledInput
+          {...(register && register(registerName, rules))}
+          isError={errors?.id && true}
+          placeholder={placeHolder}
+          type={inputType}
+          id={idName}
+        />
+      </Wrapper>
     </InputGroupContainer>
   );
 }

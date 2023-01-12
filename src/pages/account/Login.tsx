@@ -44,10 +44,12 @@ const Link = styled.a(() => ({
   padding: '0.4rem 0',
 }));
 
-interface ILoginForm {
-  id: string;
-  pw: string;
-}
+type loginType = 'id' | 'pw';
+
+type ILoginForm = {
+  [key in loginType]: string;
+};
+
 function Login() {
   const {
     register,
