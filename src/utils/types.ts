@@ -9,5 +9,8 @@ export interface ISignUp {
   pw: string;
   confirmPw: string;
   phone: string;
-  check: string;
+  useterm: boolean;
+  personalInfo: boolean;
+  SMS: boolean;
+  marketing: boolean;
 }

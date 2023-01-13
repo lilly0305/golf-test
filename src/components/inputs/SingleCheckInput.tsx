@@ -26,7 +26,7 @@ const StyledInput = styled.input<IStyledInput>(() => ({
 interface ISingleCheckInput {
   register?: UseFormRegister<ILoginForm | ISignUp | any>;
   errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp>> | any;
-  registerName: Path<ILoginForm | ISignUp>;
+  registerName: Path<ILoginForm | ISignUp | any>;
   idName: string;
   labelName: string;
   checked: boolean;
@@ -68,13 +68,19 @@ function SingleCheckInput({
         onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
         type="checkbox"
         id={idName}
+        checked={checked}
       />
 
       <InputLabel htmlFor={idName}>
         {labelName}
 
-        <span style={{ color: theme.color.red_color, marginLeft: '0.2rem' }}>
-          {required ? '*' : null}
+        <span
+          style={{
+            color: required ? theme.color.red_color : theme.color.placeholder_color,
+            marginLeft: '0.2rem',
+          }}
+        >
+          {required ? '(필수)' : '(선택)'}
         </span>
       </InputLabel>
     </InputContainer>

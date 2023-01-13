@@ -27,8 +27,15 @@ const JoinForm = styled.form(() => ({
 const formOptions = {
   resolver: yupResolver(yupJoin),
   defaultValues: {
+    nickname: '',
     id: '',
     pw: '',
+    confirmPw: '',
+    phone: '',
+    useterm: false,
+    personalInfo: false,
+    SMS: false,
+    marketing: false,
   },
 };
 
@@ -39,6 +46,7 @@ function Join() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
@@ -51,10 +59,12 @@ function Join() {
   useEffect(() => {
     setCheckArr(policyCheck);
 
-    // return () => {
-    //   second;
-    // };
+    return () => {
+      setCheckArr([]);
+    };
   }, []);
+
+  console.log(watch('SMS'));
 
   return (
     <Container>
@@ -127,8 +137,8 @@ function Join() {
           <SingleCheckInput
             key={check.id}
             register={register}
+            registerName={check.idName}
             errors={errors}
-            registerName="check"
             idName={check.idName}
             labelName={check.name}
             checked={check.checked}
