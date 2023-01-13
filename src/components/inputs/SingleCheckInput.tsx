@@ -1,31 +1,17 @@
 import React, { SetStateAction, useCallback } from 'react';
+import { Path, UseFormRegister } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
-import styled from '@emotion/styled';
-import { Path, FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
 import { ILoginForm, ISignUp } from '@utils/types';
-import { RemixIcon } from '@assets/styles/CommonStyles';
+import {
+  CheckInputLabel,
+  InputContainer,
+  RemixIcon,
+  StyledInput,
+} from '@assets/styles/CommonStyles';
 import { IPolicyCheck } from '@pages/account/join/joinPolicy';
-
-const InputContainer = styled.div(() => ({
-  display: 'flex',
-  alignItems: 'center',
-}));
-
-const InputLabel = styled.label(() => ({
-  display: 'inline-block',
-  marginLeft: '0.6rem',
-}));
-
-interface IStyledInput {
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-}
-const StyledInput = styled.input<IStyledInput>(() => ({
-  display: 'none',
-}));
 
 interface ISingleCheckInput {
   register?: UseFormRegister<ILoginForm | ISignUp | any>;
-  errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp>> | any;
   registerName: Path<ILoginForm | ISignUp | any>;
   idName: string;
   labelName: string;
@@ -57,21 +43,21 @@ function SingleCheckInput({
 
   return (
     <InputContainer>
-      {checked ? (
-        <RemixIcon className="ri-checkbox-line" color={theme.color.point_color} />
-      ) : (
-        <RemixIcon className="ri-checkbox-blank-line" color={theme.color.placeholder_color} />
-      )}
-
       <StyledInput
+        type="checkbox"
         {...(register && register(registerName))}
         onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
-        type="checkbox"
         id={idName}
         checked={checked}
       />
 
-      <InputLabel htmlFor={idName}>
+      <CheckInputLabel htmlFor={idName}>
+        {checked ? (
+          <RemixIcon className="ri-checkbox-line" color={theme.color.point_color} />
+        ) : (
+          <RemixIcon className="ri-checkbox-blank-line" color={theme.color.placeholder_color} />
+        )}
+
         {labelName}
 
         <span
@@ -82,7 +68,7 @@ function SingleCheckInput({
         >
           {required ? '(필수)' : '(선택)'}
         </span>
-      </InputLabel>
+      </CheckInputLabel>
     </InputContainer>
   );
 }

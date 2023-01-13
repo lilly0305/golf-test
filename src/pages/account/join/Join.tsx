@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
 import styled from '@emotion/styled';
+
+import { ErrorMessage, InputContainer, InputLabel } from '@assets/styles/CommonStyles';
+import AllCheckInput from '@components/inputs/AllCheckInput';
 import { PageTitle } from '@components/item';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { ISignUp } from '@utils/types';
-import { InputGroup } from '@components/inputs';
 import { yupJoin } from '@utils/yupValidation';
+import { mq } from '@utils/mediaquery/mediaQuery';
+import { InputGroup } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import SingleCheckInput from '@components/inputs/SingleCheckInput';
 import { IPolicyCheck, policyCheck } from './joinPolicy';
@@ -24,17 +27,25 @@ const JoinForm = styled.form(() => ({
   margin: '0 auto',
 }));
 
+const CheckBoxContainer = styled.div(({ theme }) => ({
+  paddingTop: '0.4rem',
+  borderTop: `1px solid ${theme.color.divider_grey}`,
+  [mq('desktop')]: {
+    marginLeft: '12rem',
+  },
+}));
+
 const formOptions = {
   resolver: yupResolver(yupJoin),
   defaultValues: {
     nickname: '',
-    id: '',
-    pw: '',
-    confirmPw: '',
+    user_id: '',
+    user_pw: '',
+    confirm_pw: '',
     phone: '',
     useterm: false,
-    personalInfo: false,
-    SMS: false,
+    personal_info: false,
+    sms: false,
     marketing: false,
   },
 };
@@ -46,7 +57,6 @@ function Join() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
@@ -63,8 +73,6 @@ function Join() {
       setCheckArr([]);
     };
   }, []);
-
-  console.log(watch('SMS'));
 
   return (
     <Container>
@@ -87,8 +95,8 @@ function Join() {
         <InputGroup
           register={register}
           errors={errors}
-          registerName="id"
-          idName="id"
+          registerName="user_id"
+          idName="user_id"
           labelName="아이디"
           inputType="text"
           placeHolder="아이디를 입력하세요"
@@ -100,18 +108,18 @@ function Join() {
         <InputGroup
           register={register}
           errors={errors}
-          registerName="pw"
-          idName="pw"
+          registerName="user_pw"
+          idName="user_pw"
           labelName="비밀번호"
           inputType="password"
-          placeHolder="비밀번호를 입력하세요"
+          placeHolder="영문, 숫자 포함 8~24글자를 입력해주세요"
           required
         />
 
         <InputGroup
           register={register}
           errors={errors}
-          registerName="confirmPw"
+          registerName="confirm_pw"
           idName="confirmPw"
           labelName="비밀번호 확인"
           inputType="password"
@@ -133,20 +141,27 @@ function Join() {
           buttonEvent={confirmPhone}
         />
 
-        {checkArr?.map((check) => (
-          <SingleCheckInput
-            key={check.id}
-            register={register}
-            registerName={check.idName}
-            errors={errors}
-            idName={check.idName}
-            labelName={check.name}
-            checked={check.checked}
-            required={check.required}
-            checkArr={checkArr}
-            setCheckArr={setCheckArr}
-          />
-        ))}
+        <InputContainer>
+          <InputLabel>약관동의</InputLabel>
+          <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} />
+        </InputContainer>
+        <ErrorMessage>{errors?.useterm?.message}</ErrorMessage>
+
+        <CheckBoxContainer>
+          {checkArr?.map((check) => (
+            <SingleCheckInput
+              key={check.id}
+              register={register}
+              registerName={check.idName}
+              idName={check.idName}
+              labelName={check.name}
+              checked={check.checked}
+              required={check.required}
+              checkArr={checkArr}
+              setCheckArr={setCheckArr}
+            />
+          ))}
+        </CheckBoxContainer>
 
         <Buttons noCancelButton activeName="회원가입" buttonType="submit" />
       </JoinForm>

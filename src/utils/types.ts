@@ -1,16 +1,16 @@
 export interface ILoginForm {
-  id: string;
-  pw: string;
+  user_id: string;
+  user_pw: string;
 }
 
 export interface ISignUp {
   nickname: string;
-  id: string;
-  pw: string;
-  confirmPw: string;
+  user_id: string;
+  user_pw: string;
+  confirm_pw: string;
   phone: string;
   useterm: boolean;
-  personalInfo: boolean;
-  SMS: boolean;
+  personal_info: boolean;
+  sms: boolean;
   marketing: boolean;
 }

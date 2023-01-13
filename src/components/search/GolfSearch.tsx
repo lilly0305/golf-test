@@ -47,7 +47,6 @@ function GolfSearch() {
     <GolfSearchContainer
       onSubmit={(e) => {
         e.preventDefault();
-        console.log('검색중');
       }}
     >
       <GolfSearchIn>

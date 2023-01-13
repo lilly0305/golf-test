@@ -44,8 +44,8 @@ const Link = styled.a(() => ({
 const formOptions = {
   resolver: yupResolver(yupLogin),
   defaultValues: {
-    id: '',
-    pw: '',
+    user_id: '',
+    user_pw: '',
   },
 };
 
@@ -66,9 +66,9 @@ function Login() {
 
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
-          registerName="id"
+          registerName="user_id"
           register={register}
-          idName="id"
+          idName="user_id"
           labelName="아이디"
           inputType="text"
           placeHolder="아이디를 입력하세요"
@@ -76,9 +76,9 @@ function Login() {
         />
 
         <InputGroup
-          registerName="pw"
+          registerName="user_pw"
           register={register}
-          idName="pw"
+          idName="user_pw"
           labelName="비밀번호"
           inputType="password"
           placeHolder="비밀번호를 입력하세요"

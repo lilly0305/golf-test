@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { Path, UseFormRegister, RegisterOptions, FieldErrorsImpl } from 'react-hook-form';
 import { ILoginForm, ISignUp } from '@utils/types';
 import { useTheme } from '@emotion/react';
+import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const InputGroupContainer = styled.div(() => ({
   display: 'flex',
@@ -11,15 +13,16 @@ const InputGroupContainer = styled.div(() => ({
   width: '100%',
 }));
 
-const InputLabel = styled.label(() => ({
-  display: 'inline-block',
-  minWidth: '12rem',
-}));
-
 const Wrapper = styled.div(() => ({
   flex: 1,
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  gap: '0.4rem 0',
+  [mq('desktop')]: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 }));
 
 interface IStyledInput {
@@ -48,12 +51,11 @@ const StyledButton = styled.button<IStyledButton>(({ theme, active = true }) => 
   fontWeight: theme.fontWeight.bold,
 }));
 
-const ErrorMessage = styled.p(({ theme }) => ({
-  fontSize: '1.2rem',
-  color: theme.color.red_color,
-  marginTop: '0.2rem',
-  marginLeft: '12rem',
-  height: '1.4rem',
+const InputButtonWrap = styled.div(() => ({
+  flex: 1,
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
 }));
 
 interface IInputGroup {
@@ -99,21 +101,23 @@ function InputGroup({
           </span>
         </InputLabel>
 
-        <StyledInput
-          {...(register && register(registerName))}
-          isError={errors[registerName] && true}
-          placeholder={placeHolder}
-          type={inputType}
-          id={idName}
-          readOnly={readonly}
-          disabled={disabled}
-        />
+        <InputButtonWrap>
+          <StyledInput
+            {...(register && register(registerName))}
+            isError={errors[registerName] && true}
+            placeholder={placeHolder}
+            type={inputType}
+            id={idName}
+            readOnly={readonly}
+            disabled={disabled}
+          />
 
-        {buttonName && (
-          <StyledButton type="button" active={active} onClick={buttonEvent}>
-            {buttonName}
-          </StyledButton>
-        )}
+          {buttonName && (
+            <StyledButton type="button" active={active} onClick={buttonEvent}>
+              {buttonName}
+            </StyledButton>
+          )}
+        </InputButtonWrap>
       </Wrapper>
 
       <ErrorMessage>{errors[registerName]?.message}</ErrorMessage>

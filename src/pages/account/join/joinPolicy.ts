@@ -17,14 +17,14 @@ export const policyCheck = [
   {
     id: 2,
     name: '개인정보수집 및 이용동의',
-    idName: 'personalInfo',
+    idName: 'personal_info',
     required: true,
     checked: false,
   },
   {
     id: 3,
     name: 'SMS 수신',
-    idName: 'SMS',
+    idName: 'sms',
     required: true,
     checked: false,
   },
