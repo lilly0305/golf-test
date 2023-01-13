@@ -1,4 +1,4 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useCallback } from 'react';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Path, FieldErrorsImpl, UseFormRegister } from 'react-hook-form';
@@ -34,7 +34,6 @@ interface ISingleCheckInput {
   checkArr: Array<IPolicyCheck>;
   setCheckArr: React.Dispatch<SetStateAction<IPolicyCheck[]>>;
 }
-
 function SingleCheckInput({
   idName,
   labelName,
@@ -43,12 +42,18 @@ function SingleCheckInput({
   required,
   checked,
   checkArr,
+  setCheckArr,
 }: ISingleCheckInput) {
   const theme = useTheme();
 
-  // const onCheckedItem = useCallback(() => {
-  //   console.log(checkArr);
-  // }, [checkArr]);
+  const onCheckedItem = useCallback(
+    (isChecked: boolean, id: string) => {
+      setCheckArr(
+        checkArr.map((check) => (check.idName === id ? { ...check, checked: isChecked } : check)),
+      );
+    },
+    [checkArr, setCheckArr],
+  );
 
   return (
     <InputContainer>
@@ -59,13 +64,12 @@ function SingleCheckInput({
       )}
 
       <StyledInput
-        onChange={() => {
-          console.log(checkArr);
-        }}
         {...(register && register(registerName))}
+        onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
         type="checkbox"
         id={idName}
       />
+
       <InputLabel htmlFor={idName}>
         {labelName}
 
