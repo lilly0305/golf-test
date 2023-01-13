@@ -13,13 +13,14 @@ const MobileNavContainer = styled.nav<IMobileNavContainer>(({ theme, active }) =
   position: 'fixed',
   zIndex: 999,
   display: 'flex',
-  transition: 'left 0.3s',
+  transition: 'all 0.3s',
   flexDirection: 'column',
   width: '100%',
   height: 'calc(100vh - 5rem)',
   background: theme.color.point_color,
   color: theme.color.white,
   left: active ? 0 : '-100vw',
+  opacity: active ? 1 : 0,
 }));
 
 const StyledLink = styled.a(({ theme }) => ({
