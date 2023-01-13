@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
 
 import { ErrorMessage, InputContainer, InputLabel } from '@assets/styles/CommonStyles';
-import AllCheckInput from '@components/inputs/AllCheckInput';
 import { PageTitle } from '@components/item';
 import { ISignUp } from '@utils/types';
 import { yupJoin } from '@utils/yupValidation';
 import { mq } from '@utils/mediaquery/mediaQuery';
-import { InputGroup } from '@components/inputs';
+import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
-import SingleCheckInput from '@components/inputs/SingleCheckInput';
 import { IPolicyCheck, policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
@@ -79,6 +77,8 @@ function Join() {
       <PageTitle pageTitle="회원가입" />
 
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
+        <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
+
         <InputGroup
           register={register}
           errors={errors}
@@ -169,4 +169,4 @@ function Join() {
   );
 }
 
-export default Join;
+export default memo(Join);
