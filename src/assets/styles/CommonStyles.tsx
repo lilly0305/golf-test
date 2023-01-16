@@ -75,5 +75,5 @@ interface IStyledInput {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 export const StyledInput = styled.input<IStyledInput>(() => ({
-  display: 'none',
+  opacity: 0,
 }));
