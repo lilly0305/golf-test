@@ -11,6 +11,8 @@ import { yupJoin } from '@utils/yupValidation';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
+import ModalPortal from '@components/modal/ModalPortal';
+import Modal from '@components/modal/Modal';
 import { policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
@@ -70,6 +72,11 @@ function Join() {
 
   return (
     <Container>
+      <ModalPortal>
+        <Modal show modalTitle="회원가입을 진행하시겠습니까?">
+          <PageTitle pageTitle="회원가입" />
+        </Modal>
+      </ModalPortal>
       <PageTitle pageTitle="회원가입" />
 
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
