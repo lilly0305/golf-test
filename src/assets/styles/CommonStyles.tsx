@@ -32,7 +32,10 @@ export const RemixIcon = styled.i<IRemixIcon>(({ fontSize = '2.4rem', color = '#
   color: color,
 }));
 
-export const ErrorMessage = styled.p(({ theme }) => ({
+export const ErrorMessage = styled.div(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.4rem 0',
   fontSize: '1.2rem',
   color: theme.color.red_color,
   margin: '0.4rem 0',

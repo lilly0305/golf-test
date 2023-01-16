@@ -59,13 +59,14 @@ function Join() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
   const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
   }, []);
+
+  console.log(checkArr);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
 
@@ -154,8 +155,8 @@ function Join() {
             {checkArr?.map((check) => (
               <SingleCheckInput
                 key={check.id}
+                index={check.id}
                 register={register}
-                setValue={setValue}
                 registerName={check.idName}
                 idName={check.idName}
                 labelName={check.name}

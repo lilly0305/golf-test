@@ -1,5 +1,5 @@
 import React, { SetStateAction, useCallback } from 'react';
-import { Path, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { Path, UseFormRegister } from 'react-hook-form';
 import { useTheme } from '@emotion/react';
 import { ILoginForm, ISignUp } from '@utils/types';
 import {
@@ -11,8 +11,8 @@ import {
 import { IPolicyCheck } from '@pages/account/join/joinPolicy';
 
 interface ISingleCheckInput {
+  index: number;
   register?: UseFormRegister<ILoginForm | ISignUp | any>;
-  setValue: UseFormSetValue<ILoginForm | ISignUp | any>;
   registerName: Path<ILoginForm | ISignUp | any>;
   idName: string;
   labelName: string;
@@ -22,11 +22,11 @@ interface ISingleCheckInput {
   setCheckArr: React.Dispatch<SetStateAction<IPolicyCheck[]>>;
 }
 function SingleCheckInput({
+  index,
   idName,
   labelName,
   registerName,
   register,
-  setValue,
   required,
   checked,
   checkArr,
@@ -35,23 +35,24 @@ function SingleCheckInput({
   const theme = useTheme();
 
   const onCheckedItem = useCallback(
-    (isChecked: boolean, id: string, name: string) => {
+    (isChecked: boolean, id: string) => {
       setCheckArr(
         checkArr.map((check) => (check.idName === id ? { ...check, checked: isChecked } : check)),
       );
-      setValue(name, isChecked);
     },
-    [checkArr, setCheckArr, setValue],
+    [checkArr, setCheckArr],
   );
+
+  console.log(checkArr[index - 1].checked);
 
   return (
     <InputContainer>
       <StyledInput
         {...(register && register(registerName))}
         type="checkbox"
-        checked={checked}
+        checked={checkArr[index - 1].checked}
         id={idName}
-        onChange={(e) => onCheckedItem(e.target.checked, e.target.id, registerName)}
+        onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
       />
 
       <CheckInputLabel htmlFor={idName}>
