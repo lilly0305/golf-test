@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -54,27 +54,20 @@ const formOptions = {
 
 function Join() {
   const [confirmedPhone, setConfirmedPhone] = useState(false);
-  const [checkArr, setCheckArr] = useState<IPolicyCheck[]>([]);
+  const [checkArr, setCheckArr] = useState<IPolicyCheck[]>(policyCheck);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
   const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
-    console.log(data);
+    console.log(JSON.stringify(data, null, 4));
   }, []);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
-
-  useEffect(() => {
-    setCheckArr(policyCheck);
-
-    return () => {
-      setCheckArr([]);
-    };
-  }, []);
 
   return (
     <Container>
@@ -150,13 +143,19 @@ function Join() {
             <InputLabel>약관동의</InputLabel>
             <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} />
           </InputContainer>
-          <ErrorMessage>{errors?.useterm?.message}</ErrorMessage>
+
+          <ErrorMessage>
+            <p>{errors?.useterm?.message}</p>
+            <p>{errors?.personal_info?.message}</p>
+            <p>{errors?.sms?.message}</p>
+          </ErrorMessage>
 
           <CheckBoxContainer>
             {checkArr?.map((check) => (
               <SingleCheckInput
                 key={check.id}
                 register={register}
+                setValue={setValue}
                 registerName={check.idName}
                 idName={check.idName}
                 labelName={check.name}

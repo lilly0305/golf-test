@@ -36,7 +36,8 @@ export const ErrorMessage = styled.p(({ theme }) => ({
   fontSize: '1.2rem',
   color: theme.color.red_color,
   margin: '0.4rem 0',
-  height: '1.4rem',
+  height: '100%',
+  minHeight: '1.4rem',
   [mq('desktop')]: {
     flexDirection: 'row',
     alignItems: 'center',
