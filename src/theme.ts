@@ -2,7 +2,13 @@ import { Theme } from '@emotion/react';
 
 export const image = {
   logoWhite: require('@assets/images/itda_logo_white.png'),
-  defaultProfile: require('@assets/images/default-profile.png'),
+  defaultProfile: require('@assets/images/default_profile.png'),
+  profileSample01: require('@assets/images/profile_sample01.png'),
+  profileSample02: require('@assets/images/profile_sample02.png'),
+  profileSample03: require('@assets/images/profile_sample03.png'),
+  profileSample04: require('@assets/images/profile_sample04.png'),
+  profileSample05: require('@assets/images/profile_sample05.png'),
+  profileSample06: require('@assets/images/profile_sample06.png'),
 };
 
 export const AppTheme: Theme = {
