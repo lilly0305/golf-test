@@ -11,7 +11,7 @@ import { yupJoin } from '@utils/yupValidation';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
-import { IPolicyCheck, policyCheck } from './joinPolicy';
+import { policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
   width: '100%',
@@ -54,7 +54,7 @@ const formOptions = {
 
 function Join() {
   const [confirmedPhone, setConfirmedPhone] = useState(false);
-  const [checkArr, setCheckArr] = useState<IPolicyCheck[]>(policyCheck);
+  const [checkArr, setCheckArr] = useState<string[]>([]);
 
   const {
     register,
@@ -65,8 +65,6 @@ function Join() {
   const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
   }, []);
-
-  console.log(checkArr);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
 
@@ -142,7 +140,7 @@ function Join() {
 
           <InputContainer>
             <InputLabel>약관동의</InputLabel>
-            <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} />
+            <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} checkData={policyCheck} />
           </InputContainer>
 
           <ErrorMessage>
@@ -152,7 +150,7 @@ function Join() {
           </ErrorMessage>
 
           <CheckBoxContainer>
-            {checkArr?.map((check) => (
+            {policyCheck?.map((check) => (
               <SingleCheckInput
                 key={check.id}
                 index={check.id}
@@ -160,10 +158,9 @@ function Join() {
                 registerName={check.idName}
                 idName={check.idName}
                 labelName={check.name}
-                checked={check.checked}
                 required={check.required}
-                checkArr={checkArr}
                 setCheckArr={setCheckArr}
+                checkArr={checkArr}
               />
             ))}
           </CheckBoxContainer>

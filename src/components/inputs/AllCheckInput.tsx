@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback } from 'react';
 import {
   CheckInputLabel,
   InputContainer,
@@ -9,31 +9,25 @@ import { useTheme } from '@emotion/react';
 import { IPolicyCheck } from '@pages/account/join/joinPolicy';
 
 interface IAllCheckInput {
-  checkArr: Array<IPolicyCheck>;
-  setCheckArr: React.Dispatch<SetStateAction<IPolicyCheck[]>>;
+  checkData: Array<IPolicyCheck>;
+  checkArr: Array<string>;
+  setCheckArr: React.Dispatch<SetStateAction<Array<string>>>;
 }
-function AllCheckInput({ checkArr, setCheckArr }: IAllCheckInput) {
+function AllCheckInput({ checkArr, setCheckArr, checkData }: IAllCheckInput) {
   const theme = useTheme();
-  const [allCheck, setAllCheck] = useState(false);
 
   const handleAllCheck = useCallback(
     (isChecked: boolean) => {
-      setAllCheck(isChecked);
-      setCheckArr(checkArr.map((check) => ({ ...check, checked: isChecked })));
-    },
-    [setCheckArr, checkArr],
-  );
-
-  useEffect(() => {
-    let checkAll = true;
-    for (let i = 0; i < checkArr.length; i += 1) {
-      if (checkArr[i].checked === false) {
-        checkAll = false;
+      if (isChecked) {
+        const idArray: Array<string> = [];
+        checkData.forEach((el) => idArray.push(el.idName));
+        setCheckArr(idArray);
+      } else {
+        setCheckArr([]);
       }
-    }
-
-    setAllCheck(checkAll);
-  }, [checkArr]);
+    },
+    [setCheckArr, checkData],
+  );
 
   return (
     <InputContainer>
@@ -43,11 +37,11 @@ function AllCheckInput({ checkArr, setCheckArr }: IAllCheckInput) {
           handleAllCheck(e.target.checked);
         }}
         id="checkAll"
-        checked={allCheck}
+        checked={checkArr?.length === checkData?.length}
       />
 
       <CheckInputLabel htmlFor="checkAll">
-        {allCheck ? (
+        {checkArr.length === checkData.length ? (
           <RemixIcon className="ri-checkbox-line" color={theme.color.point_color} />
         ) : (
           <RemixIcon className="ri-checkbox-blank-line" color={theme.color.placeholder_color} />

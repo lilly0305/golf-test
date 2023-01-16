@@ -5,7 +5,6 @@ export interface IPolicyCheck {
   required: boolean;
   checked: boolean;
 }
-
 export const policyCheck = [
   {
     id: 1,

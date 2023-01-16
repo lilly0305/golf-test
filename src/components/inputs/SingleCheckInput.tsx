@@ -8,7 +8,6 @@ import {
   RemixIcon,
   StyledInput,
 } from '@assets/styles/CommonStyles';
-import { IPolicyCheck } from '@pages/account/join/joinPolicy';
 
 interface ISingleCheckInput {
   index: number;
@@ -16,47 +15,46 @@ interface ISingleCheckInput {
   registerName: Path<ILoginForm | ISignUp | any>;
   idName: string;
   labelName: string;
-  checked: boolean;
   required?: boolean;
-  checkArr: Array<IPolicyCheck>;
-  setCheckArr: React.Dispatch<SetStateAction<IPolicyCheck[]>>;
+  checkArr: Array<string>;
+  setCheckArr: React.Dispatch<SetStateAction<Array<string>>>;
 }
 function SingleCheckInput({
-  index,
   idName,
   labelName,
   registerName,
   register,
   required,
-  checked,
   checkArr,
   setCheckArr,
 }: ISingleCheckInput) {
   const theme = useTheme();
 
   const onCheckedItem = useCallback(
-    (isChecked: boolean, id: string) => {
-      setCheckArr(
-        checkArr.map((check) => (check.idName === id ? { ...check, checked: isChecked } : check)),
-      );
+    (isChecked: boolean, name: string) => {
+      if (isChecked) {
+        // 단일 선택 시 체크된 아이템을 배열에 추가
+        setCheckArr([...checkArr, name]);
+      } else {
+        // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+        setCheckArr(checkArr.filter((el) => el !== name));
+      }
     },
     [checkArr, setCheckArr],
   );
-
-  console.log(checkArr[index - 1].checked);
 
   return (
     <InputContainer>
       <StyledInput
         {...(register && register(registerName))}
-        type="checkbox"
-        checked={checkArr[index - 1].checked}
+        onChange={(e) => onCheckedItem(e.target.checked, idName)}
+        checked={checkArr.includes(idName)}
         id={idName}
-        onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
+        type="checkbox"
       />
 
       <CheckInputLabel htmlFor={idName}>
-        {checked ? (
+        {checkArr.includes(idName) ? (
           <RemixIcon className="ri-checkbox-line" color={theme.color.point_color} />
         ) : (
           <RemixIcon className="ri-checkbox-blank-line" color={theme.color.placeholder_color} />
