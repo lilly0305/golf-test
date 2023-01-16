@@ -25,7 +25,6 @@ const StyledButton = styled.button<IStyledButton>(({ theme, active = true }) => 
 }));
 
 interface IButtons {
-  // () => void
   activeEvent?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   noCancelButton?: boolean;
   activeName: string;

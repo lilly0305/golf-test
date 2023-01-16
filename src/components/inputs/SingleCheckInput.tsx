@@ -44,8 +44,8 @@ function SingleCheckInput({
   return (
     <InputContainer>
       <StyledInput
-        type="checkbox"
         {...(register && register(registerName))}
+        type="checkbox"
         onChange={(e) => onCheckedItem(e.target.checked, e.target.id)}
         id={idName}
         checked={checked}

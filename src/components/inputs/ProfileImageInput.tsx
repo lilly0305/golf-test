@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -35,7 +35,7 @@ const ImageInputLabel = styled.label(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   border: `1px solid ${theme.color.disabled_grey}`,
-  width: '30rem',
+  minWidth: '30rem',
   aspectRatio: '1 / 1',
   cursor: 'pointer',
 }));
@@ -51,8 +51,31 @@ const ImageWrapper = styled.div(() => ({
   gap: '0.2rem',
 }));
 
-const ProfileImages = styled.img(() => ({
-  width: '9.8rem',
+interface IProfileImages {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+const ProfileImages = styled.img<IProfileImages>(() => ({
+  width: '100%',
+  cursor: 'pointer',
+}));
+
+const ImagePreview = styled.div(({ theme }) => ({
+  position: 'relative',
+  minWidth: '30rem',
+  aspectRatio: '1 / 1',
+  border: `1px solid ${theme.color.disabled_grey}`,
+}));
+
+interface IDeleteImageButton {
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+const DeleteImageButton = styled.i<IDeleteImageButton>(({ theme }) => ({
+  position: 'absolute',
+  zIndex: 30,
+  fontSize: '2.4rem',
+  color: theme.color.placeholder_color,
+  top: '0.5rem',
+  right: '0.5rem',
   cursor: 'pointer',
 }));
 
@@ -64,7 +87,7 @@ function ImageInput({ idName, labelName }: IImageInput) {
   const theme = useTheme();
   const [file, setFile] = useState<string>('');
 
-  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
 
@@ -89,14 +112,9 @@ function ImageInput({ idName, labelName }: IImageInput) {
     fileReader.readAsDataURL(files);
     fileReader.onload = (event) => {
       const result = event?.target?.result as string;
-      console.log(result);
       setFile(result);
     };
-  };
-
-  useEffect(() => {
-    console.log(file, 'file');
-  }, [file]);
+  }, []);
 
   const images = [
     {
@@ -129,19 +147,30 @@ function ImageInput({ idName, labelName }: IImageInput) {
     <ImageInputContainer>
       <Label>{labelName}</Label>
       <Wrapper>
-        <ImageInputLabel htmlFor={idName}>
-          <StyledImageInput type="file" id={idName} onChange={onFileChange} />
-          {file === '' ? (
+        {file === '' ? (
+          <ImageInputLabel htmlFor={idName}>
+            <StyledImageInput type="file" id={idName} onChange={onFileChange} />
+
             <RemixIcon className="ri-image-add-line" color={theme.color.placeholder_color} />
-          ) : (
+          </ImageInputLabel>
+        ) : (
+          <ImagePreview>
+            <DeleteImageButton className="ri-close-circle-line" onClick={() => setFile('')} />
+
             <CroppedFigure width="100%" height="100%">
-              <CroppedImage src={file} alt="" />
+              <CroppedImage src={file} alt="선택한 프로필" />
             </CroppedFigure>
-          )}
-        </ImageInputLabel>
+          </ImagePreview>
+        )}
+
         <ImageWrapper>
           {images.map((image) => (
-            <ProfileImages key={image.id} src={image.src} alt={`프로필 샘플 ${image.id}`} />
+            <ProfileImages
+              key={image.id}
+              src={image.src}
+              alt={`프로필 샘플 ${image.id}`}
+              onClick={() => setFile(image.src)}
+            />
           ))}
         </ImageWrapper>
       </Wrapper>
