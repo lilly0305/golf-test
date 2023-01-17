@@ -73,8 +73,9 @@ interface IModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   activeButtonName: string;
   closeButtonName?: string;
+  activeEvent: React.MouseEventHandler<HTMLButtonElement>
 }
-function Modal({ show, children, modalTitle, setModal, activeButtonName, closeButtonName = '취소' }: IModal) {
+function Modal({ show, children, modalTitle, setModal, activeButtonName, closeButtonName = '취소', activeEvent }: IModal) {
   useEffect(() => {
     if (show) {
       document.body.style.cssText = `
@@ -108,7 +109,7 @@ function Modal({ show, children, modalTitle, setModal, activeButtonName, closeBu
 
           <Buttons>
             <Button type="button" onClick={closeModal}>{closeButtonName}</Button>
-            <Button type="submit" buttonType="active">
+            <Button type="button" buttonType="active" onClick={activeEvent}>
               {activeButtonName}
             </Button>
           </Buttons>

@@ -12,6 +12,7 @@ const style = css`
   html {
     font-size: 62.5%;
     box-sizing: border-box;
+    line-height: 1.5;
   }
 
   body {

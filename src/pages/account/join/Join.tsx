@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
@@ -65,6 +66,7 @@ const formOptions = {
 };
 
 function Join() {
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [confirmedPhone, setConfirmedPhone] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
@@ -80,12 +82,16 @@ function Join() {
     setModal(true);
   }, []);
 
+  const postJoin = useCallback(() => {
+    navigate('/join-complete');
+  }, [navigate]);
+
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
 
   return (
     <Container>
       <ModalPortal>
-        <Modal show={modal} setModal={setModal} modalTitle="회원가입을 진행하시겠습니까?" activeButtonName="회원가입">
+        <Modal show={modal} setModal={setModal} modalTitle="회원가입을 진행하시겠습니까?" activeButtonName="회원가입" activeEvent={postJoin}>
           <div>
               <p>작성하신 정보는 로그인 후 마이페이지에서</p>
               <p>확인하실 수 있습니다.</p>
@@ -139,7 +145,7 @@ function Join() {
             register={register}
             errors={errors}
             registerName="confirm_pw"
-            idName="confirmPw"
+            idName="confirm_pw"
             labelName="비밀번호 확인"
             inputType="password"
             placeHolder="비밀번호 확인을 입력하세요"

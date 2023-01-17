@@ -7,6 +7,7 @@ import { Header } from '@components/header';
 import { Login } from '@pages/account';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { Join } from '@pages/account/join';
+import { JoinComplete } from '@pages/complete';
 
 const PageContainer = styled.div(() => ({
   width: '100%',
@@ -28,6 +29,7 @@ function PublicRouter() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/join-complete" element={<JoinComplete />} />
         </Routes>
       </PageContainer>
     </div>

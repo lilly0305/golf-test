@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { ILoginForm } from '@utils/types';
 import { yupLogin } from '@utils/yupValidation';
 import PageTitle from '@components/item/PageTitle';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div(() => ({}));
 
@@ -50,6 +51,8 @@ const formOptions = {
 };
 
 function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -58,7 +61,11 @@ function Login() {
 
   const onSubmit: SubmitHandler<ILoginForm> = useCallback((data) => {
     console.log(data);
-  }, []);
+    if (data.user_id === 'yhk' && data.user_pw === 'qweqwe123') {
+      localStorage.setItem('accessToken', 'logged in as 유화경');
+      navigate('/');
+    }
+  }, [navigate]);
 
   return (
     <Container>
