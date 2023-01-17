@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 
 const ModalContainer = styled.div(() => ({
@@ -31,10 +31,14 @@ const ModalContents = styled.div(({ theme }) => ({
   background: theme.color.white,
   minWidth: '30vw',
   maxHeight: '80vh',
+  marginBottom: '3rem',
   padding: '2rem 6rem',
+  textAlign: 'center',
+  lineHeight: '1.5'
 }));
 
 const ModalTitle = styled.h3(({ theme }) => ({
+  marginBottom: '3rem',
   textAlign: 'center',
   fontSize: '1.8rem',
   fontWeight: theme.fontWeight.extraBold,
@@ -46,7 +50,7 @@ const Buttons = styled.div(() => ({
   justifyContent: 'space-between',
   gap: '0 1rem',
   width: '80%',
-  margin: '2rem auto 0',
+  margin: '3rem auto 0',
 }));
 
 interface IButton {
@@ -66,8 +70,11 @@ interface IModal {
   show: boolean;
   children: React.ReactElement;
   modalTitle: string;
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  activeButtonName: string;
+  closeButtonName?: string;
 }
-function Modal({ show, children, modalTitle }: IModal) {
+function Modal({ show, children, modalTitle, setModal, activeButtonName, closeButtonName = '취소' }: IModal) {
   useEffect(() => {
     if (show) {
       document.body.style.cssText = `
@@ -83,17 +90,26 @@ function Modal({ show, children, modalTitle }: IModal) {
     };
   }, [show]);
 
+  const closeModal = useCallback(
+    () => {
+      setModal(false);
+    },
+    [setModal],
+  );
+
   return show ? (
     <ModalPortal>
       <ModalContainer>
         <Overlay />
         <ModalContents>
           <ModalTitle>{modalTitle}</ModalTitle>
+
           {children}
+
           <Buttons>
-            <Button type="button">취소</Button>
+            <Button type="button" onClick={closeModal}>{closeButtonName}</Button>
             <Button type="submit" buttonType="active">
-              회원가입
+              {activeButtonName}
             </Button>
           </Buttons>
         </ModalContents>

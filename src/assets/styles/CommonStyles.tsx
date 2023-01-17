@@ -42,8 +42,6 @@ export const ErrorMessage = styled.div(({ theme }) => ({
   height: '100%',
   minHeight: '1.4rem',
   [mq('desktop')]: {
-    flexDirection: 'row',
-    alignItems: 'center',
     margin: '0.4rem 0 0.4rem 12rem',
   },
 }));
@@ -55,6 +53,8 @@ export const InputLabel = styled.label(() => ({
 }));
 
 export const InputContainer = styled.div(() => ({
+  position: 'relative',
+  left: '-1.3rem',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',

@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
 
-import { ErrorMessage, InputContainer, InputLabel } from '@assets/styles/CommonStyles';
+import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { PageTitle } from '@components/item';
 import { ISignUp } from '@utils/types';
 import { yupJoin } from '@utils/yupValidation';
@@ -31,6 +31,16 @@ const InputWrap = styled.div(() => ({
   marginBottom: '5rem',
 }));
 
+const PolicyWrap = styled.div(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  [mq('desktop')]: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+}));
+
 const CheckBoxContainer = styled.div(({ theme }) => ({
   paddingTop: '0.4rem',
   borderTop: `1px solid ${theme.color.divider_grey}`,
@@ -55,6 +65,7 @@ const formOptions = {
 };
 
 function Join() {
+  const [modal, setModal] = useState(false);
   const [confirmedPhone, setConfirmedPhone] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
 
@@ -66,6 +77,7 @@ function Join() {
 
   const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
+    setModal(true);
   }, []);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
@@ -73,8 +85,11 @@ function Join() {
   return (
     <Container>
       <ModalPortal>
-        <Modal show modalTitle="회원가입을 진행하시겠습니까?">
-          <PageTitle pageTitle="회원가입" />
+        <Modal show={modal} setModal={setModal} modalTitle="회원가입을 진행하시겠습니까?" activeButtonName="회원가입">
+          <div>
+              <p>작성하신 정보는 로그인 후 마이페이지에서</p>
+              <p>확인하실 수 있습니다.</p>
+          </div>
         </Modal>
       </ModalPortal>
       <PageTitle pageTitle="회원가입" />
@@ -145,10 +160,10 @@ function Join() {
             buttonEvent={confirmPhone}
           />
 
-          <InputContainer>
+          <PolicyWrap>
             <InputLabel>약관동의</InputLabel>
             <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} checkData={policyCheck} />
-          </InputContainer>
+          </PolicyWrap>
 
           <ErrorMessage>
             <p>{errors?.useterm?.message}</p>
