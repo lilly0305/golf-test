@@ -5,7 +5,7 @@ const user = {
   id: 1,
   nickname: '하루세번펭수',
   user_id: 'yhk',
-  confirm_pw: 'qweqwe123',
+  user_pw: 'qweqwe123',
   phone: '01049555429',
   useterm: true,
   personal_info: true,
@@ -14,11 +14,11 @@ const user = {
   profile_image: require('@assets/images/profile_sample01.png'),
 };
 
-interface IUser {
+export interface IUser {
   id: number;
   nickname: string;
   user_id: string;
-  confirm_pw: string;
+  user_pw: string;
   phone: string;
   useterm: boolean;
   personal_info: boolean;
