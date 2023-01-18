@@ -14,3 +14,27 @@ export interface ISignUp {
   sms: boolean;
   marketing: boolean;
 }
+
+export interface IUser {
+  id: number;
+  name: string;
+  nickname: string;
+  phone: string;
+}
+
+export interface GenericResponse {
+  status: string;
+  message: string;
+}
+
+export interface ILoginResponse {
+  status: string;
+  access_token: string;
+}
+
+export interface IUserResponse {
+  status: string;
+  data: {
+    user: IUser;
+  };
+}
