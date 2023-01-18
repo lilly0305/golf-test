@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ import Buttons from '@components/buttons/Buttons';
 import { ILoginForm } from '@utils/types';
 import { yupLogin } from '@utils/yupValidation';
 import PageTitle from '@components/item/PageTitle';
+import { useQueryClient } from 'react-query';
+import { ErrorMessage } from '@components/message';
 
 const Container = styled.div(() => ({}));
 
@@ -52,6 +54,8 @@ const formOptions = {
 
 function Login() {
   const navigate = useNavigate();
+  const queryclient = useQueryClient();
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const {
     register,
@@ -62,11 +66,14 @@ function Login() {
   const onSubmit: SubmitHandler<ILoginForm> = useCallback(
     (data) => {
       if (data.user_id === 'yhk' && data.user_pw === 'qweqwe123') {
+        queryclient.invalidateQueries('userData');
         localStorage.setItem('accessToken', 'logged in as 유화경');
         navigate('/');
+      } else {
+        setErrorMessage(true);
       }
     },
-    [navigate],
+    [navigate, queryclient],
   );
 
   return (
@@ -74,6 +81,7 @@ function Login() {
       <PageTitle pageTitle="잇다 로그인" />
 
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
+        {errorMessage && <ErrorMessage message="아이디 혹은 비밀번호를 확인해주세요" />}
         <InputGroup
           registerName="user_id"
           register={register}

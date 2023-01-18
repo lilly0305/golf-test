@@ -6,12 +6,14 @@ import { mq } from '@utils/mediaquery/mediaQuery';
 interface ICroppedFigure {
   width: string;
   height: string;
+  radius?: string;
 }
-export const CroppedFigure = styled.figure<ICroppedFigure>(({ width, height }) => ({
+export const CroppedFigure = styled.figure<ICroppedFigure>(({ width, height, radius }) => ({
   position: 'relative',
   overflow: 'hidden',
   width: width,
   height: height,
+  borderRadius: radius,
 }));
 
 export const CroppedImage = styled.img(() => ({

@@ -1,16 +1,17 @@
 import { useQuery, useQueryClient } from 'react-query';
-import useAxios from '@utils/useAxios';
+// import useAxios from '@utils/useAxios';
 
 const user = {
   id: 1,
   nickname: '하루세번펭수',
-  user_id: 'yhk0305',
+  user_id: 'yhk',
   confirm_pw: 'qweqwe123',
   phone: '01049555429',
   useterm: true,
   personal_info: true,
   sms: true,
   marketing: false,
+  profile_image: require('@assets/images/profile_sample01.png'),
 };
 
 interface IUser {
@@ -23,11 +24,11 @@ interface IUser {
   personal_info: boolean;
   sms: boolean;
   marketing: boolean;
+  profile_image: string;
 }
 
 function getStoredUser(): IUser | null {
   const storedUser = localStorage.getItem('accessToken');
-  console.log(storedUser);
   return storedUser ? user : null;
 }
 
@@ -35,16 +36,17 @@ interface IUseUser {
   userData: IUser | null | undefined;
   updateUser: (newUser: IUser) => void;
   clearUser: () => void;
+  isLoggedIn: boolean;
 }
 export function useUser(): IUseUser {
   const queryclient = useQueryClient();
-  const interceptor = useAxios();
+  // const interceptor = useAxios();
 
   async function getUser(userData: IUser | null): Promise<IUser | null> {
     if (!userData) return null;
 
-    const { data } = await interceptor.get(`/user/${userData.id}`);
-    return data.user;
+    // const { data } = await interceptor.get(`/user/${userData.id}`);
+    return userData;
   }
 
   function updateUser(newUser: IUser): void {
@@ -60,13 +62,15 @@ export function useUser(): IUseUser {
     onSuccess: (received: IUser | null) => {
       if (!received) {
         console.log('ddd');
-        clearUser();
+        // clearUser();
       } else {
-        updateUser(received);
+        // updateUser(received);
         console.log('eee');
       }
     },
   });
 
-  return { userData, updateUser, clearUser };
+  const isLoggedIn = userData !== null;
+
+  return { userData, updateUser, clearUser, isLoggedIn };
 }
