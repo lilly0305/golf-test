@@ -38,7 +38,11 @@ function Buttons({
 }: IButtons) {
   return (
     <ButtonsContainer>
-      {!noCancelButton && <StyledButton active={false}>취소</StyledButton>}
+      {!noCancelButton && (
+        <StyledButton active={false} type="button">
+          취소
+        </StyledButton>
+      )}
 
       <StyledButton onClick={activeEvent} type={buttonType}>
         {activeName}

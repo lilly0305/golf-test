@@ -22,7 +22,13 @@ export const yupJoin = Yup.object().shape({
   confirm_pw: Yup.string()
     .required('비밀번호 확인을 입력해주세요')
     .oneOf([Yup.ref('user_pw')], '비밀번호와 일치하지 않습니다'),
+  phone: Yup.string().required('휴대폰 인증을 해주세요'),
   useterm: Yup.bool().oneOf([true], '이용약관에 동의해주세요'),
   personal_info: Yup.bool().oneOf([true], '개인정보수집 및 이용동의에 동의해주세요'),
   sms: Yup.bool().oneOf([true], 'SMS 수신에 동의해주세요'),
+});
+
+export const yupFindId = Yup.object().shape({
+  phone: Yup.string().required('휴대폰 인증을 해주세요'),
+  code: Yup.number().required('인증번호를 입력해주세요.').min(6).max(6),
 });

@@ -5,6 +5,7 @@ const TabContainer = styled.div(() => ({
   display: ' flex',
   alignItems: 'center',
   justifyContent: 'center',
+  margin: '0 0 4rem',
 }));
 
 interface ITabButton {
@@ -13,7 +14,15 @@ interface ITabButton {
   onClick: (index: number) => void;
 }
 const TabButton = styled.button<ITabButton>(({ theme, index, currentTab }) => ({
+  flex: 1,
+  display: ' flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.6rem 0',
   background: index === currentTab ? theme.color.point_color : theme.color.white,
+  border: `1px solid ${theme.color.divider_grey}`,
+  fontWeight: theme.fontWeight.bold,
+  color: index === currentTab ? theme.color.white : theme.color.point_color,
 }));
 
 interface ITabButtons {
