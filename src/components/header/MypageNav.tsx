@@ -1,6 +1,7 @@
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 import styled from '@emotion/styled';
 import { IUser } from '@global-states/useUser';
+import { mq } from '@utils/mediaquery/mediaQuery';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
@@ -9,37 +10,52 @@ const MypageModal = styled.div(() => ({
   minWidth: '18rem',
 }));
 
-const Profile = styled.div(() => ({
+const Profile = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '0 0.8rem',
   cursor: 'pointer',
+  padding: '1.6rem',
+  borderBottom: `1px solid ${theme.color.grey_opacity_60}`,
+  [mq('desktop')]: {
+    borderBottom: 'none',
+    padding: '0',
+  },
 }));
 
 const NavModal = styled.div(({ theme }) => ({
-  position: 'absolute',
-  top: '110%',
   width: '100%',
-  padding: '0.4rem 0',
+  padding: '1.6rem',
   background: theme.color.white,
-  border: `1px solid ${theme.color.divider_grey}`,
   color: theme.color.base_black,
   fontSize: '1.4rem',
+  [mq('desktop')]: {
+    position: 'absolute',
+    top: '110%',
+    padding: '0.4rem 0',
+    border: `1px solid ${theme.color.divider_grey}`,
+  },
 }));
 
 interface IStyledNav {
   onClick?: () => void;
 }
 const StyledNav = styled.button<IStyledNav>(({ theme, onClick }) => ({
-  padding: '0.4rem 1.2rem',
+  padding: '0.8rem 0',
   background: theme.color.white,
   fontWeight: theme.fontWeight.bold,
   color: onClick ? theme.color.placeholder_color : theme.color.base_black,
+  [mq('desktop')]: {
+    padding: '0.4rem 1.2rem',
+  },
 }));
 
 const StyledLink = styled.a(() => ({
   display: 'block',
-  padding: '0.6rem 2.4rem',
+  padding: '1rem 1.2rem',
+  [mq('desktop')]: {
+    padding: '0.6rem 2.4rem',
+  },
 }));
 
 interface IMypageNav {
@@ -49,14 +65,13 @@ interface IMypageNav {
 function MypageNav({ userData }: IMypageNav) {
   const queryclient = useQueryClient();
   const wrapperRef = useRef(null);
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [arrowToggle, setArrowToggle] = useState(false);
 
   function useOutsideClick(ref: any) {
+    // NOTE: 모달 바깥 쪽 클릭하면 닫히기
     useEffect(() => {
-      /**
-       * Alert if clicked on outside of element
-       */
       function handleClickOutside(event: any): void {
         if (ref.current && !ref.current.contains(event.target)) {
           setProfileOpen(false);

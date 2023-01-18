@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useUser } from '@global-states/useUser';
 import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
 import WebNav from './WebNav';
-import MypageNav from './MypageNav';
+import MypageNav from '../MypageNav';
 
 const WebHeaderContainer = styled.div(({ theme }) => ({
   display: 'flex',

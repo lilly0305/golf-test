@@ -5,6 +5,8 @@ import { useTheme } from '@emotion/react';
 
 import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
 import navList from '@components/header/navList.json';
+import { useUser } from '@global-states/useUser';
+import MypageNav from '../MypageNav';
 
 interface IMobileNavContainer {
   active: boolean;
@@ -47,14 +49,20 @@ interface IMobileNav {
 }
 function MobileNav({ active }: IMobileNav) {
   const theme = useTheme();
+  const { userData } = useUser();
+
   return (
     <MobileNavContainer active={active}>
-      <StyledLink href="/login">
-        <CroppedFigure width="4.8rem" height="4.8rem">
-          <CroppedImage src={theme.image.defaultProfile} alt="흰색 로고" />
-        </CroppedFigure>
-        로그인
-      </StyledLink>
+      {userData !== null ? (
+        <MypageNav userData={userData} />
+      ) : (
+        <StyledLink href="/login">
+          <CroppedFigure width="4.8rem" height="4.8rem">
+            <CroppedImage src={theme.image.defaultProfile} alt="흰색 로고" />
+          </CroppedFigure>
+          로그인
+        </StyledLink>
+      )}
 
       {navList.map((nav) => (
         <StyledLink key={nav.id} href={nav.linkTo}>
