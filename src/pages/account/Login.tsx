@@ -59,13 +59,15 @@ function Login() {
     formState: { errors },
   } = useForm<ILoginForm>(formOptions);
 
-  const onSubmit: SubmitHandler<ILoginForm> = useCallback((data) => {
-    console.log(data);
-    if (data.user_id === 'yhk' && data.user_pw === 'qweqwe123') {
-      localStorage.setItem('accessToken', 'logged in as 유화경');
-      navigate('/');
-    }
-  }, [navigate]);
+  const onSubmit: SubmitHandler<ILoginForm> = useCallback(
+    (data) => {
+      if (data.user_id === 'yhk' && data.user_pw === 'qweqwe123') {
+        localStorage.setItem('accessToken', 'logged in as 유화경');
+        navigate('/');
+      }
+    },
+    [navigate],
+  );
 
   return (
     <Container>

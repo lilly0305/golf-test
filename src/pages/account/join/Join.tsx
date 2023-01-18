@@ -74,6 +74,7 @@ function Join() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
@@ -91,10 +92,16 @@ function Join() {
   return (
     <Container>
       <ModalPortal>
-        <Modal show={modal} setModal={setModal} modalTitle="회원가입을 진행하시겠습니까?" activeButtonName="회원가입" activeEvent={postJoin}>
+        <Modal
+          show={modal}
+          setModal={setModal}
+          modalTitle="회원가입을 진행하시겠습니까?"
+          activeButtonName="회원가입"
+          activeEvent={postJoin}
+        >
           <div>
-              <p>작성하신 정보는 로그인 후 마이페이지에서</p>
-              <p>확인하실 수 있습니다.</p>
+            <p>작성하신 정보는 로그인 후 마이페이지에서</p>
+            <p>확인하실 수 있습니다.</p>
           </div>
         </Modal>
       </ModalPortal>
@@ -168,7 +175,12 @@ function Join() {
 
           <PolicyWrap>
             <InputLabel>약관동의</InputLabel>
-            <AllCheckInput checkArr={checkArr} setCheckArr={setCheckArr} checkData={policyCheck} />
+            <AllCheckInput
+              checkArr={checkArr}
+              setCheckArr={setCheckArr}
+              checkData={policyCheck}
+              setValue={setValue}
+            />
           </PolicyWrap>
 
           <ErrorMessage>

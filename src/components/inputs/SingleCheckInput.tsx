@@ -30,7 +30,7 @@ function SingleCheckInput({
 }: ISingleCheckInput) {
   const theme = useTheme();
 
-  const onCheckedItem = useCallback(
+  const handleSingleCheck = useCallback(
     (isChecked: boolean, name: string) => {
       if (isChecked) {
         // 단일 선택 시 체크된 아이템을 배열에 추가
@@ -47,10 +47,10 @@ function SingleCheckInput({
     <InputContainer>
       <StyledInput
         {...(register && register(registerName))}
-        onChange={(e) => onCheckedItem(e.target.checked, idName)}
-        checked={checkArr.includes(idName)}
         id={idName}
         type="checkbox"
+        onChange={(e) => handleSingleCheck(e.target.checked, idName)}
+        checked={checkArr.includes(idName)}
       />
 
       <CheckInputLabel htmlFor={idName}>
