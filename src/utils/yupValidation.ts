@@ -6,6 +6,7 @@ import {
   phonePlaceholder,
   userIdPlaceholder,
   userPwPlaceholder,
+  validNicknamePlaceholder,
   validPersonalPlaceholer,
   validPwPlaceholder,
   validSmsPlaceholer,
@@ -20,15 +21,17 @@ export const yupLogin = Yup.object().shape({
 });
 
 export const yupJoin = Yup.object().shape({
-  nickname: Yup.string().required(nicknamePlaceholder).max(8, '최대 8글자까지 입력 가능합니다'),
+  nickname: Yup.string().required(nicknamePlaceholder).max(8, validNicknamePlaceholder),
   user_id: Yup.string().required(userIdPlaceholder),
   user_pw: Yup.string()
     .required(validPwPlaceholder)
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
   confirm_pw: Yup.string()
     .required(confirmPwPlaceholder)
-    .oneOf([Yup.ref('user_pw')], '비밀번호와 일치하지 않습니다'),
-  phone: Yup.string().required(phonePlaceholder),
+    .oneOf([Yup.ref('user_pw')], confirmPwPlaceholder),
+  phone: Yup.string()
+    .required(phonePlaceholder)
+    .matches(/^[0-9]+$/, phonePlaceholder),
   useterm: Yup.bool().oneOf([true], validUsetermPlaceholer),
   personal_info: Yup.bool().oneOf([true], validPersonalPlaceholer),
   sms: Yup.bool().oneOf([true], validSmsPlaceholer),
@@ -36,11 +39,11 @@ export const yupJoin = Yup.object().shape({
 
 export const yupFindId = Yup.object().shape({
   phone: Yup.string().required(phonePlaceholder),
-  code: Yup.number().required(codePlaceholder).min(6).max(6),
+  code: Yup.string().required(codePlaceholder),
 });
 
 export const yupFindPw = Yup.object().shape({
   user_id: Yup.string().required(userIdPlaceholder),
   phone: Yup.string().required(phonePlaceholder),
-  code: Yup.number().required(codePlaceholder).min(6).max(6),
+  code: Yup.string().required(codePlaceholder).min(6).max(6),
 });

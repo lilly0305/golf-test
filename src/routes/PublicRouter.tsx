@@ -8,7 +8,7 @@ import { Login } from '@pages/account';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { Join } from '@pages/account/join';
 import { JoinComplete } from '@pages/complete';
-import { FindAccount } from '@pages/account/find';
+import { FindAccount, FindIdComplete } from '@pages/account/find';
 
 const PageContainer = styled.div(() => ({
   width: '100%',
@@ -32,6 +32,7 @@ function PublicRouter() {
           <Route path="/join" element={<Join />} />
           <Route path="/join-complete" element={<JoinComplete />} />
           <Route path="/find-account" element={<FindAccount />} />
+          <Route path="/find-id-complete" element={<FindIdComplete />} />
         </Routes>
       </PageContainer>
     </div>

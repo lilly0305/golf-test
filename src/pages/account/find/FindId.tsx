@@ -7,6 +7,7 @@ import { yupFindId } from '@utils/yupValidation';
 import { InputGroup } from '@components/inputs';
 import { codePlaceholder, phonePlaceholder } from '@utils/placeholder';
 import { Buttons } from '@components/buttons';
+import { useNavigate } from 'react-router-dom';
 
 const FindIdForm = styled.form(() => ({
   display: 'flex',
@@ -16,7 +17,8 @@ const FindIdForm = styled.form(() => ({
   margin: '0 auto',
 }));
 function FindId() {
-  const [confirmedPhone, setConfirmedPhone] = useState(false);
+  const [codeActive, setCodeActive] = useState(false);
+  const navigate = useNavigate();
 
   const formOptions = {
     resolver: yupResolver(yupFindId),
@@ -31,11 +33,19 @@ function FindId() {
     formState: { errors },
   } = useForm<IFindId>(formOptions);
 
-  const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
-
-  const onSubmit: SubmitHandler<IFindId> = useCallback((data) => {
-    console.log(JSON.stringify(data, null, 4));
+  const confirmPhone = useCallback(() => {
+    setCodeActive(true);
   }, []);
+
+  const confirmCode = useCallback(() => {}, []);
+
+  const onSubmit: SubmitHandler<IFindId> = useCallback(
+    (data) => {
+      console.log(JSON.stringify(data, null, 4));
+      navigate('/find-id-complete');
+    },
+    [navigate],
+  );
 
   return (
     <FindIdForm onSubmit={handleSubmit(onSubmit)}>
@@ -46,10 +56,9 @@ function FindId() {
         idName="phone"
         labelName="휴대폰 번호"
         inputType="text"
-        placeHolder={confirmedPhone ? '010-4955-5429' : phonePlaceholder}
+        placeHolder={phonePlaceholder}
         required
         buttonName="휴대폰 인증"
-        disabled
         buttonEvent={confirmPhone}
       />
 
@@ -63,8 +72,8 @@ function FindId() {
         placeHolder={codePlaceholder}
         required
         buttonName="번호 확인"
-        disabled
-        buttonEvent={confirmPhone}
+        disabled={!codeActive}
+        buttonEvent={confirmCode}
       />
 
       <Buttons activeName="아이디 찾기" buttonType="submit" />
