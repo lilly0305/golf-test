@@ -3,7 +3,7 @@ import { QueryClient } from 'react-query';
 const queryClientConfig = {
   defaultOptions: {
     queries: {
-      retry: 1,
+      retry: 0,
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       refetchOnReconnect: true,
@@ -11,7 +11,7 @@ const queryClientConfig = {
       refetchIntervalInBackground: false,
       suspense: false,
       staleTime: 60 * 1000, // 1분
-      cacheTime: 60 * 5 * 1000, // 5분
+      cacheTime: 60 * 1000 * 5, // 5분
       keepPreviousData: true,
     },
     mutations: {

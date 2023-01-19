@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from 'react-query';
 const user = {
   id: 1,
   nickname: '하루세번펭수',
-  user_id: 'yhk',
+  user_id: 'yhk0305',
   user_pw: 'qweqwe123',
   phone: '01049555429',
   useterm: true,

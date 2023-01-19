@@ -23,11 +23,14 @@ function AllCheckInput({ checkArr, setCheckArr, checkData, setValue }: IAllCheck
     (isChecked: boolean) => {
       if (isChecked) {
         const idArray: Array<string> = [];
+
         checkData.forEach((el) => {
           idArray.push(el.idName);
           setValue(el.idName, true);
         });
+
         setCheckArr(idArray);
+
         setValue('useterm', true);
       } else {
         setCheckArr([]);

@@ -56,14 +56,14 @@ export const InputLabel = styled.label(() => ({
 
 export const InputContainer = styled.div(() => ({
   position: 'relative',
-  left: '-1.3rem',
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   alignItems: 'flex-start',
-  gap: '1rem 0',
+  left: '-1.3rem',
   [mq('desktop')]: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: '1rem 0',
   },
 }));
 

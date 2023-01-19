@@ -1,12 +1,13 @@
+import { Login } from '@pages/account';
 import React from 'react';
 
 interface IPrivateRouter {
-  children : React.ReactElement;
+  children: React.ReactElement;
 }
-function PrivateRouter({children} : IPrivateRouter) {
-  const accessible = localStorage.getItem('accessTokens') !== undefined;
+function PrivateRouter({ children }: IPrivateRouter) {
+  const accessible = localStorage.getItem('accessToken') !== null;
 
-  return accessible ? children : <div>PrivateRouter</div>;
+  return accessible ? children : <Login />;
 }
 
 export default PrivateRouter;

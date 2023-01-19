@@ -29,6 +29,17 @@ export interface IChangePw {
   confirm_pw: string;
 }
 
+export interface IUserAccount {
+  user_id: string;
+  user_pw: string;
+  confirm_pw: string;
+  phone: string;
+  useterm: boolean;
+  personal_info: boolean;
+  sms: boolean;
+  marketing: boolean;
+}
+
 export interface IUser {
   id: number;
   name: string;

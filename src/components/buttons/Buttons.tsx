@@ -1,13 +1,17 @@
 import React, { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
+import { mq } from '@utils/mediaquery/mediaQuery';
 
 const ButtonsContainer = styled.div(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: '0 1.2rem',
-  marginTop: '2rem',
+  marginTop: '3rem',
+  [mq('desktop')]: {
+    marginTop: '5rem',
+  },
 }));
 
 interface IStyledButton {

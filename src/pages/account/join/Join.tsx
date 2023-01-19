@@ -20,6 +20,7 @@ import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import ModalPortal from '@components/modal/ModalPortal';
+import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import Modal from '@components/modal/Modal';
 import { policyCheck } from './joinPolicy';
 
@@ -46,14 +47,6 @@ const PolicyWrap = styled.div(() => ({
   [mq('desktop')]: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-}));
-
-const CheckBoxContainer = styled.div(({ theme }) => ({
-  paddingTop: '0.4rem',
-  borderTop: `1px solid ${theme.color.divider_grey}`,
-  [mq('desktop')]: {
-    marginLeft: '12rem',
   },
 }));
 
@@ -173,7 +166,7 @@ function Join() {
             idName="phone"
             labelName="휴대폰 번호"
             inputType="text"
-            placeHolder={confirmedPhone ? '010-4955-5429' : phonePlaceholder}
+            placeHolder={confirmedPhone ? '01049555429' : phonePlaceholder}
             required
             buttonName="휴대폰 인증"
             disabled

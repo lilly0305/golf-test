@@ -8,6 +8,16 @@ import {
   RemixIcon,
   StyledInput,
 } from '@assets/styles/CommonStyles';
+import styled from '@emotion/styled';
+import { mq } from '@utils/mediaquery/mediaQuery';
+
+export const CheckBoxContainer = styled.div(({ theme }) => ({
+  paddingTop: '0.4rem',
+  borderTop: `1px solid ${theme.color.divider_grey}`,
+  [mq('desktop')]: {
+    marginLeft: '12rem',
+  },
+}));
 
 interface ISingleCheckInput {
   index: number;

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { ThemeProvider } from '@emotion/react';
 import { QueryClientProvider } from 'react-query';
 
-import { queryClient } from '@utils/mediaquery/queryClient';
+import { queryClient } from '@utils/queryClient';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { AppTheme } from './theme';

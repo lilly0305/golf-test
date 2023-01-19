@@ -61,3 +61,26 @@ export const yupChangePW = Yup.object().shape({
     .required(confirmPwPlaceholder)
     .oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
 });
+
+export const yupUserAccount = Yup.object().shape(
+  {
+    user_id: Yup.string()
+      .required(userIdPlaceholder)
+      .matches(/^[a-z]+[a-z0-9]{5,19}$/g, validUserIdPlaceholder),
+    user_pw: Yup.string().when('user_pw', {
+      is: (value: string) => value?.length,
+      then: (rule) => rule.matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
+    }),
+    confirm_pw: Yup.string().oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
+    phone: Yup.string()
+      .required(phonePlaceholder)
+      .matches(/^[0-9]+$/, phonePlaceholder),
+    useterm: Yup.bool().oneOf([true], validUsetermPlaceholer),
+    personal_info: Yup.bool().oneOf([true], validPersonalPlaceholer),
+    sms: Yup.bool().oneOf([true], validSmsPlaceholer),
+  },
+  [
+    // Add Cyclic deps here because when require itself
+    ['user_pw', 'user_pw'],
+  ],
+);

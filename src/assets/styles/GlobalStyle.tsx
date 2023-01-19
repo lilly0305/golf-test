@@ -24,6 +24,19 @@ const style = css`
     padding: 0;
     margin: 0;
 
+    &::-webkit-scrollbar {
+      width: 1rem;
+      height: 0.6rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #68b984;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
     ${mq('desktop')} {
       font-size: 1.6rem;
     }
@@ -35,6 +48,19 @@ const style = css`
     border: 0;
     box-sizing: border-box;
     font-family: 'NanumSquareNeo-Variable', sans-serif;
+
+    &::-webkit-scrollbar {
+      width: 1rem;
+      height: 0.6rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #68b984;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
   }
 
   a {
