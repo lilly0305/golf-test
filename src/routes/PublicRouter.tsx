@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
 import { Login } from '@pages/account';
-import { UserAccount } from '@pages/mypage';
+import { UserAccount, UserProfile } from '@pages/mypage';
 import { Header } from '@components/header';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { Join } from '@pages/account/join';
@@ -39,10 +39,19 @@ function PublicRouter() {
           <Route path="/find-pw-complete" element={<FindPwComplete />} />
 
           <Route
-            path="/user-info"
+            path="/user-account"
             element={
               <PrivateRouter>
                 <UserAccount />
+              </PrivateRouter>
+            }
+          />
+
+          <Route
+            path="/user-profile"
+            element={
+              <PrivateRouter>
+                <UserProfile />
               </PrivateRouter>
             }
           />

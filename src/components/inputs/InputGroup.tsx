@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 import { Path, UseFormRegister, RegisterOptions, FieldErrorsImpl } from 'react-hook-form';
-import { IFindId, ILoginForm, ISignUp } from '@utils/types';
+import { IChangePw, IFindId, ILoginForm, ISignUp } from '@utils/types';
 import { useTheme } from '@emotion/react';
 import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { mq } from '@utils/mediaquery/mediaQuery';
@@ -59,9 +59,9 @@ const InputButtonWrap = styled.div(() => ({
 }));
 
 interface IInputGroup {
-  register?: UseFormRegister<ILoginForm | ISignUp | IFindId | any>;
+  register?: UseFormRegister<ILoginForm | ISignUp | IFindId | IChangePw | any>;
   errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp | IFindId>> | any;
-  registerName: Path<ILoginForm | ISignUp | IFindId>;
+  registerName: Path<ILoginForm | ISignUp | IFindId | IChangePw>;
   idName: string;
   labelName: string;
   inputType: 'text' | 'email' | 'number' | 'password';

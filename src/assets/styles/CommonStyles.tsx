@@ -40,11 +40,11 @@ export const ErrorMessage = styled.div(({ theme }) => ({
   gap: '0.4rem 0',
   fontSize: '1.2rem',
   color: theme.color.red_color,
-  margin: '0.4rem 0',
+  margin: '0.2rem 0 0',
   height: '100%',
-  minHeight: '1.4rem',
+  minHeight: '1.8rem',
   [mq('desktop')]: {
-    margin: '0.4rem 0 0.4rem 12rem',
+    margin: '0.2rem 0 0 12rem',
   },
 }));
 

@@ -84,3 +84,19 @@ export const yupUserAccount = Yup.object().shape(
     ['user_pw', 'user_pw'],
   ],
 );
+
+export const yupUserProfile = Yup.object().shape({
+  nickname: Yup.string().required(nicknamePlaceholder).max(8, validNicknamePlaceholder),
+});
+
+export const yupChangePw = Yup.object().shape({
+  user_pw: Yup.string()
+    .required(validPwPlaceholder)
+    .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
+  new_pw: Yup.string()
+    .required(validPwPlaceholder)
+    .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
+  confirm_pw: Yup.string()
+    .required(confirmPwPlaceholder)
+    .oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
+});

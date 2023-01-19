@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import MessagePortal from './MessagePortal';
@@ -25,7 +25,7 @@ const messageAnimation = keyframes`
 const StyledMessage = styled.span(({ theme }) => ({
   position: 'fixed',
   zIndex: 999,
-  bottom: '20%',
+  bottom: '10%',
   left: '50%',
   transform: 'translateX(-50%)',
   padding: '2rem',
@@ -50,4 +50,4 @@ function Message({ show, message }: IMessage) {
   ) : null;
 }
 
-export default Message;
+export default memo(Message);

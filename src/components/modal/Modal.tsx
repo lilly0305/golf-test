@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 
 const ModalContainer = styled.div(() => ({
@@ -33,8 +33,6 @@ const ModalContents = styled.div(({ theme }) => ({
   maxHeight: '80vh',
   marginBottom: '3rem',
   padding: '2rem 6rem',
-  textAlign: 'center',
-  lineHeight: '1.5',
 }));
 
 const ModalTitle = styled.h3(({ theme }) => ({
@@ -71,9 +69,10 @@ interface IModal {
   children: React.ReactElement;
   modalTitle: string;
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
-  activeButtonName: string;
+  activeButtonName?: string;
   closeButtonName?: string;
-  activeEvent: React.MouseEventHandler<HTMLButtonElement>;
+  activeEvent?: React.MouseEventHandler<HTMLButtonElement>;
+  noButton?: boolean;
 }
 function Modal({
   show,
@@ -83,6 +82,7 @@ function Modal({
   activeButtonName,
   closeButtonName = '취소',
   activeEvent,
+  noButton,
 }: IModal) {
   useEffect(() => {
     if (show) {
@@ -112,18 +112,20 @@ function Modal({
 
           {children}
 
-          <Buttons>
-            <Button type="button" onClick={closeModal}>
-              {closeButtonName}
-            </Button>
-            <Button type="button" buttonType="active" onClick={activeEvent}>
-              {activeButtonName}
-            </Button>
-          </Buttons>
+          {noButton ? null : (
+            <Buttons>
+              <Button type="button" onClick={closeModal}>
+                {closeButtonName}
+              </Button>
+              <Button type="button" buttonType="active" onClick={activeEvent}>
+                {activeButtonName}
+              </Button>
+            </Buttons>
+          )}
         </ModalContents>
       </ModalContainer>
     </ModalPortal>
   ) : null;
 }
 
-export default memo(Modal);
+export default Modal;

@@ -4,25 +4,24 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { PageTitle } from '@components/item';
-import { AllCheckInput, InputGroup } from '@components/inputs';
+import { AllCheckInput, InputGroup, InputText } from '@components/inputs';
 import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { yupUserAccount } from '@utils/yupValidation';
-import {
-  confirmPwPlaceholder,
-  phonePlaceholder,
-  userIdPlaceholder,
-  userPwPlaceholder,
-} from '@utils/placeholder';
+import { phonePlaceholder, userIdPlaceholder } from '@utils/placeholder';
 import { IUserAccount } from '@utils/types';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { policyCheck } from '@pages/account/join/joinPolicy';
+import { Message } from '@components/message';
 import SingleCheckInput, { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import { Buttons } from '@components/buttons';
 import { useQueryClient } from 'react-query';
+import ModalPortal from '@components/modal/ModalPortal';
+import { Modal } from '@components/modal';
+import { ChangePasswordModal } from '@components/modal/modal-form';
 
 const Container = styled.div(() => ({}));
 
-const UserInfoForm = styled.form(() => ({
+const UserAccountForm = styled.form(() => ({
   width: '100%',
   maxWidth: '51.4rem',
   margin: '0 auto 8rem',
@@ -38,19 +37,27 @@ const PolicyWrap = styled.div(() => ({
   },
 }));
 
-function UserInfo() {
+const ChangePwButton = styled.button(({ theme }) => ({
+  padding: '0.8rem 1.2rem',
+  background: theme.color.placeholder_color,
+  color: theme.color.white,
+  borderRadius: '3rem',
+  fontSize: '1.4rem',
+}));
+
+function UserAccount() {
   const queryClient = useQueryClient();
   const userData: IUserAccount | undefined = queryClient.getQueryData('userData');
 
   const [confirmedPhone, setConfirmedPhone] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
+  const [modal, setModal] = useState(false);
+  const [message, setMessage] = useState(false);
 
   const formOptions = {
     resolver: yupResolver(yupUserAccount),
     defaultValues: {
       user_id: userData?.user_id,
-      user_pw: '',
-      confirm_pw: '',
       phone: userData?.phone,
       useterm: userData?.useterm,
       personal_info: userData?.personal_info,
@@ -87,6 +94,17 @@ function UserInfo() {
 
   const onSubmit: SubmitHandler<IUserAccount> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
+    setMessage(true);
+  }, []);
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => setMessage(false), 2000);
+    }
+  }, [message]);
+
+  const changePwModal = useCallback(() => {
+    setModal(true);
   }, []);
 
   const {
@@ -98,9 +116,17 @@ function UserInfo() {
 
   return (
     <Container>
+      <ModalPortal>
+        <Modal show={modal} setModal={setModal} modalTitle="비밀번호 변경" noButton>
+          <ChangePasswordModal setModal={setModal} />
+        </Modal>
+      </ModalPortal>
+
+      <Message show={message} message="회원 정보가 수정되었습니다👍" />
+
       <PageTitle pageTitle="회원 정보 수정" />
 
-      <UserInfoForm onSubmit={handleSubmit(onSubmit)}>
+      <UserAccountForm onSubmit={handleSubmit(onSubmit)}>
         <InputGroup
           register={register}
           errors={errors}
@@ -114,26 +140,13 @@ function UserInfo() {
           active={false}
         />
 
-        <InputGroup
-          register={register}
-          errors={errors}
-          registerName="user_pw"
-          idName="user_pw"
-          labelName="비밀번호"
-          inputType="password"
-          placeHolder={userPwPlaceholder}
-          required
-        />
-
-        <InputGroup
-          register={register}
-          errors={errors}
-          registerName="confirm_pw"
-          idName="confirm_pw"
-          labelName="비밀번호 확인"
-          inputType="password"
-          placeHolder={confirmPwPlaceholder}
-          required
+        <InputText
+          labelName="비밀번호 변경"
+          contents={
+            <ChangePwButton onClick={changePwModal} type="button">
+              변경하기
+            </ChangePwButton>
+          }
         />
 
         <InputGroup
@@ -183,9 +196,9 @@ function UserInfo() {
         </CheckBoxContainer>
 
         <Buttons noCancelButton activeName="회원 정보 수정" buttonType="submit" />
-      </UserInfoForm>
+      </UserAccountForm>
     </Container>
   );
 }
 
-export default memo(UserInfo);
+export default memo(UserAccount);

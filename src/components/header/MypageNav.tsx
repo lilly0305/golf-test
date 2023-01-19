@@ -117,8 +117,8 @@ function MypageNav({ userData }: IMypageNav) {
         <NavModal>
           <StyledNav>마이페이지</StyledNav>
           <div>
-            <StyledLink to="/user-info">회원 정보 수정</StyledLink>
-            <StyledLink to="/profile">프로필</StyledLink>
+            <StyledLink to="/user-account">회원 정보 수정</StyledLink>
+            <StyledLink to="/user-profile">프로필</StyledLink>
             <StyledLink to="/like-list">찜 목록</StyledLink>
             <StyledLink to="/suggestions">내가 쓴 제안서</StyledLink>
             <StyledLink to="/requests">내가 쓴 신청서</StyledLink>

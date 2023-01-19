@@ -19,7 +19,6 @@ import {
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
-import ModalPortal from '@components/modal/ModalPortal';
 import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import Modal from '@components/modal/Modal';
 import { policyCheck } from './joinPolicy';
@@ -91,20 +90,18 @@ function Join() {
 
   return (
     <Container>
-      <ModalPortal>
-        <Modal
-          show={modal}
-          setModal={setModal}
-          modalTitle="회원가입을 진행하시겠습니까?"
-          activeButtonName="회원가입"
-          activeEvent={postJoin}
-        >
-          <div>
-            <p>작성하신 정보는 로그인 후 마이페이지에서</p>
-            <p>확인하실 수 있습니다.</p>
-          </div>
-        </Modal>
-      </ModalPortal>
+      <Modal
+        show={modal}
+        setModal={setModal}
+        modalTitle="회원가입을 진행하시겠습니까?"
+        activeButtonName="회원가입"
+        activeEvent={postJoin}
+      >
+        <div>
+          <p>작성하신 정보는 로그인 후 마이페이지에서</p>
+          <p>확인하실 수 있습니다.</p>
+        </div>
+      </Modal>
       <PageTitle pageTitle="회원가입" />
 
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
