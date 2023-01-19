@@ -66,7 +66,7 @@ function Login() {
 
   const onSubmit: SubmitHandler<ILoginForm> = useCallback(
     (data) => {
-      if (data.user_id === 'yhk' && data.user_pw === 'qweqwe123') {
+      if (data.user_id === 'yhk0305' && data.user_pw === 'qweqwe123') {
         queryclient.invalidateQueries('userData');
         localStorage.setItem('accessToken', 'logged in as 유화경');
         navigate('/');
