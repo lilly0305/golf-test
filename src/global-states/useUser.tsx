@@ -59,6 +59,8 @@ export function useUser(): IUseUser {
 
   const { data: userData } = useQuery<IUser | null>('userData', () => getUser(user), {
     initialData: getStoredUser,
+    staleTime: Infinity,
+    cacheTime: Infinity,
     onSuccess: (received: IUser | null) => {
       if (!received) {
         console.log('ddd');

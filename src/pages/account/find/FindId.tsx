@@ -5,7 +5,7 @@ import { IFindId } from '@utils/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupFindId } from '@utils/yupValidation';
 import { InputGroup } from '@components/inputs';
-import { codePlaceholder, phonePlaceholder } from '@utils/placeholder';
+import { phonePlaceholder } from '@utils/placeholder';
 import { Buttons } from '@components/buttons';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,8 +17,8 @@ const FindIdForm = styled.form(() => ({
   margin: '0 auto',
 }));
 function FindId() {
-  const [codeActive, setCodeActive] = useState(false);
   const navigate = useNavigate();
+  const [confirmedPhone, setConfirmedPhone] = useState(false);
 
   const formOptions = {
     resolver: yupResolver(yupFindId),
@@ -30,14 +30,14 @@ function FindId() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IFindId>(formOptions);
 
   const confirmPhone = useCallback(() => {
-    setCodeActive(true);
-  }, []);
-
-  const confirmCode = useCallback(() => {}, []);
+    setConfirmedPhone((prev) => !prev);
+    setValue('phone', '01049555429');
+  }, [setConfirmedPhone, setValue]);
 
   const onSubmit: SubmitHandler<IFindId> = useCallback(
     (data) => {
@@ -56,24 +56,11 @@ function FindId() {
         idName="phone"
         labelName="휴대폰 번호"
         inputType="text"
-        placeHolder={phonePlaceholder}
         required
+        disabled
+        placeHolder={confirmedPhone ? '01049555429' : phonePlaceholder}
         buttonName="휴대폰 인증"
         buttonEvent={confirmPhone}
-      />
-
-      <InputGroup
-        register={register}
-        errors={errors}
-        registerName="code"
-        idName="code"
-        labelName="인증번호"
-        inputType="text"
-        placeHolder={codePlaceholder}
-        required
-        buttonName="번호 확인"
-        disabled={!codeActive}
-        buttonEvent={confirmCode}
       />
 
       <Buttons activeName="아이디 찾기" buttonType="submit" />

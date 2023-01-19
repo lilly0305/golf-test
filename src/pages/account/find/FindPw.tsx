@@ -4,9 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
 import { InputGroup } from '@components/inputs';
 import { IFindPw } from '@utils/types';
-import { userIdPlaceholder, phonePlaceholder, codePlaceholder } from '@utils/placeholder';
+import { userIdPlaceholder, phonePlaceholder } from '@utils/placeholder';
 import { yupFindPw } from '@utils/yupValidation';
 import { Buttons } from '@components/buttons';
+import { useNavigate } from 'react-router-dom';
 
 const FindPwForm = styled.form(() => ({
   display: 'flex',
@@ -16,13 +17,18 @@ const FindPwForm = styled.form(() => ({
   margin: '0 auto',
 }));
 
-function FindPw() {
+interface IFindPwProps {
+  idValue: string;
+}
+function FindPw({ idValue }: IFindPwProps) {
+  const navigate = useNavigate();
+
   const [confirmedPhone, setConfirmedPhone] = useState(false);
 
   const formOptions = {
     resolver: yupResolver(yupFindPw),
     defaultValues: {
-      user_id: '',
+      user_id: idValue,
       phone: '',
     },
   };
@@ -30,14 +36,22 @@ function FindPw() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IFindPw>(formOptions);
 
-  const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
+  const confirmPhone = useCallback(() => {
+    setConfirmedPhone((prev) => !prev);
+    setValue('phone', '01049555429');
+  }, [setConfirmedPhone, setValue]);
 
-  const onSubmit: SubmitHandler<IFindPw> = useCallback((data) => {
-    console.log(JSON.stringify(data, null, 4));
-  }, []);
+  const onSubmit: SubmitHandler<IFindPw> = useCallback(
+    (data) => {
+      console.log(JSON.stringify(data, null, 4));
+      navigate('/change-password');
+    },
+    [navigate],
+  );
 
   return (
     <FindPwForm onSubmit={handleSubmit(onSubmit)}>
@@ -59,23 +73,9 @@ function FindPw() {
         idName="phone"
         labelName="휴대폰 번호"
         inputType="text"
-        placeHolder={confirmedPhone ? '010-4955-5429' : phonePlaceholder}
+        placeHolder={confirmedPhone ? '01049555429' : phonePlaceholder}
         required
         buttonName="휴대폰 인증"
-        disabled
-        buttonEvent={confirmPhone}
-      />
-
-      <InputGroup
-        register={register}
-        errors={errors}
-        registerName="code"
-        idName="code"
-        labelName="인증번호"
-        inputType="text"
-        placeHolder={codePlaceholder}
-        required
-        buttonName="번호 확인"
         disabled
         buttonEvent={confirmPhone}
       />

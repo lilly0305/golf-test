@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -41,7 +41,7 @@ const OtherPages = styled.div(() => ({
   justifyContent: 'space-around',
 }));
 
-const Link = styled.a(() => ({
+const StyledLink = styled(Link)(() => ({
   padding: '0.4rem 0',
 }));
 
@@ -108,11 +108,11 @@ function Login() {
         <LoginInfo>로그인에 문제가 있으신가요?</LoginInfo>
 
         <OtherPages>
-          <Link href="/join">회원가입</Link>
+          <StyledLink to="/join">회원가입</StyledLink>
 
-          <Link href="/find-account">아이디/비밀번호 찾기</Link>
+          <StyledLink to="/find-account">아이디/비밀번호 찾기</StyledLink>
 
-          <Link href="/customer">고객센터</Link>
+          <StyledLink to="/customer">고객센터</StyledLink>
         </OtherPages>
       </LoginForm>
     </Container>

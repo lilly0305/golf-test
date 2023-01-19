@@ -1,20 +1,23 @@
 import * as Yup from 'yup';
 import {
-  codePlaceholder,
   confirmPwPlaceholder,
   nicknamePlaceholder,
   phonePlaceholder,
   userIdPlaceholder,
   userPwPlaceholder,
+  validConfirmPwPlaceholder,
   validNicknamePlaceholder,
   validPersonalPlaceholer,
   validPwPlaceholder,
   validSmsPlaceholer,
+  validUserIdPlaceholder,
   validUsetermPlaceholer,
 } from './placeholder';
 
 export const yupLogin = Yup.object().shape({
-  user_id: Yup.string().required(userIdPlaceholder),
+  user_id: Yup.string()
+    .required(userIdPlaceholder)
+    .matches(/^[a-z]+[a-z0-9]{5,19}$/g, validUserIdPlaceholder),
   user_pw: Yup.string()
     .required(validPwPlaceholder)
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
@@ -22,13 +25,15 @@ export const yupLogin = Yup.object().shape({
 
 export const yupJoin = Yup.object().shape({
   nickname: Yup.string().required(nicknamePlaceholder).max(8, validNicknamePlaceholder),
-  user_id: Yup.string().required(userIdPlaceholder),
+  user_id: Yup.string()
+    .required(userIdPlaceholder)
+    .matches(/^[a-z]+[a-z0-9]{5,19}$/g, validUserIdPlaceholder),
   user_pw: Yup.string()
     .required(validPwPlaceholder)
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
   confirm_pw: Yup.string()
     .required(confirmPwPlaceholder)
-    .oneOf([Yup.ref('user_pw')], confirmPwPlaceholder),
+    .oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
   phone: Yup.string()
     .required(phonePlaceholder)
     .matches(/^[0-9]+$/, phonePlaceholder),
@@ -39,11 +44,20 @@ export const yupJoin = Yup.object().shape({
 
 export const yupFindId = Yup.object().shape({
   phone: Yup.string().required(phonePlaceholder),
-  code: Yup.string().required(codePlaceholder),
 });
 
 export const yupFindPw = Yup.object().shape({
-  user_id: Yup.string().required(userIdPlaceholder),
+  user_id: Yup.string()
+    .required(userIdPlaceholder)
+    .matches(/^[a-z]+[a-z0-9]{5,19}$/g, validUserIdPlaceholder),
   phone: Yup.string().required(phonePlaceholder),
-  code: Yup.string().required(codePlaceholder).min(6).max(6),
+});
+
+export const yupChangePW = Yup.object().shape({
+  user_pw: Yup.string()
+    .required(validPwPlaceholder)
+    .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
+  confirm_pw: Yup.string()
+    .required(confirmPwPlaceholder)
+    .oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
 });

@@ -17,13 +17,16 @@ export interface ISignUp {
 
 export interface IFindId {
   phone: string;
-  code: number;
 }
 
 export interface IFindPw {
   user_id: string;
   phone: string;
-  code: number;
+}
+
+export interface IChangePw {
+  user_pw: string;
+  confirm_pw: string;
 }
 
 export interface IUser {

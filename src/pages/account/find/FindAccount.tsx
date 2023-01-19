@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 import { PageTitle } from '@components/item';
@@ -19,22 +20,23 @@ const WrapAll = styled.div(() => ({
 
 const ContentWrapper = styled.div(() => ({}));
 
-const findAccountArr = [
-  {
-    id: 1,
-    name: '아이디 찾기',
-    content: <FindId />,
-  },
-  {
-    id: 2,
-    name: '비밀번호 찾기',
-    content: <FindPw />,
-  },
-];
-
 function FindAccount() {
-  const [currentTab, setCurrentTab] = useState(1);
+  const location = useLocation();
 
+  const [currentTab, setCurrentTab] = useState(location.state !== null ? location.state.tab : 1);
+
+  const findAccountArr = [
+    {
+      id: 1,
+      name: '아이디 찾기',
+      content: <FindId />,
+    },
+    {
+      id: 2,
+      name: '비밀번호 찾기',
+      content: <FindPw idValue={location.state !== null ? location.state.foundId : ''} />,
+    },
+  ];
   return (
     <Container>
       <PageTitle pageTitle="아이디/비밀번호 찾기" />

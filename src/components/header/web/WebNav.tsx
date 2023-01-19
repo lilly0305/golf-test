@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 import navList from '@components/header/navList.json';
@@ -12,7 +13,7 @@ const WebNavContainer = styled.nav(({ theme }) => ({
   color: theme.color.white,
 }));
 
-const StyledLink = styled.a(({ theme }) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -26,7 +27,7 @@ function WebNav() {
   return (
     <WebNavContainer>
       {navList.map((nav) => (
-        <StyledLink key={nav.id} href={nav.linkTo}>
+        <StyledLink key={nav.id} to={nav.linkTo}>
           {nav.navTitle}
         </StyledLink>
       ))}

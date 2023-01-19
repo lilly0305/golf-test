@@ -17,12 +17,8 @@ const ResultText = styled.h2(() => ({
   fontSize: '2rem',
 }));
 
-const ResultId = styled.div(({ theme }) => ({
-  width: '36rem',
+const ResultId = styled.div(() => ({
   margin: '3rem auto',
-  padding: '1rem 0',
-  border: `1px solid ${theme.color.divider_grey}`,
-  fontWeight: theme.fontWeight.bold,
   fontSize: '1.6rem',
   textAlign: 'center',
 }));
@@ -49,20 +45,18 @@ const StyledLink = styled(Link)<IStyledLink>(({ theme, type }) => ({
   color: theme.color.white,
 }));
 
-function FindIdComplete() {
+function FindPwComplete() {
   return (
     <Container>
-      <PageTitle pageTitle="아이디 찾기 결과" />
+      <PageTitle pageTitle="비밀번호 변경 완료" />
 
       <Wrapper>
-        <ResultText>*루세번펭수님의 아이디는 아래와 같습니다.</ResultText>
-        <ResultId>yhk0305</ResultId>
+        <ResultText>비밀번호 변경이 완료되었습니다.</ResultText>
+        <ResultId>변경하신 비밀번호로 다시 로그인해주세요.</ResultId>
       </Wrapper>
 
       <Buttons>
-        <StyledLink to="/find-account" state={{ tab: 2, foundId: 'yhk0305' }}>
-          비밀번호 찾기
-        </StyledLink>
+        <StyledLink to="/">메인으로</StyledLink>
         <StyledLink to="/login" type="login">
           로그인
         </StyledLink>
@@ -71,4 +65,4 @@ function FindIdComplete() {
   );
 }
 
-export default FindIdComplete;
+export default FindPwComplete;

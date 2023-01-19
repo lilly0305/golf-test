@@ -1,8 +1,9 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 import styled from '@emotion/styled';
 import { IUser } from '@global-states/useUser';
 import { mq } from '@utils/mediaquery/mediaQuery';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 const MypageModal = styled.div(() => ({
@@ -50,7 +51,7 @@ const StyledNav = styled.button<IStyledNav>(({ theme, onClick }) => ({
   },
 }));
 
-const StyledLink = styled.a(() => ({
+const StyledLink = styled(Link)(() => ({
   display: 'block',
   padding: '1rem 1.2rem',
   [mq('desktop')]: {
@@ -116,11 +117,11 @@ function MypageNav({ userData }: IMypageNav) {
         <NavModal>
           <StyledNav>마이페이지</StyledNav>
           <div>
-            <StyledLink href="/user-info">회원 정보 수정</StyledLink>
-            <StyledLink href="/profile">프로필</StyledLink>
-            <StyledLink href="/like-list">찜 목록</StyledLink>
-            <StyledLink href="/suggestions">내가 쓴 제안서</StyledLink>
-            <StyledLink href="/requests">내가 쓴 신청서</StyledLink>
+            <StyledLink to="/user-info">회원 정보 수정</StyledLink>
+            <StyledLink to="/profile">프로필</StyledLink>
+            <StyledLink to="/like-list">찜 목록</StyledLink>
+            <StyledLink to="/suggestions">내가 쓴 제안서</StyledLink>
+            <StyledLink to="/requests">내가 쓴 신청서</StyledLink>
           </div>
           <StyledNav onClick={logout}>로그아웃</StyledNav>
         </NavModal>

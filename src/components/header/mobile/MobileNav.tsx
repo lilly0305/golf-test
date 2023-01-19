@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
@@ -25,7 +26,7 @@ const MobileNavContainer = styled.nav<IMobileNavContainer>(({ theme, active }) =
   opacity: active ? 1 : 0,
 }));
 
-const StyledLink = styled.a(({ theme }) => ({
+const StyledLink = styled(Link)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'start',
@@ -56,7 +57,7 @@ function MobileNav({ active }: IMobileNav) {
       {userData !== null ? (
         <MypageNav userData={userData} />
       ) : (
-        <StyledLink href="/login">
+        <StyledLink to="/login">
           <CroppedFigure width="4.8rem" height="4.8rem">
             <CroppedImage src={theme.image.defaultProfile} alt="흰색 로고" />
           </CroppedFigure>
@@ -65,7 +66,7 @@ function MobileNav({ active }: IMobileNav) {
       )}
 
       {navList.map((nav) => (
-        <StyledLink key={nav.id} href={nav.linkTo}>
+        <StyledLink key={nav.id} to={nav.linkTo}>
           {nav.navTitle}
         </StyledLink>
       ))}
