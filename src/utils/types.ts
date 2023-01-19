@@ -33,14 +33,15 @@ export interface IUserAccount {
   marketing: boolean;
 }
 
+export interface IUserProfile {
+  nickname: string;
+  pro_type: string;
+}
+
 export interface IChangePw {
   user_pw: string;
   new_pw: string;
   confirm_pw: string;
-}
-
-export interface IUserProfile {
-  nickname: string;
 }
 
 export interface IUser {

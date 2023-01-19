@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { PageTitle } from '@components/item';
-import { InputGroup, InputText, ProfileImageInput } from '@components/inputs';
+import { InputGroup, InputText, ProfileImageInput, SelectInput } from '@components/inputs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
 import { IUserProfile } from '@utils/types';
@@ -64,7 +64,16 @@ function UserProfile() {
         />
 
         <InputText labelName="이름" contents="유이름" />
+
         <InputText labelName="성별/나이" contents="여자 / 27세" />
+
+        <SelectInput
+          register={register}
+          errors={errors}
+          registerName="pro_type"
+          idName="pro_type"
+          labelName="프로 유형"
+        />
       </UserProfileForm>
     </Container>
   );
