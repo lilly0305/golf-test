@@ -20,6 +20,12 @@ export interface IFindId {
   code: number;
 }
 
+export interface IFindPw {
+  user_id: string;
+  phone: string;
+  code: number;
+}
+
 export interface IUser {
   id: number;
   name: string;

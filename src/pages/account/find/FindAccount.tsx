@@ -12,6 +12,11 @@ const Container = styled.div(() => ({
   padding: 0,
 }));
 
+const WrapAll = styled.div(() => ({
+  maxWidth: '51.2rem',
+  margin: '0 auto',
+}));
+
 const ContentWrapper = styled.div(() => ({}));
 
 const findAccountArr = [
@@ -34,9 +39,11 @@ function FindAccount() {
     <Container>
       <PageTitle pageTitle="아이디/비밀번호 찾기" />
 
-      <TabButtons tabArr={findAccountArr} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <WrapAll>
+        <TabButtons tabArr={findAccountArr} currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
-      <ContentWrapper>{findAccountArr?.[currentTab - 1].content}</ContentWrapper>
+        <ContentWrapper>{findAccountArr?.[currentTab - 1].content}</ContentWrapper>
+      </WrapAll>
     </Container>
   );
 }

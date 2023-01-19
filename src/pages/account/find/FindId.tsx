@@ -5,14 +5,14 @@ import { IFindId } from '@utils/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupFindId } from '@utils/yupValidation';
 import { InputGroup } from '@components/inputs';
+import { codePlaceholder, phonePlaceholder } from '@utils/placeholder';
 import { Buttons } from '@components/buttons';
 
-const FindInForm = styled.form(() => ({
+const FindIdForm = styled.form(() => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem 0',
   width: '100%',
-  maxWidth: '42rem',
   margin: '0 auto',
 }));
 function FindId() {
@@ -38,7 +38,7 @@ function FindId() {
   }, []);
 
   return (
-    <FindInForm onSubmit={handleSubmit(onSubmit)}>
+    <FindIdForm onSubmit={handleSubmit(onSubmit)}>
       <InputGroup
         register={register}
         errors={errors}
@@ -46,7 +46,7 @@ function FindId() {
         idName="phone"
         labelName="휴대폰 번호"
         inputType="text"
-        placeHolder={confirmedPhone ? '010-4955-5429' : '휴대폰 인증을 진행해주세요'}
+        placeHolder={confirmedPhone ? '010-4955-5429' : phonePlaceholder}
         required
         buttonName="휴대폰 인증"
         disabled
@@ -60,7 +60,7 @@ function FindId() {
         idName="code"
         labelName="인증번호"
         inputType="text"
-        placeHolder="인증번호를 입력해주세요"
+        placeHolder={codePlaceholder}
         required
         buttonName="번호 확인"
         disabled
@@ -68,7 +68,7 @@ function FindId() {
       />
 
       <Buttons activeName="아이디 찾기" buttonType="submit" />
-    </FindInForm>
+    </FindIdForm>
   );
 }
 

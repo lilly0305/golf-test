@@ -9,6 +9,13 @@ import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { PageTitle } from '@components/item';
 import { ISignUp } from '@utils/types';
 import { yupJoin } from '@utils/yupValidation';
+import {
+  confirmPwPlaceholder,
+  nicknamePlaceholder,
+  phonePlaceholder,
+  userIdPlaceholder,
+  userPwPlaceholder,
+} from '@utils/placeholder';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
@@ -118,7 +125,7 @@ function Join() {
             idName="nickname"
             labelName="닉네임"
             inputType="text"
-            placeHolder="닉네임을 입력하세요"
+            placeHolder={nicknamePlaceholder}
             required
             buttonName="중복확인"
             active
@@ -131,7 +138,7 @@ function Join() {
             idName="user_id"
             labelName="아이디"
             inputType="text"
-            placeHolder="아이디를 입력하세요"
+            placeHolder={userIdPlaceholder}
             required
             buttonName="중복확인"
             active={false}
@@ -144,7 +151,7 @@ function Join() {
             idName="user_pw"
             labelName="비밀번호"
             inputType="password"
-            placeHolder="영문, 숫자 포함 8~24글자를 입력해주세요"
+            placeHolder={userPwPlaceholder}
             required
           />
 
@@ -155,7 +162,7 @@ function Join() {
             idName="confirm_pw"
             labelName="비밀번호 확인"
             inputType="password"
-            placeHolder="비밀번호 확인을 입력하세요"
+            placeHolder={confirmPwPlaceholder}
             required
           />
 
@@ -166,7 +173,7 @@ function Join() {
             idName="phone"
             labelName="휴대폰 번호"
             inputType="text"
-            placeHolder={confirmedPhone ? '010-4955-5429' : '휴대폰 인증을 진행해주세요'}
+            placeHolder={confirmedPhone ? '010-4955-5429' : phonePlaceholder}
             required
             buttonName="휴대폰 인증"
             disabled

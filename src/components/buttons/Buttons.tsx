@@ -1,5 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const ButtonsContainer = styled.div(() => ({
   display: 'flex',
@@ -36,10 +37,16 @@ function Buttons({
   activeName,
   buttonType = 'button',
 }: IButtons) {
+  const navigate = useNavigate();
+
+  const goBackHandler = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   return (
     <ButtonsContainer>
       {!noCancelButton && (
-        <StyledButton active={false} type="button">
+        <StyledButton active={false} type="button" onClick={goBackHandler}>
           취소
         </StyledButton>
       )}

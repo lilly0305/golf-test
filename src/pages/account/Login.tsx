@@ -12,6 +12,7 @@ import { yupLogin } from '@utils/yupValidation';
 import PageTitle from '@components/item/PageTitle';
 import { useQueryClient } from 'react-query';
 import { ErrorMessage } from '@components/message';
+import { userIdPlaceholder, validPwPlaceholder } from '@utils/placeholder';
 
 const Container = styled.div(() => ({}));
 
@@ -88,7 +89,7 @@ function Login() {
           idName="user_id"
           labelName="아이디"
           inputType="text"
-          placeHolder="아이디를 입력하세요"
+          placeHolder={userIdPlaceholder}
           errors={errors}
         />
 
@@ -98,7 +99,7 @@ function Login() {
           idName="user_pw"
           labelName="비밀번호"
           inputType="password"
-          placeHolder="비밀번호를 입력하세요"
+          placeHolder={validPwPlaceholder}
           errors={errors}
         />
 
