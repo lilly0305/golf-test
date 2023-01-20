@@ -21,7 +21,7 @@ export const CheckBoxContainer = styled.div(({ theme }) => ({
 
 interface ISingleCheckInput {
   register?: UseFormRegister<ILoginForm | ISignUp | any>;
-  registerName: Path<ILoginForm | ISignUp | any>;
+  registerName?: Path<ILoginForm | ISignUp | any>;
   idName: string;
   labelName: string;
   required?: boolean;
@@ -55,7 +55,7 @@ function SingleCheckInput({
   return (
     <InputContainer>
       <StyledInput
-        {...(register && register(registerName))}
+        {...(register && registerName && register(registerName))}
         id={idName}
         type="checkbox"
         onChange={(e) => handleSingleCheck(e.target.checked, idName)}
