@@ -31,7 +31,7 @@ function AllCheckInput({ checkArr, setCheckArr, checkData, setValue }: IAllCheck
 
         setCheckArr(idArray);
 
-        setValue('useterm', true);
+        setValue('use_term_policy', true);
       } else {
         setCheckArr([]);
         checkData.forEach((el) => {

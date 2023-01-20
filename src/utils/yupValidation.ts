@@ -37,9 +37,9 @@ export const yupJoin = Yup.object().shape({
   phone: Yup.string()
     .required(phonePlaceholder)
     .matches(/^[0-9]+$/, phonePlaceholder),
-  useterm: Yup.bool().oneOf([true], validUsetermPlaceholer),
-  personal_info: Yup.bool().oneOf([true], validPersonalPlaceholer),
-  sms: Yup.bool().oneOf([true], validSmsPlaceholer),
+  use_term_policy: Yup.bool().oneOf([true], validUsetermPlaceholer),
+  personal_policy: Yup.bool().oneOf([true], validPersonalPlaceholer),
+  sms_policy: Yup.bool().oneOf([true], validSmsPlaceholer),
 });
 
 export const yupFindId = Yup.object().shape({
@@ -75,9 +75,9 @@ export const yupUserAccount = Yup.object().shape(
     phone: Yup.string()
       .required(phonePlaceholder)
       .matches(/^[0-9]+$/, phonePlaceholder),
-    useterm: Yup.bool().oneOf([true], validUsetermPlaceholer),
-    personal_info: Yup.bool().oneOf([true], validPersonalPlaceholer),
-    sms: Yup.bool().oneOf([true], validSmsPlaceholer),
+    use_term_policy: Yup.bool().oneOf([true], validUsetermPlaceholer),
+    personal_policy: Yup.bool().oneOf([true], validPersonalPlaceholer),
+    sms_policy: Yup.bool().oneOf([true], validSmsPlaceholer),
   },
   [
     // Add Cyclic deps here because when require itself

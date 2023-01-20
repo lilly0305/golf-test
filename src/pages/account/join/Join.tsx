@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
@@ -17,10 +18,12 @@ import {
   userPwPlaceholder,
 } from '@utils/placeholder';
 import { mq } from '@utils/mediaquery/mediaQuery';
+import { INicknameCheck } from '@utils/axiosResponseTypes';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import Modal from '@components/modal/Modal';
+import axios, { AxiosError } from 'axios';
 import { policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
@@ -52,15 +55,20 @@ const PolicyWrap = styled.div(() => ({
 const formOptions = {
   resolver: yupResolver(yupJoin),
   defaultValues: {
+    user_name: '유화경',
+    gender: '여자',
     nickname: '',
     user_id: '',
     user_pw: '',
     confirm_pw: '',
     phone: '',
-    useterm: false,
-    personal_info: false,
-    sms: false,
-    marketing: false,
+    use_term_policy: false,
+    personal_policy: false,
+    sms_policy: false,
+    marketing_policy: false,
+    file_path: '',
+    origin_file_name: '',
+    temp_file_name: '',
   },
 };
 
@@ -85,6 +93,32 @@ function Join() {
   const postJoin = useCallback(() => {
     navigate('/join-complete');
   }, [navigate]);
+
+  const checkNickname = async (nickname: string) => {
+    const { data } = await axios.post('/api/v1/user/check-nickname', { nickname: nickname });
+
+    return data;
+  };
+
+  const { mutate } = useMutation<INicknameCheck, AxiosError, string>(checkNickname, {
+    onMutate: (variables) => {
+      // variables : {id: 1}
+      console.log('onMutate', variables);
+    },
+    onError: (error, variables, context) => {
+      // error
+      console.log('error', error, variables, context);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log('success', data, variables, context);
+    },
+    onSettled: (data, error, variables, context) => {
+      // end
+      console.log('settled', data, error, variables, context);
+    },
+  });
+
+  const checkNicknameHandler = useCallback(() => mutate('하루세번펭수'), [mutate]);
 
   const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
 
@@ -118,6 +152,7 @@ function Join() {
             placeHolder={nicknamePlaceholder}
             required
             buttonName="중복확인"
+            buttonEvent={checkNicknameHandler}
             active
           />
 
@@ -181,9 +216,9 @@ function Join() {
           </PolicyWrap>
 
           <ErrorMessage>
-            <p>{errors?.useterm?.message}</p>
-            <p>{errors?.personal_info?.message}</p>
-            <p>{errors?.sms?.message}</p>
+            <p>{errors?.use_term_policy?.message}</p>
+            <p>{errors?.personal_policy?.message}</p>
+            <p>{errors?.sms_policy?.message}</p>
           </ErrorMessage>
 
           <CheckBoxContainer>

@@ -7,10 +7,10 @@ const user = {
   user_id: 'yhk0305',
   user_pw: 'qweqwe123',
   phone: '01049555429',
-  useterm: true,
-  personal_info: true,
-  sms: true,
-  marketing: false,
+  use_term_policy: true,
+  personal_policy: true,
+  sms_policy: true,
+  marketing_policy: false,
   profile_image: require('@assets/images/profile_sample01.png'),
 };
 
@@ -20,10 +20,10 @@ export interface IUser {
   user_id: string;
   user_pw: string;
   phone: string;
-  useterm: boolean;
-  personal_info: boolean;
-  sms: boolean;
-  marketing: boolean;
+  use_term_policy: boolean;
+  personal_policy: boolean;
+  sms_policy: boolean;
+  marketing_policy: boolean;
   profile_image: string;
 }
 

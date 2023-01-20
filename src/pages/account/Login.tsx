@@ -13,6 +13,7 @@ import PageTitle from '@components/item/PageTitle';
 import { useQueryClient } from 'react-query';
 import { ErrorMessage } from '@components/message';
 import { userIdPlaceholder, validPwPlaceholder } from '@utils/placeholder';
+import axios from 'axios';
 
 const Container = styled.div(() => ({}));
 
@@ -56,7 +57,8 @@ const formOptions = {
 function Login() {
   const navigate = useNavigate();
   const queryclient = useQueryClient();
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   const {
     register,
@@ -65,13 +67,22 @@ function Login() {
   } = useForm<ILoginForm>(formOptions);
 
   const onSubmit: SubmitHandler<ILoginForm> = useCallback(
-    (data) => {
-      if (data.user_id === 'yhk0305' && data.user_pw === 'qweqwe123') {
-        queryclient.invalidateQueries('userData');
-        localStorage.setItem('accessToken', 'logged in as 유화경');
-        navigate('/');
-      } else {
-        setErrorMessage(true);
+    async (received) => {
+      try {
+        const { data, status } = await axios.post('/api/v1/user/sign-in', received);
+        if (status === 200) {
+          navigate('/');
+          queryclient.invalidateQueries('userData');
+          localStorage.setItem('accessToken', data.access_token);
+        }
+      } catch (error: any) {
+        if (error !== undefined || null) {
+          setIsError(true);
+
+          if (error.response.status === 400) {
+            setErrorMessage('아이디 혹은 비밀번호를 확인해주세요');
+          }
+        }
       }
     },
     [navigate, queryclient],
@@ -82,7 +93,7 @@ function Login() {
       <PageTitle pageTitle="잇다 로그인" />
 
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
-        {errorMessage && <ErrorMessage message="아이디 혹은 비밀번호를 확인해주세요" />}
+        {isError && <ErrorMessage message={errorMessage} />}
         <InputGroup
           registerName="user_id"
           register={register}

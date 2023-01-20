@@ -59,29 +59,29 @@ function UserAccount() {
     defaultValues: {
       user_id: userData?.user_id,
       phone: userData?.phone,
-      useterm: userData?.useterm,
-      personal_info: userData?.personal_info,
-      sms: userData?.sms,
-      marketing: userData?.marketing,
+      use_term_policy: userData?.use_term_policy,
+      personal_policy: userData?.personal_policy,
+      sms_policy: userData?.sms_policy,
+      marketing_policy: userData?.marketing_policy,
     },
   };
 
   useEffect(() => {
     if (userData !== undefined) {
-      if (userData.useterm) {
-        setCheckArr((prev) => [...prev, 'useterm']);
+      if (userData.use_term_policy) {
+        setCheckArr((prev) => [...prev, 'use_term_policy']);
       }
 
-      if (userData.personal_info) {
-        setCheckArr((prev) => [...prev, 'personal_info']);
+      if (userData.personal_policy) {
+        setCheckArr((prev) => [...prev, 'personal_policy']);
       }
 
-      if (userData.sms) {
-        setCheckArr((prev) => [...prev, 'sms']);
+      if (userData.sms_policy) {
+        setCheckArr((prev) => [...prev, 'sms_policy']);
       }
 
-      if (userData.marketing) {
-        setCheckArr((prev) => [...prev, 'marketing']);
+      if (userData.marketing_policy) {
+        setCheckArr((prev) => [...prev, 'marketing_policy']);
       }
     }
 
@@ -174,9 +174,9 @@ function UserAccount() {
         </PolicyWrap>
 
         <ErrorMessage>
-          <p>{errors?.useterm?.message}</p>
-          <p>{errors?.personal_info?.message}</p>
-          <p>{errors?.sms?.message}</p>
+          <p>{errors?.use_term_policy?.message}</p>
+          <p>{errors?.personal_policy?.message}</p>
+          <p>{errors?.sms_policy?.message}</p>
         </ErrorMessage>
 
         <CheckBoxContainer>
