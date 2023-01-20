@@ -5,6 +5,7 @@ import { IUserProfile } from '@utils/types';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { InputLabel } from '@assets/styles/CommonStyles';
 import { useTheme } from '@emotion/react';
+import { ISelectOptions } from './selectOptions';
 
 const SelectWrapper = styled.div(() => ({
   flex: 1,
@@ -12,6 +13,7 @@ const SelectWrapper = styled.div(() => ({
   alignItems: 'flex-start',
   flexDirection: 'column',
   gap: '0.4rem 0',
+  marginBottom: '1.8rem',
   [mq('desktop')]: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -20,7 +22,7 @@ const SelectWrapper = styled.div(() => ({
 
 const StyledSelect = styled.select(({ theme }) => ({
   border: `1px solid ${theme.color.divider_grey}`,
-  padding: '0.8rem 1.2rem',
+  padding: '0.9rem 1.2rem',
   minWidth: '20rem',
 }));
 
@@ -33,8 +35,16 @@ interface ISelectInput {
   idName: string;
   labelName: string;
   required?: boolean;
+  optionList: Array<ISelectOptions>;
 }
-function SelectInput({ register, registerName, idName, labelName, required }: ISelectInput) {
+function SelectInput({
+  register,
+  registerName,
+  idName,
+  labelName,
+  required,
+  optionList,
+}: ISelectInput) {
   const theme = useTheme();
 
   return (
@@ -47,10 +57,11 @@ function SelectInput({ register, registerName, idName, labelName, required }: IS
       </InputLabel>
 
       <StyledSelect {...(register && register(registerName))}>
-        <StyledOption value="pro01">티칭프로</StyledOption>
-        <StyledOption value="pro02">협회준회원</StyledOption>
-        <StyledOption value="pro03">협회정회원</StyledOption>
-        <StyledOption value="pro04">투어 프로</StyledOption>
+        {optionList.map((option) => (
+          <StyledOption key={option.id} value={option.value}>
+            {option.name}
+          </StyledOption>
+        ))}
       </StyledSelect>
     </SelectWrapper>
   );

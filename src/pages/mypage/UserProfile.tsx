@@ -1,13 +1,22 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { PageTitle } from '@components/item';
-import { InputGroup, InputText, ProfileImageInput, SelectInput } from '@components/inputs';
+import {
+  InputGroup,
+  InputText,
+  ProfileImageInput,
+  SelectInput,
+  SingleCheckInput,
+} from '@components/inputs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
-import { IUserProfile } from '@utils/types';
+import { IUserAccount, IUserProfile } from '@utils/types';
 import { nicknamePlaceholder } from '@utils/placeholder';
+import { AveScoreOptions, careerOptions, proTypeOptions } from '@components/inputs/selectOptions';
+import { Buttons } from '@components/buttons';
+import { useQueryClient } from 'react-query';
 
 const Container = styled.div(() => ({}));
 
@@ -17,19 +26,24 @@ const UserProfileForm = styled.form(() => ({
   margin: '0 auto 8rem',
 }));
 
+const SelectWrapper = styled.div(() => ({
+  marginTop: '1.8rem',
+}));
+
 function UserProfile() {
+  const queryClient = useQueryClient();
+  const userData: IUserAccount | undefined = queryClient.getQueryData('userData');
+
+  const [checkArr, setCheckArr] = useState<string[]>([]);
+
   const formOptions = {
     resolver: yupResolver(yupUserProfile),
     defaultValues: {
-      nickname: '',
-      user_id: '',
-      user_pw: '',
-      confirm_pw: '',
-      phone: '',
-      useterm: false,
-      personal_info: false,
-      sms: false,
-      marketing: false,
+      nickname: userData?.nickname,
+      pro_yn: false,
+      pro_type: '',
+      ave_score: 'aveScore01',
+      career: 'career01',
     },
   };
 
@@ -67,13 +81,47 @@ function UserProfile() {
 
         <InputText labelName="성별/나이" contents="여자 / 27세" />
 
-        <SelectInput
+        <SingleCheckInput
           register={register}
-          errors={errors}
-          registerName="pro_type"
-          idName="pro_type"
-          labelName="프로 유형"
+          registerName="pro_yn"
+          idName="pro_yn"
+          labelName="프로 골퍼입니다!"
+          setCheckArr={setCheckArr}
+          checkArr={checkArr}
         />
+
+        {checkArr.includes('pro_yn') && (
+          <SelectInput
+            register={register}
+            errors={errors}
+            registerName="pro_type"
+            idName="pro_type"
+            labelName="프로 유형"
+            optionList={proTypeOptions}
+          />
+        )}
+
+        <SelectWrapper>
+          <SelectInput
+            register={register}
+            errors={errors}
+            registerName="ave_score"
+            idName="ave_score"
+            labelName="평균 타수"
+            optionList={AveScoreOptions}
+          />
+
+          <SelectInput
+            register={register}
+            errors={errors}
+            registerName="career"
+            idName="career"
+            labelName="골프 경력"
+            optionList={careerOptions}
+          />
+        </SelectWrapper>
+
+        <Buttons noCancelButton activeName="프로필 수정" buttonType="submit" />
       </UserProfileForm>
     </Container>
   );

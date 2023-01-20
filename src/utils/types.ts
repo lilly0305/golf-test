@@ -26,6 +26,7 @@ export interface IFindPw {
 
 export interface IUserAccount {
   user_id: string;
+  nickname: string;
   phone: string;
   useterm: boolean;
   personal_info: boolean;
@@ -35,7 +36,10 @@ export interface IUserAccount {
 
 export interface IUserProfile {
   nickname: string;
+  pro_yn: boolean;
   pro_type: string;
+  ave_score: string;
+  career: string;
 }
 
 export interface IChangePw {

@@ -183,7 +183,6 @@ function UserAccount() {
           {policyCheck?.map((check) => (
             <SingleCheckInput
               key={check.id}
-              index={check.id}
               register={register}
               registerName={check.idName}
               idName={check.idName}

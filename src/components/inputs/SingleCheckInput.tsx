@@ -20,7 +20,6 @@ export const CheckBoxContainer = styled.div(({ theme }) => ({
 }));
 
 interface ISingleCheckInput {
-  index: number;
   register?: UseFormRegister<ILoginForm | ISignUp | any>;
   registerName: Path<ILoginForm | ISignUp | any>;
   idName: string;
@@ -78,7 +77,7 @@ function SingleCheckInput({
             marginLeft: '0.2rem',
           }}
         >
-          {required ? '(필수)' : '(선택)'}
+          {required ? '(필수)' : ''}
         </span>
       </CheckInputLabel>
     </InputContainer>
