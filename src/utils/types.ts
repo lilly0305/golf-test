@@ -40,6 +40,7 @@ export interface IUserProfile {
   pro_type: string;
   ave_score: string;
   career: string;
+  introduce: string;
 }
 
 export interface IChangePw {

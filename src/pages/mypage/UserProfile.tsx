@@ -9,6 +9,7 @@ import {
   ProfileImageInput,
   SelectInput,
   SingleCheckInput,
+  TextareaInput,
 } from '@components/inputs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
@@ -44,6 +45,7 @@ function UserProfile() {
       pro_type: '',
       ave_score: 'aveScore01',
       career: 'career01',
+      introduce: '',
     },
   };
 
@@ -120,6 +122,15 @@ function UserProfile() {
             optionList={careerOptions}
           />
         </SelectWrapper>
+
+        <TextareaInput
+          register={register}
+          errors={errors}
+          registerName="introduce"
+          idName="introduce"
+          labelName="자기소개"
+          placeholder="간단한 자기소개를 입력해주세요 (최대 500글자)"
+        />
 
         <Buttons noCancelButton activeName="프로필 수정" buttonType="submit" />
       </UserProfileForm>

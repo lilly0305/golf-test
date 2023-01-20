@@ -20,11 +20,12 @@ const Wrapper = styled.div(() => ({
   gap: '0.4rem 0',
   [mq('desktop')]: {
     flexDirection: 'row',
-    alignItems: 'center',
   },
 }));
 
 const Contents = styled.div(({ theme }) => ({
+  height: '3.6rem',
+  lineHeight: '3.6rem',
   fontWeight: theme.fontWeight.bold,
 }));
 
