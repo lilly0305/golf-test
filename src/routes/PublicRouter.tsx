@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import Home from '@pages/Home';
 import { Login } from '@pages/account';
+import { Customer } from '@pages/customer';
 import { UserAccount, UserProfile } from '@pages/mypage';
 import { Header } from '@components/header';
 import { mq } from '@utils/mediaquery/mediaQuery';
@@ -30,6 +31,7 @@ function PublicRouter() {
         <Routes>
           <Route path="/" element={<Home />} />
 
+          {/* NOTE: 계정 관련 페이지 : 로그인, 회원가입, 아이디/비번 찾기 */}
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/join-complete" element={<JoinComplete />} />
@@ -37,6 +39,8 @@ function PublicRouter() {
           <Route path="/find-id-complete" element={<FindIdComplete />} />
           <Route path="/change-password" element={<ChangePw />} />
           <Route path="/find-pw-complete" element={<FindPwComplete />} />
+
+          <Route path="/customer" element={<Customer />} />
 
           <Route
             path="/user-account"
