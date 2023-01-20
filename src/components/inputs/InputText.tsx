@@ -8,7 +8,7 @@ const InputGroupContainer = styled.div(() => ({
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  height: '3.6rem',
+  minHeight: '3.6rem',
   marginBottom: '1.4rem',
 }));
 
@@ -18,15 +18,18 @@ const Wrapper = styled.div(() => ({
   alignItems: 'flex-start',
   flexDirection: 'column',
   gap: '0.4rem 0',
+  height: 'fit-content',
   [mq('desktop')]: {
     flexDirection: 'row',
   },
 }));
 
 const Contents = styled.div(({ theme }) => ({
-  height: '3.6rem',
-  lineHeight: '3.6rem',
   fontWeight: theme.fontWeight.bold,
+  [mq('desktop')]: {
+    height: '3.6rem',
+    lineHeight: '3.6rem',
+  },
 }));
 
 interface IInputText {

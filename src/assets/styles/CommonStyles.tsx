@@ -52,8 +52,10 @@ export const ErrorMessage = styled.div(({ theme }) => ({
 export const InputLabel = styled.label(() => ({
   display: 'inline-block',
   minWidth: '12rem',
-  height: '3.6rem',
-  lineHeight: '3.6rem',
+  [mq('desktop')]: {
+    height: '3.6rem',
+    lineHeight: '3.6rem',
+  },
 }));
 
 export const InputContainer = styled.div(() => ({

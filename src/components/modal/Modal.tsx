@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { mq } from '@utils/mediaquery/mediaQuery';
 import React, { useCallback, useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 
@@ -29,10 +30,14 @@ const ModalContents = styled.div(({ theme }) => ({
   overflowY: 'auto',
   zIndex: 10,
   background: theme.color.white,
+  width: '90%',
   minWidth: '30vw',
   maxHeight: '80vh',
   marginBottom: '3rem',
-  padding: '2rem 6rem',
+  padding: '2rem',
+  [mq('desktop')]: {
+    padding: '2rem 6rem',
+  },
 }));
 
 const ModalTitle = styled.h3(({ theme }) => ({

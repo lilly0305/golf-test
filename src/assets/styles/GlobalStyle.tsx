@@ -30,7 +30,7 @@ const style = css`
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #68b984;
+      background-color: #dcdcdc;
     }
 
     &::-webkit-scrollbar-track {
