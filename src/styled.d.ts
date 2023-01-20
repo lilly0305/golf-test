@@ -15,6 +15,7 @@ declare module '@emotion/react' {
       white: string;
       base_black: string;
       point_color: string;
+      point_color_10: string;
       sub_point_color: string;
       red_color: string;
       placeholder_color: string;

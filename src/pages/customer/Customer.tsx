@@ -17,6 +17,8 @@ const WrapAll = styled.div(() => ({
   margin: '0 auto',
 }));
 
+const ContentWrapper = styled.div(() => ({}));
+
 function Customer() {
   const [currentTab, setCurrentTab] = useState(1);
 
@@ -43,6 +45,8 @@ function Customer() {
       <PageTitle pageTitle="고객센터" />
       <WrapAll>
         <TabButtons tabArr={customerArr} currentTab={currentTab} setCurrentTab={setCurrentTab} />
+
+        <ContentWrapper>{customerArr?.[currentTab - 1].content}</ContentWrapper>
       </WrapAll>
     </Container>
   );

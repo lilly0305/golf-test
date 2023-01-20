@@ -17,6 +17,7 @@ export const AppTheme: Theme = {
     white: '#ffffff',
     base_black: '#111827',
     point_color: '#68B984',
+    point_color_10: '#F0F8F3',
     sub_point_color: '#95C15B',
     red_color: '#F15757',
     placeholder_color: '#7D7D7D',

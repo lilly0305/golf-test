@@ -28,11 +28,16 @@ export const CroppedImage = styled.img(() => ({
 interface IRemixIcon {
   fontSize?: string;
   color?: string;
+  active?: boolean;
 }
-export const RemixIcon = styled.i<IRemixIcon>(({ fontSize = '2.4rem', color = '#fff' }) => ({
-  fontSize: fontSize,
-  color: color,
-}));
+export const RemixIcon = styled.i<IRemixIcon>(
+  ({ fontSize = '2.4rem', color = '#fff', active }) => ({
+    fontSize: fontSize,
+    color: color,
+    transition: 'all 0.3s',
+    transform: active ? 'rotate(90deg)' : 'rotate(0deg)',
+  }),
+);
 
 export const ErrorMessage = styled.div(({ theme }) => ({
   display: 'flex',
