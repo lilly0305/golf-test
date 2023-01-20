@@ -38,7 +38,7 @@ const PolicyWrap = styled.div(() => ({
 }));
 
 const ChangePwButton = styled.button(({ theme }) => ({
-  padding: '0.8rem 1.2rem',
+  padding: '0rem 1.2rem',
   background: theme.color.placeholder_color,
   color: theme.color.white,
   borderRadius: '3rem',

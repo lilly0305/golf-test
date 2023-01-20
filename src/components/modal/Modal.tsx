@@ -36,6 +36,8 @@ const ModalContents = styled.div(({ theme }) => ({
   marginBottom: '3rem',
   padding: '2rem',
   [mq('desktop')]: {
+    maxWidth: '50vw',
+    width: '80rem',
     padding: '2rem 6rem',
   },
 }));
