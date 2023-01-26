@@ -13,7 +13,6 @@ import {
 import axios from 'axios';
 import { FieldErrorsImpl, UseFormSetError, UseFormSetValue } from 'react-hook-form';
 import { ISignUp, IUserProfile } from '@utils/types';
-import { useUser } from '@global-states/useUser';
 
 const ImageInputContainer = styled.div(() => ({
   marginBottom: '1.4rem',
@@ -92,9 +91,8 @@ interface IImageInput {
 }
 function ImageInput({ idName, labelName, setValue, setError, errors }: IImageInput) {
   const theme = useTheme();
-  const { userData } = useUser();
 
-  const [file, setFile] = useState<string | undefined>(userData !== null ? userData?.file_url : '');
+  const [file, setFile] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
 
   const onFileChange = useCallback(

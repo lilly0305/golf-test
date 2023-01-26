@@ -57,6 +57,7 @@ export interface IUserProfile {
   avg_score: string;
   career: string;
   introduce: string;
+  file_url: string;
 }
 
 // NOTE: 비밀번호 찾기
