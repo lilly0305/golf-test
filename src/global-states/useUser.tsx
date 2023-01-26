@@ -1,55 +1,44 @@
+import axios from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
-// import useAxios from '@utils/useAxios';
 
-const user = {
-  id: 1,
-  nickname: '하루세번펭수',
-  user_id: 'yhk0305',
-  user_pw: 'qweqwe123',
-  phone: '01049555429',
-  use_term_policy: true,
-  personal_policy: true,
-  sms_policy: true,
-  marketing_policy: false,
-  profile_image: require('@assets/images/profile_sample01.png'),
-};
-
-export interface IUser {
-  id: number;
-  nickname: string;
-  user_id: string;
-  user_pw: string;
+export interface IUserData {
+  user_key: number;
+  gender: string;
   phone: string;
+  nickname: string;
+  user_name: string;
   use_term_policy: boolean;
-  personal_policy: boolean;
   sms_policy: boolean;
+  pro_yn: boolean;
+  personal_policy: boolean;
+  user_id: string;
   marketing_policy: boolean;
-  profile_image: string;
-}
-
-function getStoredUser(): IUser | null {
-  const storedUser = localStorage.getItem('accessToken');
-  return storedUser ? user : null;
+  career: string;
+  file_url: string;
 }
 
 interface IUseUser {
-  userData: IUser | null | undefined;
-  updateUser: (newUser: IUser) => void;
+  userData: IUserData | null | undefined;
+  updateUser: (newUser: IUserData) => void;
   clearUser: () => void;
   isLoggedIn: boolean;
 }
 export function useUser(): IUseUser {
+  const token = localStorage.getItem('accessToken');
   const queryclient = useQueryClient();
-  // const interceptor = useAxios();
 
-  async function getUser(userData: IUser | null): Promise<IUser | null> {
-    if (!userData) return null;
+  async function getUser(storedToken: string | null): Promise<IUserData | null> {
+    if (storedToken === null) return null;
 
-    // const { data } = await interceptor.get(`/user/${userData.id}`);
-    return userData;
+    const res = await axios.get('/api/v1/user/my-info', {
+      headers: { Authorization: `Bearer ${storedToken}` },
+    });
+
+    console.log(res);
+    return res.data.data;
   }
 
-  function updateUser(newUser: IUser): void {
+  function updateUser(newUser: IUserData): void {
     queryclient.setQueryData('userData', newUser);
   }
 
@@ -57,17 +46,22 @@ export function useUser(): IUseUser {
     queryclient.setQueryData('userData', null);
   }
 
-  const { data: userData } = useQuery<IUser | null>('userData', () => getUser(user), {
-    initialData: getStoredUser,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    onSuccess: (received: IUser | null) => {
+  const { data: userData } = useQuery<IUserData | null>('userData', () => getUser(token), {
+    staleTime: 60 * 1000 * 10, // 10분,
+    cacheTime: 60 * 1000 * 20, // 20분,
+    retry: 0,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
+    refetchInterval: 60 * 1000 * 10,
+    onSuccess: (received: IUserData | null) => {
+      console.log(received);
       if (!received) {
-        console.log('ddd');
-        // clearUser();
+        console.log('clear user');
+        clearUser();
       } else {
-        // updateUser(received);
-        console.log('eee');
+        updateUser(received);
+        console.log('update user');
       }
     },
   });

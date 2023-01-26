@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const useAxios = () => {
-  const accessToken = 'eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ';
+  const accessToken = localStorage.getItem('accessToken');
 
   const instance = axios.create({
     headers: { Authorization: `Bearer ${accessToken}` },

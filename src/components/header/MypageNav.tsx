@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 import styled from '@emotion/styled';
-import { IUser } from '@global-states/useUser';
+import { IUserData } from '@global-states/useUser';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { useQueryClient } from 'react-query';
 
@@ -60,7 +60,7 @@ const StyledLink = styled(Link)(() => ({
 }));
 
 interface IMypageNav {
-  userData: IUser | null | undefined;
+  userData: IUserData | null | undefined;
 }
 
 function MypageNav({ userData }: IMypageNav) {
@@ -96,14 +96,13 @@ function MypageNav({ userData }: IMypageNav) {
   const logout = useCallback(() => {
     localStorage.removeItem('accessToken');
     queryclient.invalidateQueries('userData');
-    // clearUser();
   }, [queryclient]);
 
   return (
     <MypageModal ref={wrapperRef}>
       <Profile onClick={handleModalToggle}>
         <CroppedFigure width="4.8rem" height="4.8rem" radius="50%">
-          <CroppedImage src={userData?.profile_image} alt="흰색 로고" />
+          <CroppedImage src={userData?.file_url} alt="흰색 로고" />
         </CroppedFigure>
         {userData?.nickname}
         {arrowToggle ? (

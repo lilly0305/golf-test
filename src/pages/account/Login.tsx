@@ -67,13 +67,14 @@ function Login() {
   } = useForm<ILoginForm>(formOptions);
 
   const onSubmit: SubmitHandler<ILoginForm> = useCallback(
-    async (received) => {
+    async (loginData) => {
       try {
-        const { data, status } = await axios.post('/api/v1/user/sign-in', received);
+        const { data, status } = await axios.post('/api/v1/user/sign-in', loginData);
         if (status === 200) {
+          console.log(data.data.access_token);
           navigate('/');
           queryclient.invalidateQueries('userData');
-          localStorage.setItem('accessToken', data.access_token);
+          localStorage.setItem('accessToken', data.data.access_token);
         }
       } catch (error: any) {
         if (error !== undefined || null) {
