@@ -23,17 +23,11 @@ export const yupLogin = Yup.object().shape({
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
 });
 
-export const yupNickname = Yup.object().shape({
+export const yupJoin = Yup.object().shape({
   nickname: Yup.string().required(nicknamePlaceholder).max(8, validNicknamePlaceholder),
-});
-
-export const yupUserId = Yup.object().shape({
   user_id: Yup.string()
     .required(userIdPlaceholder)
     .matches(/^[a-z]+[a-z0-9]{5,19}$/g, validUserIdPlaceholder),
-});
-
-export const yupJoin = Yup.object().shape({
   user_pw: Yup.string()
     .required(validPwPlaceholder)
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),

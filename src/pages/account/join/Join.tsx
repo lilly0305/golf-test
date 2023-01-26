@@ -2,6 +2,7 @@ import React, { memo, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
+import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
 
@@ -9,15 +10,19 @@ import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { PageTitle } from '@components/item';
 import { ISignUp } from '@utils/types';
 import { yupJoin } from '@utils/yupValidation';
-import { confirmPwPlaceholder, phonePlaceholder, userPwPlaceholder } from '@utils/placeholder';
+import {
+  confirmPwPlaceholder,
+  nicknamePlaceholder,
+  phonePlaceholder,
+  userIdPlaceholder,
+  userPwPlaceholder,
+} from '@utils/placeholder';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import Modal from '@components/modal/Modal';
 import { policyCheck } from './joinPolicy';
-import NicknameCheck from './NicknameCheck';
-import UserIdCheck from './UserIdCheck';
 
 const Container = styled.div(() => ({
   maxWidth: '51.4rem',
@@ -68,11 +73,18 @@ function Join() {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
+  const [buttonActive, setButtonActive] = useState({
+    nickname: true,
+    user_id: true,
+  });
 
   const {
     register,
     handleSubmit,
     setValue,
+    watch,
+    trigger,
+    setError,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
@@ -84,6 +96,33 @@ function Join() {
   const postJoin = useCallback(() => {
     navigate('/join-complete');
   }, [navigate]);
+
+  console.log(errors);
+
+  const checkDuplicate = useCallback(
+    async (key: string, value: string): Promise<any> => {
+      if (key === 'nickname') {
+        trigger('nickname');
+      } else if (key === 'user_id') {
+        trigger('user_id');
+      }
+      console.log('ddd');
+      try {
+        const res = await axios.post('/api/v1/user/check-duplicate', {
+          [key]: value,
+        });
+
+        if (res.data.status === 'success') {
+          setButtonActive({ ...buttonActive, [key]: false });
+        }
+      } catch (error: any) {
+        if (error.response.status === 400) {
+          setError('nickname', { message: '중복된 닉네임이 있습니다.' });
+        }
+      }
+    },
+    [buttonActive, setButtonActive, trigger, setError],
+  );
 
   const confirmPhone = useCallback(() => {
     setValue('phone', '01049555429');
@@ -107,11 +146,35 @@ function Join() {
 
       <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
 
-      <NicknameCheck setValue={setValue} />
-      <UserIdCheck setValue={setValue} />
-
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrap>
+          <InputGroup
+            register={register}
+            errors={errors}
+            registerName="nickname"
+            idName="nickname"
+            labelName="닉네임"
+            inputType="text"
+            placeHolder={nicknamePlaceholder}
+            buttonName={buttonActive.nickname ? '중복확인' : '확인완료'}
+            buttonEvent={() => checkDuplicate('nickname', watch('nickname'))}
+            required
+            active={buttonActive.nickname}
+          />
+
+          <InputGroup
+            register={register}
+            errors={errors}
+            registerName="user_id"
+            idName="user_id"
+            labelName="아이디"
+            inputType="text"
+            placeHolder={userIdPlaceholder}
+            buttonName={buttonActive.user_id ? '중복확인' : '확인완료'}
+            buttonEvent={() => checkDuplicate('user_id', watch('user_id'))}
+            required
+            active={buttonActive.user_id}
+          />
           <InputGroup
             register={register}
             errors={errors}
