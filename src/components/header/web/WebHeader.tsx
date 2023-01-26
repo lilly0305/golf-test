@@ -3,7 +3,7 @@ import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
-import { useUser } from '@global-states/useUser';
+import { IUserData } from '@global-states/useUser';
 import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
 import WebNav from './WebNav';
 import MypageNav from '../MypageNav';
@@ -19,9 +19,11 @@ const WebHeaderContainer = styled.div(({ theme }) => ({
   color: theme.color.white,
 }));
 
-function WebHeader() {
+interface IWebHeader {
+  userData: IUserData | null | undefined;
+}
+function WebHeader({ userData }: IWebHeader) {
   const theme = useTheme();
-  const { userData } = useUser();
 
   return (
     <WebHeaderContainer>

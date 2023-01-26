@@ -96,7 +96,7 @@ function MypageNav({ userData }: IMypageNav) {
 
   const logout = useCallback(() => {
     localStorage.removeItem('tokens');
-    queryclient.invalidateQueries('userData');
+    queryclient.setQueryData('userData', null);
     navigate('/login');
   }, [queryclient, navigate]);
 

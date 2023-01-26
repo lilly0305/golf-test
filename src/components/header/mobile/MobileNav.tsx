@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react';
 
 import { CroppedFigure, CroppedImage } from '@assets/styles/CommonStyles';
 import navList from '@components/header/navList.json';
-import { useUser } from '@global-states/useUser';
+import { IUserData } from '@global-states/useUser';
 import MypageNav from '../MypageNav';
 
 interface IMobileNavContainer {
@@ -48,10 +48,10 @@ const Footer = styled.p(({ theme }) => ({
 
 interface IMobileNav {
   active: boolean;
+  userData: IUserData | null | undefined;
 }
-function MobileNav({ active }: IMobileNav) {
+function MobileNav({ active, userData }: IMobileNav) {
   const theme = useTheme();
-  const { userData } = useUser();
   const queryClient = useQueryClient();
 
   return (
