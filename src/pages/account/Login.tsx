@@ -13,6 +13,7 @@ import { yupLogin } from '@utils/yupValidation';
 import PageTitle from '@components/item/PageTitle';
 import { ErrorMessage } from '@components/message';
 import { userIdPlaceholder, validPwPlaceholder } from '@utils/placeholder';
+import { useQueryClient } from 'react-query';
 
 const Container = styled.div(() => ({}));
 
@@ -55,6 +56,7 @@ const formOptions = {
 
 function Login() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
@@ -69,10 +71,9 @@ function Login() {
       try {
         const { data, status } = await axios.post('/api/v1/user/sign-in', loginData);
         if (status === 200) {
-          console.log(data.data.access_token);
+          localStorage.setItem('tokens', JSON.stringify(data.data));
+          queryClient.invalidateQueries('userData');
           navigate('/');
-          // queryclient.invalidateQueries('userData');
-          localStorage.setItem('accessToken', data.data.access_token);
         }
       } catch (error: any) {
         if (error !== undefined || null) {
@@ -84,7 +85,7 @@ function Login() {
         }
       }
     },
-    [navigate],
+    [navigate, queryClient],
   );
 
   return (

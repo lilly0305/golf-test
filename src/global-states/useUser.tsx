@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 export interface IUserData {
   user_key: number;
@@ -25,18 +26,25 @@ interface IUseUser {
   isLoggedIn: boolean;
 }
 export function useUser(): IUseUser {
-  const token = localStorage.getItem('accessToken');
+  const token: any = localStorage.getItem('tokens');
   const queryclient = useQueryClient();
+  const navigate = useNavigate();
 
-  async function getUser(storedToken: string | null): Promise<IUserData | null> {
+  async function getUser(storedToken: any): Promise<IUserData | null> {
     if (storedToken === null) return null;
 
-    const res = await axios.get('/api/v1/user/my-info', {
-      headers: { Authorization: `Bearer ${storedToken}` },
-    });
+    console.log(storedToken, 'get user');
 
-    console.log(res);
-    return res.data.data;
+    let res;
+    try {
+      res = await axios.get('/api/v1/user/my-info', {
+        headers: { Authorization: `Bearer ${storedToken?.access_token}` },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    return res?.data.data;
   }
 
   function updateUser(newUser: IUserData): void {
@@ -47,25 +55,37 @@ export function useUser(): IUseUser {
     queryclient.setQueryData('userData', null);
   }
 
-  const { data: userData } = useQuery<IUserData | null>('userData', () => getUser(token), {
-    staleTime: 60 * 1000 * 10, // 10분,
-    cacheTime: 60 * 1000 * 20, // 20분,
-    retry: 0,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: true,
-    refetchInterval: 60 * 1000 * 10,
-    onSuccess: (received: IUserData | null) => {
-      console.log(received);
-      if (!received) {
-        console.log('clear user');
-        clearUser();
-      } else {
-        updateUser(received);
-        console.log('update user');
-      }
+  const { data: userData } = useQuery<IUserData | null>(
+    'userData',
+    () => getUser(JSON.parse(token)),
+    {
+      staleTime: 60 * 1000 * 10, // 10분,
+      cacheTime: 60 * 1000 * 20, // 20분,
+      retry: 0,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      refetchInterval: 60 * 1000 * 10,
+      enabled: token !== null,
+      onSuccess: (received: IUserData | null) => {
+        if (!received) {
+          console.log('clear user');
+          // clearUser();
+        } else {
+          updateUser(received);
+          console.log(received, 'update user');
+        }
+      },
+      onError: (error: any) => {
+        // error
+        if (error.response.status === 401) {
+          localStorage.removeItem('tokens');
+          queryclient.invalidateQueries('userData');
+          navigate('/login');
+        }
+      },
     },
-  });
+  );
 
   const isLoggedIn = userData !== null;
 

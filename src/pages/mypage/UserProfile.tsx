@@ -15,7 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
 import { IUserProfile } from '@utils/types';
 import { nicknamePlaceholder } from '@utils/placeholder';
-import { AveScoreOptions, careerOptions, proTypeOptions } from '@components/inputs/selectOptions';
+import { AveScoreOptions, careerOptions, ISelectOptions } from '@components/inputs/selectOptions';
 import { Buttons } from '@components/buttons';
 import { useQueryClient } from 'react-query';
 
@@ -34,6 +34,7 @@ const SelectWrapper = styled.div(() => ({
 function UserProfile() {
   const queryClient = useQueryClient();
   const userData: IUserProfile | undefined = queryClient.getQueryData('userData');
+  const proTypeCode: Array<ISelectOptions> | undefined = queryClient.getQueryData('proTypeCode');
 
   const [checkArr, setCheckArr] = useState<string[]>([]);
 
@@ -107,7 +108,7 @@ function UserProfile() {
             registerName="pro_type"
             idName="pro_type"
             labelName="프로 유형"
-            optionList={proTypeOptions}
+            optionList={proTypeCode}
           />
         )}
 

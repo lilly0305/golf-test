@@ -35,7 +35,7 @@ interface ISelectInput {
   idName: string;
   labelName: string;
   required?: boolean;
-  optionList: Array<ISelectOptions>;
+  optionList: Array<ISelectOptions> | undefined;
 }
 function SelectInput({
   register,
@@ -57,9 +57,9 @@ function SelectInput({
       </InputLabel>
 
       <StyledSelect {...(register && register(registerName))}>
-        {optionList.map((option) => (
-          <StyledOption key={option.id} value={option.value}>
-            {option.name}
+        {optionList?.map((option) => (
+          <StyledOption key={option.code_name} value={option.code_value}>
+            {option.code_name}
           </StyledOption>
         ))}
       </StyledSelect>

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
 import styled from '@emotion/styled';
-import { IUserData } from '@global-states/useUser';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { useQueryClient } from 'react-query';
+import { IUserData } from '@global-states/useUser';
 
 const MypageModal = styled.div(() => ({
   position: 'relative',
@@ -66,6 +66,7 @@ interface IMypageNav {
 function MypageNav({ userData }: IMypageNav) {
   const queryclient = useQueryClient();
   const wrapperRef = useRef(null);
+  const navigate = useNavigate();
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [arrowToggle, setArrowToggle] = useState(false);
@@ -94,9 +95,10 @@ function MypageNav({ userData }: IMypageNav) {
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem('tokens');
     queryclient.invalidateQueries('userData');
-  }, [queryclient]);
+    navigate('/login');
+  }, [queryclient, navigate]);
 
   return (
     <MypageModal ref={wrapperRef}>

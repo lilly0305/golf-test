@@ -5,7 +5,7 @@ interface IPrivateRouter {
   children: React.ReactElement;
 }
 function PrivateRouter({ children }: IPrivateRouter) {
-  const accessible = localStorage.getItem('accessToken') !== null;
+  const accessible = localStorage.getItem('tokens') !== null;
 
   return accessible ? children : <Login />;
 }

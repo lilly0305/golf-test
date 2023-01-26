@@ -1,35 +1,34 @@
 export interface ISelectOptions {
-  id: number;
-  value: string;
-  name: string;
+  code_value: string;
+  code_name: string;
 }
 
 // 프로필 - 프로 유형
 export const proTypeOptions = [
   {
     id: 1,
-    value: '',
-    name: '프로 유형을 선택해주세요',
+    code_value: '',
+    code_name: '프로 유형을 선택해주세요',
   },
   {
     id: 2,
-    value: 'pro01',
-    name: '티칭프로',
+    code_value: 'pro01',
+    code_name: '티칭프로',
   },
   {
     id: 3,
-    value: 'pro02',
-    name: '협회준회원',
+    code_value: 'pro02',
+    code_name: '협회준회원',
   },
   {
     id: 4,
-    value: 'pro03',
-    name: '협회정회원',
+    code_value: 'pro03',
+    code_name: '협회정회원',
   },
   {
     id: 5,
-    value: 'pro04',
-    name: '투어 프로',
+    code_value: 'pro04',
+    code_name: '투어 프로',
   },
 ];
 
@@ -37,43 +36,43 @@ export const proTypeOptions = [
 export const AveScoreOptions = [
   {
     id: 1,
-    value: 'aveScore01',
-    name: '언더',
+    code_value: 'aveScore01',
+    code_name: '언더',
   },
   {
     id: 2,
-    value: 'aveScore02',
-    name: '이븐',
+    code_value: 'aveScore02',
+    code_name: '이븐',
   },
   {
     id: 3,
-    value: 'aveScore03',
-    name: '싱글',
+    code_value: 'aveScore03',
+    code_name: '싱글',
   },
   {
     id: 4,
-    value: 'aveScore04',
-    name: '평균 80타',
+    code_value: 'aveScore04',
+    code_name: '평균 80타',
   },
   {
     id: 5,
-    value: 'aveScore05',
-    name: '평균 90타',
+    code_value: 'aveScore05',
+    code_name: '평균 90타',
   },
   {
     id: 6,
-    value: 'aveScore06',
-    name: '평균 100타',
+    code_value: 'aveScore06',
+    code_name: '평균 100타',
   },
   {
     id: 7,
-    value: 'aveScore07',
-    name: '평균 110타',
+    code_value: 'aveScore07',
+    code_name: '평균 110타',
   },
   {
     id: 8,
-    value: 'aveScore08',
-    name: '평균 120타 이상',
+    code_value: 'aveScore08',
+    code_name: '평균 120타 이상',
   },
 ];
 
@@ -81,57 +80,57 @@ export const AveScoreOptions = [
 export const careerOptions = [
   {
     id: 1,
-    value: 'career01',
-    name: '1년',
+    code_value: 'career01',
+    code_name: '1년',
   },
   {
     id: 2,
-    value: 'career02',
-    name: '2년',
+    code_value: 'career02',
+    code_name: '2년',
   },
   {
     id: 3,
-    value: 'career03',
-    name: '3년',
+    code_value: 'career03',
+    code_name: '3년',
   },
   {
     id: 4,
-    value: 'career04',
-    name: '4년',
+    code_value: 'career04',
+    code_name: '4년',
   },
   {
     id: 5,
-    value: 'career05',
-    name: '5년',
+    code_value: 'career05',
+    code_name: '5년',
   },
   {
     id: 6,
-    value: 'career06',
-    name: '6년',
+    code_value: 'career06',
+    code_name: '6년',
   },
   {
     id: 7,
-    value: 'career07',
-    name: '7년',
+    code_value: 'career07',
+    code_name: '7년',
   },
   {
     id: 8,
-    value: 'aveScore08',
-    name: '8년',
+    code_value: 'aveScore08',
+    code_name: '8년',
   },
   {
     id: 9,
-    value: 'aveScore09',
-    name: '9년',
+    code_value: 'aveScore09',
+    code_name: '9년',
   },
   {
     id: 10,
-    value: 'aveScore010',
-    name: '10년',
+    code_value: 'aveScore010',
+    code_name: '10년',
   },
   {
     id: 11,
-    value: 'aveScore011',
-    name: '10년 이상',
+    code_value: 'aveScore011',
+    code_name: '10년 이상',
   },
 ];

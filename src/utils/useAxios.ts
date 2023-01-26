@@ -1,13 +1,16 @@
 import axios from 'axios';
 
 const useAxios = () => {
-  const accessToken = localStorage.getItem('accessToken');
+  const token: any = localStorage.getItem('tokens');
 
-  const instance = axios.create({
-    headers: { Authorization: `Bearer ${accessToken}` },
+  if (token === null) return null;
+  const parseToken = JSON.parse(token);
+
+  const axiosInstance = axios.create({
+    headers: { Authorization: `Bearer ${parseToken?.accessToken}` },
   });
 
-  return instance;
+  return axiosInstance;
 };
 
 export default useAxios;

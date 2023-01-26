@@ -33,7 +33,7 @@ function WebHeader() {
 
       <WebNav />
 
-      {userData !== null ? (
+      {userData !== null && userData !== undefined ? (
         <MypageNav userData={userData} />
       ) : (
         <Link to="/login">

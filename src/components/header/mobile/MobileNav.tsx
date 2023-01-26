@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useQueryClient } from 'react-query';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 
@@ -51,11 +52,12 @@ interface IMobileNav {
 function MobileNav({ active }: IMobileNav) {
   const theme = useTheme();
   const { userData } = useUser();
+  const queryClient = useQueryClient();
 
   return (
     <MobileNavContainer active={active}>
       {userData !== null ? (
-        <MypageNav userData={userData} />
+        <MypageNav userData={queryClient.getQueryData('userData')} />
       ) : (
         <StyledLink to="/login">
           <CroppedFigure width="4.8rem" height="4.8rem">
