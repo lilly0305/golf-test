@@ -3,6 +3,13 @@ export interface ILoginForm {
   user_id: string;
   user_pw: string;
 }
+export interface INicknameCheck {
+  nickname: string;
+}
+
+export interface IUserIdCheck {
+  user_id: string;
+}
 
 // NOTE: 회원가입
 export interface ISignUp {

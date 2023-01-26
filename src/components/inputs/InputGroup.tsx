@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import styled from '@emotion/styled';
 
 import { Path, UseFormRegister, RegisterOptions, FieldErrorsImpl } from 'react-hook-form';
-import { IChangePw, IFindId, ILoginForm, ISignUp } from '@utils/types';
+import { IChangePw, IFindId, ILoginForm, INicknameCheck, ISignUp } from '@utils/types';
 import { useTheme } from '@emotion/react';
 import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { mq } from '@utils/mediaquery/mediaQuery';
@@ -44,7 +44,7 @@ interface IStyledButton {
 const StyledButton = styled.button<IStyledButton>(({ theme, active = true }) => ({
   marginLeft: '1rem',
   padding: '0.8rem 1.2rem',
-  background: active ? theme.color.point_color : theme.color.disabled_grey,
+  background: active ? theme.color.point_color : theme.color.divider_grey,
   fontSize: '1.4rem',
   borderRadius: '3rem',
   color: theme.color.white,
@@ -59,9 +59,9 @@ const InputButtonWrap = styled.div(() => ({
 }));
 
 interface IInputGroup {
-  register?: UseFormRegister<ILoginForm | ISignUp | IFindId | IChangePw | any>;
-  errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp | IFindId>> | any;
-  registerName: Path<ILoginForm | ISignUp | IFindId | IChangePw>;
+  register?: UseFormRegister<ILoginForm | ISignUp | INicknameCheck | IFindId | IChangePw | any>;
+  errors: Partial<FieldErrorsImpl<ILoginForm | ISignUp | INicknameCheck | IFindId>> | any;
+  registerName: Path<ILoginForm | ISignUp | INicknameCheck | IFindId | IChangePw>;
   idName: string;
   labelName: string;
   inputType: 'text' | 'email' | 'number' | 'password';
@@ -73,6 +73,7 @@ interface IInputGroup {
   readonly?: boolean;
   disabled?: boolean;
   buttonEvent?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  buttonType?: 'button' | 'reset' | 'submit' | undefined;
 }
 function InputGroup({
   idName,
@@ -83,11 +84,12 @@ function InputGroup({
   register,
   errors,
   required,
-  active,
+  active = true,
   buttonName,
   readonly,
   disabled,
   buttonEvent,
+  buttonType = 'button',
 }: IInputGroup) {
   const theme = useTheme();
 
@@ -113,7 +115,12 @@ function InputGroup({
           />
 
           {buttonName && (
-            <StyledButton type="button" active={active} onClick={buttonEvent}>
+            <StyledButton
+              type={buttonType}
+              active={active}
+              onClick={buttonEvent}
+              disabled={!active}
+            >
               {buttonName}
             </StyledButton>
           )}

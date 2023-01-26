@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import styled from '@emotion/styled';
@@ -10,32 +9,25 @@ import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { PageTitle } from '@components/item';
 import { ISignUp } from '@utils/types';
 import { yupJoin } from '@utils/yupValidation';
-import {
-  confirmPwPlaceholder,
-  nicknamePlaceholder,
-  phonePlaceholder,
-  userIdPlaceholder,
-  userPwPlaceholder,
-} from '@utils/placeholder';
+import { confirmPwPlaceholder, phonePlaceholder, userPwPlaceholder } from '@utils/placeholder';
 import { mq } from '@utils/mediaquery/mediaQuery';
-import { INicknameCheck } from '@utils/axiosResponseTypes';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import Modal from '@components/modal/Modal';
-import axios, { AxiosError } from 'axios';
 import { policyCheck } from './joinPolicy';
+import NicknameCheck from './NicknameCheck';
+import UserIdCheck from './UserIdCheck';
 
 const Container = styled.div(() => ({
+  maxWidth: '51.4rem',
+  margin: '0 auto 8rem',
   width: '100%',
-  margin: 0,
   padding: 0,
 }));
 
 const JoinForm = styled.form(() => ({
   width: '100%',
-  maxWidth: '51.4rem',
-  margin: '0 auto 8rem',
 }));
 
 const InputWrap = styled.div(() => ({
@@ -75,7 +67,6 @@ const formOptions = {
 function Join() {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
-  const [confirmedPhone, setConfirmedPhone] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
 
   const {
@@ -94,33 +85,9 @@ function Join() {
     navigate('/join-complete');
   }, [navigate]);
 
-  const checkNickname = async (nickname: string) => {
-    const { data } = await axios.post('/api/v1/user/check-nickname', { nickname: nickname });
-
-    return data;
-  };
-
-  const { mutate } = useMutation<INicknameCheck, AxiosError, string>(checkNickname, {
-    onMutate: (variables) => {
-      // variables : {id: 1}
-      console.log('onMutate', variables);
-    },
-    onError: (error, variables, context) => {
-      // error
-      console.log('error', error, variables, context);
-    },
-    onSuccess: (data, variables, context) => {
-      console.log('success', data, variables, context);
-    },
-    onSettled: (data, error, variables, context) => {
-      // end
-      console.log('settled', data, error, variables, context);
-    },
-  });
-
-  const checkNicknameHandler = useCallback(() => mutate('하루세번펭수'), [mutate]);
-
-  const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
+  const confirmPhone = useCallback(() => {
+    setValue('phone', '01049555429');
+  }, [setValue]);
 
   return (
     <Container>
@@ -138,37 +105,13 @@ function Join() {
       </Modal>
       <PageTitle pageTitle="회원가입" />
 
+      <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
+
+      <NicknameCheck setValue={setValue} />
+      <UserIdCheck setValue={setValue} />
+
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrap>
-          <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
-
-          <InputGroup
-            register={register}
-            errors={errors}
-            registerName="nickname"
-            idName="nickname"
-            labelName="닉네임"
-            inputType="text"
-            placeHolder={nicknamePlaceholder}
-            required
-            buttonName="중복확인"
-            buttonEvent={checkNicknameHandler}
-            active
-          />
-
-          <InputGroup
-            register={register}
-            errors={errors}
-            registerName="user_id"
-            idName="user_id"
-            labelName="아이디"
-            inputType="text"
-            placeHolder={userIdPlaceholder}
-            required
-            buttonName="중복확인"
-            active={false}
-          />
-
           <InputGroup
             register={register}
             errors={errors}
@@ -198,11 +141,11 @@ function Join() {
             idName="phone"
             labelName="휴대폰 번호"
             inputType="text"
-            placeHolder={confirmedPhone ? '01049555429' : phonePlaceholder}
             required
             buttonName="휴대폰 인증"
-            disabled
+            placeHolder={phonePlaceholder}
             buttonEvent={confirmPhone}
+            disabled
           />
 
           <PolicyWrap>
