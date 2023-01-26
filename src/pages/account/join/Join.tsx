@@ -103,9 +103,8 @@ function Join() {
   }, [navigate, joinData]);
 
   const checkDuplicate = useCallback(
-    async (key: string, value: string): Promise<any> => {
-      trigger('nickname');
-      trigger('user_id');
+    async (key: string | any, value: string): Promise<any> => {
+      trigger(key);
 
       try {
         const res = await axios.post('/api/v1/user/check-duplicate', {
@@ -125,7 +124,7 @@ function Join() {
   );
 
   const confirmPhone = useCallback(() => {
-    setValue('phone', '01049555429');
+    setValue('phone', '01049231232');
   }, [setValue]);
 
   return (
