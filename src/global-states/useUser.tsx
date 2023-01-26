@@ -15,6 +15,7 @@ export interface IUserData {
   marketing_policy: boolean;
   career: string;
   file_url: string;
+  avg_score: string;
 }
 
 interface IUseUser {

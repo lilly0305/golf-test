@@ -49,7 +49,6 @@ function UserAccount() {
   const queryClient = useQueryClient();
   const userData: IUserAccount | undefined = queryClient.getQueryData('userData');
 
-  const [confirmedPhone, setConfirmedPhone] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
   const [modal, setModal] = useState(false);
   const [message, setMessage] = useState(false);
@@ -65,6 +64,13 @@ function UserAccount() {
       marketing_policy: userData?.marketing_policy,
     },
   };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IUserAccount>(formOptions);
 
   useEffect(() => {
     if (userData !== undefined) {
@@ -90,7 +96,9 @@ function UserAccount() {
     };
   }, [userData]);
 
-  const confirmPhone = useCallback(() => setConfirmedPhone((prev) => !prev), [setConfirmedPhone]);
+  const confirmPhone = useCallback(() => {
+    console.log('confirmPhone');
+  }, []);
 
   const onSubmit: SubmitHandler<IUserAccount> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
@@ -106,13 +114,6 @@ function UserAccount() {
   const changePwModal = useCallback(() => {
     setModal(true);
   }, []);
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<IUserAccount>(formOptions);
 
   return (
     <Container>
@@ -156,7 +157,7 @@ function UserAccount() {
           idName="phone"
           labelName="휴대폰 번호"
           inputType="text"
-          placeHolder={confirmedPhone ? '01049555429' : phonePlaceholder}
+          placeHolder={phonePlaceholder}
           required
           buttonName="휴대폰 인증"
           disabled

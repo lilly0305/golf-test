@@ -54,7 +54,7 @@ export interface IUserProfile {
   nickname: string;
   pro_yn: boolean;
   pro_type: string;
-  ave_score: string;
+  avg_score: string;
   career: string;
   introduce: string;
 }

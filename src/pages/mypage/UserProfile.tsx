@@ -13,7 +13,7 @@ import {
 } from '@components/inputs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
-import { IUserAccount, IUserProfile } from '@utils/types';
+import { IUserProfile } from '@utils/types';
 import { nicknamePlaceholder } from '@utils/placeholder';
 import { AveScoreOptions, careerOptions, proTypeOptions } from '@components/inputs/selectOptions';
 import { Buttons } from '@components/buttons';
@@ -33,7 +33,7 @@ const SelectWrapper = styled.div(() => ({
 
 function UserProfile() {
   const queryClient = useQueryClient();
-  const userData: IUserAccount | undefined = queryClient.getQueryData('userData');
+  const userData: IUserProfile | undefined = queryClient.getQueryData('userData');
 
   const [checkArr, setCheckArr] = useState<string[]>([]);
 
@@ -41,10 +41,10 @@ function UserProfile() {
     resolver: yupResolver(yupUserProfile),
     defaultValues: {
       nickname: userData?.nickname,
-      pro_yn: false,
+      pro_yn: userData?.pro_yn,
+      avg_score: userData?.avg_score,
+      career: userData?.career,
       pro_type: '',
-      ave_score: 'aveScore01',
-      career: 'career01',
       introduce: '',
     },
   };
@@ -115,8 +115,8 @@ function UserProfile() {
           <SelectInput
             register={register}
             errors={errors}
-            registerName="ave_score"
-            idName="ave_score"
+            registerName="avg_score"
+            idName="avg_score"
             labelName="평균 타수"
             optionList={AveScoreOptions}
           />

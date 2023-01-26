@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,10 +11,8 @@ import Buttons from '@components/buttons/Buttons';
 import { ILoginForm } from '@utils/types';
 import { yupLogin } from '@utils/yupValidation';
 import PageTitle from '@components/item/PageTitle';
-import { useQueryClient } from 'react-query';
 import { ErrorMessage } from '@components/message';
 import { userIdPlaceholder, validPwPlaceholder } from '@utils/placeholder';
-import axios from 'axios';
 
 const Container = styled.div(() => ({}));
 
@@ -56,7 +55,6 @@ const formOptions = {
 
 function Login() {
   const navigate = useNavigate();
-  const queryclient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
@@ -73,7 +71,7 @@ function Login() {
         if (status === 200) {
           console.log(data.data.access_token);
           navigate('/');
-          queryclient.invalidateQueries('userData');
+          // queryclient.invalidateQueries('userData');
           localStorage.setItem('accessToken', data.data.access_token);
         }
       } catch (error: any) {
@@ -86,7 +84,7 @@ function Login() {
         }
       }
     },
-    [navigate, queryclient],
+    [navigate],
   );
 
   return (
