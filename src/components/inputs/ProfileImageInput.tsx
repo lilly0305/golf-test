@@ -2,7 +2,7 @@ import React, { memo, useCallback, useState } from 'react';
 
 import styled from '@emotion/styled';
 
-import { CroppedFigure, CroppedImage, RemixIcon } from '@assets/styles/CommonStyles';
+import { CroppedFigure, CroppedImage, ErrorMessage, RemixIcon } from '@assets/styles/CommonStyles';
 import { useTheme } from '@emotion/react';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import {
@@ -10,6 +10,9 @@ import {
   FILE_SIZE_MAX_LIMIT,
   ONLY_IMAGE_TYPE,
 } from '@utils/functions/fileRelated';
+import axios from 'axios';
+import { FieldErrorsImpl, UseFormSetError, UseFormSetValue } from 'react-hook-form';
+import { ISignUp, IUserProfile } from '@utils/types';
 
 const ImageInputContainer = styled.div(() => ({
   marginBottom: '1.4rem',
@@ -82,76 +85,107 @@ const DeleteImageButton = styled.i<IDeleteImageButton>(({ theme }) => ({
 interface IImageInput {
   idName: string;
   labelName: string;
+  setValue: UseFormSetValue<ISignUp | IUserProfile | any>;
+  setError: UseFormSetError<ISignUp | IUserProfile | any>;
+  errors: Partial<FieldErrorsImpl<ISignUp | IUserProfile>> | any;
 }
-function ImageInput({ idName, labelName }: IImageInput) {
+function ImageInput({ idName, labelName, setValue, setError, errors }: IImageInput) {
   const theme = useTheme();
   const [file, setFile] = useState<string>('');
+  const [loading, setLoading] = useState(false);
 
-  const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.currentTarget;
-    const files = (target.files as FileList)[0];
+  const onFileChange = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const target = e.currentTarget;
+      const files = (target.files as FileList)[0];
 
-    if (files === undefined) {
-      return;
-    }
+      if (files === undefined) {
+        return;
+      }
 
-    if (!fileExtensionValid(files)) {
-      target.value = '';
-      console.log(`업로드 가능한 확장자가 아닙니다. [가능한 확장자 : ${ONLY_IMAGE_TYPE}]`);
-      return;
-    }
+      if (!fileExtensionValid(files)) {
+        target.value = '';
+        setError('file_url', {
+          message: `업로드 가능한 확장자가 아닙니다. [가능한 확장자 : ${ONLY_IMAGE_TYPE}]`,
+        });
 
-    // 파일 용량 체크
-    if (files.size > FILE_SIZE_MAX_LIMIT) {
-      target.value = '';
-      console.log('업로드 가능한 최대 용량은 5MB입니다. ');
-      return;
-    }
+        return;
+      }
 
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(files);
-    fileReader.onload = (event) => {
-      const result = event?.target?.result as string;
-      setFile(result);
-    };
-  }, []);
+      // 파일 용량 체크
+      if (files.size > FILE_SIZE_MAX_LIMIT) {
+        target.value = '';
+        setError('file_url', { message: '업로드 가능한 최대 용량은 10MB입니다.' });
+
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const res = await axios.post(
+          '/api/v1/file/upload',
+          {
+            upfile: files,
+          },
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          },
+        );
+
+        if (res.status === 200) {
+          setFile(res.data.fileUrl);
+          setValue('file_url', res.data.fileUrl);
+          setLoading(false);
+        }
+      } catch (error: any) {
+        console.log(error);
+        setLoading(false);
+      }
+    },
+    [setError, setValue],
+  );
 
   const images = [
     {
       id: 1,
-      src: theme.image.profileSample01,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample01.png',
     },
     {
       id: 2,
-      src: theme.image.profileSample02,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample02.png',
     },
     {
       id: 3,
-      src: theme.image.profileSample03,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample03.png',
     },
     {
       id: 4,
-      src: theme.image.profileSample04,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample04.png',
     },
     {
       id: 5,
-      src: theme.image.profileSample05,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample05.png',
     },
     {
       id: 6,
-      src: theme.image.profileSample06,
+      src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample06.png',
     },
   ];
 
   return (
     <ImageInputContainer>
       <Label>{labelName}</Label>
+      <ErrorMessage margin="0">{errors?.file_url?.message}</ErrorMessage>
       <Wrapper>
         {file === '' ? (
           <ImageInputLabel htmlFor={idName}>
-            <StyledImageInput type="file" id={idName} onChange={onFileChange} />
+            <StyledImageInput type="file" accept="image/*" id={idName} onChange={onFileChange} />
 
-            <RemixIcon className="ri-image-add-line" color={theme.color.placeholder_color} />
+            {loading ? (
+              'Loading..'
+            ) : (
+              <RemixIcon className="ri-image-add-line" color={theme.color.placeholder_color} />
+            )}
           </ImageInputLabel>
         ) : (
           <ImagePreview>
@@ -169,7 +203,10 @@ function ImageInput({ idName, labelName }: IImageInput) {
               key={image.id}
               src={image.src}
               alt={`프로필 샘플 ${image.id}`}
-              onClick={() => setFile(image.src)}
+              onClick={() => {
+                setFile(image.src);
+                setValue('file_url', image.src);
+              }}
             />
           ))}
         </ImageWrapper>

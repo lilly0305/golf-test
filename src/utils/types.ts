@@ -24,9 +24,7 @@ export interface ISignUp {
   personal_policy: boolean;
   sms_policy: boolean;
   marketing_policy: boolean;
-  file_path: string;
-  origin_file_name: string;
-  temp_file_name: string;
+  file_url: string;
 }
 
 // NOTE: 아이디 찾기

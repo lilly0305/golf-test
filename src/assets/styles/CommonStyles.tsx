@@ -39,7 +39,10 @@ export const RemixIcon = styled.i<IRemixIcon>(
   }),
 );
 
-export const ErrorMessage = styled.div(({ theme }) => ({
+interface IErrorMessage {
+  margin?: string;
+}
+export const ErrorMessage = styled.div<IErrorMessage>(({ theme, margin = '0.2rem 0 0 12rem' }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.4rem 0',
@@ -49,7 +52,7 @@ export const ErrorMessage = styled.div(({ theme }) => ({
   height: '100%',
   minHeight: '1.8rem',
   [mq('desktop')]: {
-    margin: '0.2rem 0 0 12rem',
+    margin: margin,
   },
 }));
 

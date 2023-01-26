@@ -52,6 +52,8 @@ function UserProfile() {
   const {
     register,
     handleSubmit,
+    setValue,
+    setError,
     formState: { errors },
   } = useForm<IUserProfile>(formOptions);
 
@@ -64,7 +66,13 @@ function UserProfile() {
       <PageTitle pageTitle="프로필 설정" />
 
       <UserProfileForm onSubmit={handleSubmit(onSubmit)}>
-        <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
+        <ProfileImageInput
+          idName="profile"
+          labelName="프로필 사진 (300px X 300px | 1:1 비율)"
+          setValue={setValue}
+          setError={setError}
+          errors={errors}
+        />
 
         <InputGroup
           register={register}

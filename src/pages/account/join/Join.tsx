@@ -25,14 +25,15 @@ import Modal from '@components/modal/Modal';
 import { policyCheck } from './joinPolicy';
 
 const Container = styled.div(() => ({
-  maxWidth: '51.4rem',
-  margin: '0 auto 8rem',
   width: '100%',
+  margin: 0,
   padding: 0,
 }));
 
 const JoinForm = styled.form(() => ({
   width: '100%',
+  maxWidth: '51.4rem',
+  margin: '0 auto 8rem',
 }));
 
 const InputWrap = styled.div(() => ({
@@ -63,14 +64,13 @@ const formOptions = {
     personal_policy: false,
     sms_policy: false,
     marketing_policy: false,
-    file_path: '',
-    origin_file_name: '',
-    temp_file_name: '',
+    file_url: '',
   },
 };
 
 function Join() {
   const navigate = useNavigate();
+  const [joinData, setJoinData] = useState({});
   const [modal, setModal] = useState(false);
   const [checkArr, setCheckArr] = useState<string[]>([]);
   const [buttonActive, setButtonActive] = useState({
@@ -90,23 +90,23 @@ function Join() {
 
   const onSubmit: SubmitHandler<ISignUp> = useCallback((data) => {
     console.log(JSON.stringify(data, null, 4));
+    setJoinData(data);
     setModal(true);
   }, []);
 
-  const postJoin = useCallback(() => {
-    navigate('/join-complete');
-  }, [navigate]);
-
-  console.log(errors);
+  const postJoin = useCallback(async () => {
+    const res = await axios.post('/api/v1/user/sign-up', joinData);
+    console.log(res);
+    if (res.status === 200) {
+      navigate('/join-complete');
+    }
+  }, [navigate, joinData]);
 
   const checkDuplicate = useCallback(
     async (key: string, value: string): Promise<any> => {
-      if (key === 'nickname') {
-        trigger('nickname');
-      } else if (key === 'user_id') {
-        trigger('user_id');
-      }
-      console.log('ddd');
+      trigger('nickname');
+      trigger('user_id');
+
       try {
         const res = await axios.post('/api/v1/user/check-duplicate', {
           [key]: value,
@@ -144,10 +144,15 @@ function Join() {
       </Modal>
       <PageTitle pageTitle="회원가입" />
 
-      <ProfileImageInput idName="profile" labelName="프로필 사진 (300px X 300px | 1:1 비율)" />
-
       <JoinForm onSubmit={handleSubmit(onSubmit)}>
         <InputWrap>
+          <ProfileImageInput
+            idName="profile"
+            labelName="프로필 사진 (300px X 300px | 1:1 비율)"
+            setValue={setValue}
+            setError={setError}
+            errors={errors}
+          />
           <InputGroup
             register={register}
             errors={errors}
