@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IChangePw } from '@utils/types';
@@ -37,8 +37,10 @@ const Button = styled.button<IButton>(({ theme, buttonType = 'inactive' }) => ({
 
 interface IChangePasswordModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessage: React.Dispatch<React.SetStateAction<{ edit: boolean; changePw: boolean }>>;
+  message: { edit: boolean; changePw: boolean };
 }
-function ChangePasswordModal({ setModal }: IChangePasswordModal) {
+function ChangePasswordModal({ setModal, setMessage, message }: IChangePasswordModal) {
   const interceptor = useAxios();
 
   const formOptions = {
@@ -53,28 +55,45 @@ function ChangePasswordModal({ setModal }: IChangePasswordModal) {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<IChangePw>(formOptions);
 
-  console.log(errors);
-
   const changePassword: SubmitHandler<IChangePw> = useCallback(
-    (data) => {
+    async (data) => {
       console.log(JSON.stringify(data, null, 4));
 
-      const res = interceptor?.patch('/api/v1/user/pw', {
-        user_pw: data.user_pw,
-        new_pw: data.new_pw,
-      });
+      try {
+        const res = await interceptor?.patch('/api/v1/user/pw', {
+          user_pw: data.user_pw,
+          new_pw: data.new_pw,
+        });
 
-      console.log(res);
+        if (res?.status === 200) {
+          setMessage({ ...message, changePw: true });
+          setModal(false);
+        }
+      } catch (error: any) {
+        if (error.response?.status === 400) {
+          console.log('ddd');
+          setError('user_pw', { message: '기존 비밀번호가 일치하지 않습니다.' });
+        }
+      }
     },
-    [interceptor],
+    [interceptor, setError, setModal, message, setMessage],
   );
 
   const closeModal = useCallback(() => {
     setModal(false);
   }, [setModal]);
+
+  useEffect(() => {
+    if (message) {
+      setTimeout(() => setMessage({ ...message, changePw: false }), 2000);
+    }
+  }, [message, setMessage]);
+
+  console.log(message, 'messge boolean');
 
   return (
     <ChangePwForm onSubmit={handleSubmit(changePassword)}>

@@ -8,9 +8,11 @@ import { Customer } from '@pages/customer';
 import { UserAccount, UserProfile } from '@pages/mypage';
 import { Header } from '@components/header';
 import { mq } from '@utils/mediaquery/mediaQuery';
+import { IUser } from '@utils/types';
 import { Join } from '@pages/account/join';
 import { JoinComplete } from '@pages/complete';
 import { ChangePw, FindAccount, FindIdComplete, FindPwComplete } from '@pages/account/find';
+import { useQueryClient } from 'react-query';
 import PrivateRouter from './PrivateRouter';
 
 const PageContainer = styled.div(() => ({
@@ -23,6 +25,10 @@ const PageContainer = styled.div(() => ({
 }));
 
 function PublicRouter() {
+  const queryClient = useQueryClient();
+
+  const userData: IUser | null | undefined = queryClient.getQueryData('userData');
+
   return (
     <div>
       <Header />
@@ -46,7 +52,7 @@ function PublicRouter() {
             path="/user-account"
             element={
               <PrivateRouter>
-                <UserAccount />
+                <UserAccount userData={userData} />
               </PrivateRouter>
             }
           />
@@ -55,7 +61,7 @@ function PublicRouter() {
             path="/user-profile"
             element={
               <PrivateRouter>
-                <UserProfile />
+                <UserProfile userData={userData} />
               </PrivateRouter>
             }
           />

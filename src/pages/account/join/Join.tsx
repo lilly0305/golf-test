@@ -132,7 +132,7 @@ function Join() {
   );
 
   const confirmPhone = useCallback(() => {
-    setValue('phone', '01049231232');
+    setValue('phone', '01043040302');
   }, [setValue]);
 
   return (
@@ -160,6 +160,7 @@ function Join() {
             setError={setError}
             errors={errors}
           />
+
           <InputGroup
             register={register}
             errors={errors}
@@ -187,6 +188,7 @@ function Join() {
             required
             active={buttonActive.user_id}
           />
+
           <InputGroup
             register={register}
             errors={errors}

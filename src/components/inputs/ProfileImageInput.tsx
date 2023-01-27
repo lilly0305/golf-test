@@ -176,7 +176,7 @@ function ImageInput({ idName, labelName, setValue, setError, errors }: IImageInp
   ];
 
   useEffect(() => {
-    if (userData?.file_url !== undefined && userData?.file_url !== '') {
+    if (userData?.file_url !== '') {
       setFile(userData?.file_url);
     } else {
       setFile('');

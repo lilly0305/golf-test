@@ -13,7 +13,7 @@ import {
 } from '@components/inputs';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { yupUserProfile } from '@utils/yupValidation';
-import { IUserProfile } from '@utils/types';
+import { IUser, IUserProfile } from '@utils/types';
 import { nicknamePlaceholder } from '@utils/placeholder';
 import { AveScoreOptions, careerOptions, ISelectOptions } from '@components/inputs/selectOptions';
 import { Buttons } from '@components/buttons';
@@ -32,9 +32,11 @@ const SelectWrapper = styled.div(() => ({
   marginTop: '1.8rem',
 }));
 
-function UserProfile() {
+interface IUserProfileProps {
+  userData: IUser | null | undefined;
+}
+function UserProfile({ userData }: IUserProfileProps) {
   const queryClient = useQueryClient();
-  const userData: IUserProfile | undefined = queryClient.getQueryData('userData');
   const proTypeCode: Array<ISelectOptions> | undefined = queryClient.getQueryData('proTypeCode');
 
   const [checkArr, setCheckArr] = useState<string[]>([]);

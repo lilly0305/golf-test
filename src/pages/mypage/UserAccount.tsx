@@ -8,13 +8,12 @@ import { AllCheckInput, InputGroup, InputText } from '@components/inputs';
 import { ErrorMessage, InputLabel } from '@assets/styles/CommonStyles';
 import { yupUserAccount } from '@utils/yupValidation';
 import { phonePlaceholder, userIdPlaceholder } from '@utils/placeholder';
-import { IUserAccount } from '@utils/types';
+import { IUser, IUserAccount } from '@utils/types';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { policyCheck } from '@pages/account/join/joinPolicy';
 import { Message } from '@components/message';
 import SingleCheckInput, { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
 import { Buttons } from '@components/buttons';
-import { useQueryClient } from 'react-query';
 import ModalPortal from '@components/modal/ModalPortal';
 import { Modal } from '@components/modal';
 import { ChangePasswordModal } from '@components/modal/modal-form';
@@ -45,13 +44,16 @@ const ChangePwButton = styled.button(({ theme }) => ({
   fontSize: '1.4rem',
 }));
 
-function UserAccount() {
-  const queryClient = useQueryClient();
-  const userData: IUserAccount | undefined = queryClient.getQueryData('userData');
-
+interface IUserProfileProps {
+  userData: IUser | null | undefined;
+}
+function UserAccount({ userData }: IUserProfileProps) {
   const [checkArr, setCheckArr] = useState<string[]>([]);
   const [modal, setModal] = useState(false);
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState({
+    edit: false,
+    changePw: false,
+  });
 
   const formOptions = {
     resolver: yupResolver(yupUserAccount),
@@ -73,7 +75,7 @@ function UserAccount() {
   } = useForm<IUserAccount>(formOptions);
 
   useEffect(() => {
-    if (userData !== undefined) {
+    if (userData) {
       if (userData.use_term_policy) {
         setCheckArr((prev) => [...prev, 'use_term_policy']);
       }
@@ -100,14 +102,19 @@ function UserAccount() {
     console.log('confirmPhone');
   }, []);
 
-  const onSubmit: SubmitHandler<IUserAccount> = useCallback((data) => {
-    console.log(JSON.stringify(data, null, 4));
-    setMessage(true);
-  }, []);
+  const onSubmit: SubmitHandler<IUserAccount> = useCallback(
+    (data) => {
+      console.log(JSON.stringify(data, null, 4));
+      setMessage({ ...message, edit: true });
+    },
+    [message],
+  );
 
   useEffect(() => {
-    if (message) {
-      setTimeout(() => setMessage(false), 2000);
+    if (message.edit) {
+      setTimeout(() => setMessage({ ...message, edit: false }), 2000);
+    } else if (message.changePw) {
+      setTimeout(() => setMessage({ ...message, changePw: false }), 2000);
     }
   }, [message]);
 
@@ -119,11 +126,12 @@ function UserAccount() {
     <Container>
       <ModalPortal>
         <Modal show={modal} setModal={setModal} modalTitle="비밀번호 변경" noButton>
-          <ChangePasswordModal setModal={setModal} />
+          <ChangePasswordModal setModal={setModal} message={message} setMessage={setMessage} />
         </Modal>
       </ModalPortal>
 
-      <Message show={message} message="회원 정보가 수정되었습니다👍" />
+      <Message show={message.edit} message="회원 정보가 수정되었습니다👍" />
+      <Message show={message.changePw} message="비밀번호가 정상적으로 수정되었습니다👍" />
 
       <PageTitle pageTitle="회원 정보 수정" />
 

@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { mq } from '@utils/mediaquery/mediaQuery';
 import { useQueryClient } from 'react-query';
 import { IUserData } from '@global-states/useUser';
+import { useTheme } from '@emotion/react';
 
 const MypageModal = styled.div(() => ({
   position: 'relative',
@@ -68,6 +69,8 @@ function MypageNav({ userData }: IMypageNav) {
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
 
+  const theme = useTheme();
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [arrowToggle, setArrowToggle] = useState(false);
 
@@ -104,7 +107,11 @@ function MypageNav({ userData }: IMypageNav) {
     <MypageModal ref={wrapperRef}>
       <Profile onClick={handleModalToggle}>
         <CroppedFigure width="4.8rem" height="4.8rem" radius="50%">
-          <CroppedImage src={userData?.file_url} alt="흰색 로고" />
+          {userData?.file_url === '' ? (
+            <CroppedImage src={theme.image.defaultProfile} alt="흰색 로고" />
+          ) : (
+            <CroppedImage src={userData?.file_url} alt="흰색 로고" />
+          )}
         </CroppedFigure>
         {userData?.nickname}
         {arrowToggle ? (

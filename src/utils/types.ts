@@ -69,8 +69,17 @@ export interface IChangePw {
 
 // NOTE: 유저 정보
 export interface IUser {
-  id: number;
-  name: string;
+  user_id: string;
   nickname: string;
   phone: string;
+  use_term_policy: boolean;
+  personal_policy: boolean;
+  sms_policy: boolean;
+  marketing_policy: boolean;
+  pro_yn: boolean;
+  pro_type: string;
+  avg_score: string;
+  career: string;
+  introduce: string;
+  file_url: string;
 }
