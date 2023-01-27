@@ -9,4 +9,4 @@ export const validConfirmPwPlaceholder = '비밀번호와 일치하지 않습니
 export const phonePlaceholder = '휴대폰 인증을 진행해주세요';
 export const validUsetermPlaceholer = '이용약관에 동의해주세요';
 export const validPersonalPlaceholer = '개인정보수집 및 이용동의에 동의해주세요';
-export const validSmsPlaceholer = 'sms_policy 수신에 동의해주세요';
+export const validSmsPlaceholer = 'sms 수신에 동의해주세요';

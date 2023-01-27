@@ -19,7 +19,7 @@ export const policyCheck = [
   },
   {
     id: 3,
-    name: 'sms_policy 수신',
+    name: 'sms 수신',
     idName: 'sms_policy',
     required: true,
   },

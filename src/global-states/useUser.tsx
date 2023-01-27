@@ -33,8 +33,6 @@ export function useUser(): IUseUser {
   async function getUser(storedToken: any): Promise<IUserData | null> {
     if (storedToken === null) return null;
 
-    console.log(storedToken, 'get user');
-
     let res;
     try {
       res = await axios.get('/api/v1/user/my-info', {
@@ -56,7 +54,7 @@ export function useUser(): IUseUser {
   }
 
   const { data: userData } = useQuery<IUserData | null>(
-    'userData',
+    ['userData', token],
     () => getUser(JSON.parse(token)),
     {
       staleTime: 60 * 1000 * 10, // 10분,
@@ -80,7 +78,7 @@ export function useUser(): IUseUser {
         // error
         if (error.response.status === 401) {
           localStorage.removeItem('tokens');
-          queryclient.invalidateQueries('userData');
+          queryclient.setQueryData('userData', null);
           navigate('/login');
         }
       },

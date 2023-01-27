@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 
 import styled from '@emotion/styled';
 
@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import { FieldErrorsImpl, UseFormSetError, UseFormSetValue } from 'react-hook-form';
 import { ISignUp, IUserProfile } from '@utils/types';
+import { useUser } from '@global-states/useUser';
 
 const ImageInputContainer = styled.div(() => ({
   marginBottom: '1.4rem',
@@ -91,6 +92,7 @@ interface IImageInput {
 }
 function ImageInput({ idName, labelName, setValue, setError, errors }: IImageInput) {
   const theme = useTheme();
+  const { userData } = useUser();
 
   const [file, setFile] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
@@ -172,6 +174,18 @@ function ImageInput({ idName, labelName, setValue, setError, errors }: IImageInp
       src: 'https:golf-dev-bucket.s3.ap-northeast-2.amazonaws.com/golf/img/profile_sample06.png',
     },
   ];
+
+  useEffect(() => {
+    if (userData?.file_url !== undefined && userData?.file_url !== '') {
+      setFile(userData?.file_url);
+    } else {
+      setFile('');
+    }
+
+    return () => {
+      setFile('');
+    };
+  }, [userData]);
 
   return (
     <ImageInputContainer>
