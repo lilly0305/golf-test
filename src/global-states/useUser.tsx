@@ -38,8 +38,13 @@ export function useUser(): IUseUser {
       res = await axios.get('/api/v1/user/my-info', {
         headers: { Authorization: `Bearer ${storedToken?.access_token}` },
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if (error?.response.status === 401) {
+        localStorage.removeItem('tokens');
+        queryclient.setQueryData('userData', null);
+        navigate('/login');
+      }
     }
 
     return res?.data.data;

@@ -5,6 +5,7 @@
       "@assets/*": ["./assets/*"],
       "@components/*": ["./components/*"],
       "@global-states/*": ["./global-states/*"],
+      "@hooks/*": ["./hooks/*"],
       "@pages/*": ["./pages/*"],
       "@routes/*": ["./routes/*"],
       "@utils/*": ["./utils/*"]

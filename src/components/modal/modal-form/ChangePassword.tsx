@@ -3,10 +3,11 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { IChangePw } from '@utils/types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { yupChangePw } from '@utils/yupValidation';
 import styled from '@emotion/styled';
 import { confirmPwPlaceholder, userPwPlaceholder } from '@utils/placeholder';
 import { InputGroup } from '@components/inputs';
+import useAxios from '@utils/useAxios';
+import { yupChangePW } from '@utils/yupValidation';
 
 const ChangePwForm = styled.form(() => ({
   padding: '2rem 0',
@@ -38,8 +39,10 @@ interface IChangePasswordModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 function ChangePasswordModal({ setModal }: IChangePasswordModal) {
+  const interceptor = useAxios();
+
   const formOptions = {
-    resolver: yupResolver(yupChangePw),
+    resolver: yupResolver(yupChangePW),
     defaultValues: {
       user_pw: '',
       new_pw: '',
@@ -53,16 +56,28 @@ function ChangePasswordModal({ setModal }: IChangePasswordModal) {
     formState: { errors },
   } = useForm<IChangePw>(formOptions);
 
-  const onSubmit: SubmitHandler<IChangePw> = useCallback((data) => {
-    console.log(JSON.stringify(data, null, 4));
-  }, []);
+  console.log(errors);
+
+  const changePassword: SubmitHandler<IChangePw> = useCallback(
+    (data) => {
+      console.log(JSON.stringify(data, null, 4));
+
+      const res = interceptor?.patch('/api/v1/user/pw', {
+        user_pw: data.user_pw,
+        new_pw: data.new_pw,
+      });
+
+      console.log(res);
+    },
+    [interceptor],
+  );
 
   const closeModal = useCallback(() => {
     setModal(false);
   }, [setModal]);
 
   return (
-    <ChangePwForm onSubmit={handleSubmit(onSubmit)}>
+    <ChangePwForm onSubmit={handleSubmit(changePassword)}>
       <InputGroup
         register={register}
         errors={errors}

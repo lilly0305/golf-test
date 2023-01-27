@@ -57,9 +57,10 @@ export const yupChangePW = Yup.object().shape({
   user_pw: Yup.string()
     .required(validPwPlaceholder)
     .matches(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/g, userPwPlaceholder),
+  new_pw: Yup.string().required(validPwPlaceholder),
   confirm_pw: Yup.string()
     .required(confirmPwPlaceholder)
-    .oneOf([Yup.ref('user_pw')], validConfirmPwPlaceholder),
+    .oneOf([Yup.ref('new_pw')], validConfirmPwPlaceholder),
 });
 
 export const yupUserAccount = Yup.object().shape(

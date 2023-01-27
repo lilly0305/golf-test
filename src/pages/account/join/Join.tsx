@@ -18,6 +18,7 @@ import {
   userPwPlaceholder,
 } from '@utils/placeholder';
 import { mq } from '@utils/mediaquery/mediaQuery';
+import useCheckDuplicate from '@hooks/UserMutation';
 import { AllCheckInput, InputGroup, ProfileImageInput, SingleCheckInput } from '@components/inputs';
 import { Buttons } from '@components/buttons';
 import { CheckBoxContainer } from '@components/inputs/SingleCheckInput';
@@ -69,6 +70,8 @@ const formOptions = {
 };
 
 function Join() {
+  const { mutate: checkDuplicate } = useCheckDuplicate();
+
   const navigate = useNavigate();
   const [joinData, setJoinData] = useState({});
   const [modal, setModal] = useState(false);
@@ -83,8 +86,8 @@ function Join() {
     handleSubmit,
     setValue,
     watch,
-    trigger,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<ISignUp>(formOptions);
 
@@ -102,25 +105,30 @@ function Join() {
     }
   }, [navigate, joinData]);
 
-  const checkDuplicate = useCallback(
-    async (key: string | any, value: string): Promise<any> => {
-      trigger(key);
-
-      try {
-        const res = await axios.post('/api/v1/user/check-duplicate', {
-          [key]: value,
-        });
-
-        if (res.data.status === 'success') {
-          setButtonActive({ ...buttonActive, [key]: false });
-        }
-      } catch (error: any) {
-        if (error.response.status === 400) {
-          setError('nickname', { message: '중복된 닉네임이 있습니다.' });
-        }
-      }
+  const handleDuplicateCheck = useCallback(
+    (key: string | any, value: string) => {
+      console.log('ddd');
+      checkDuplicate(
+        {
+          key,
+          value,
+        },
+        {
+          onSuccess: () => {
+            setButtonActive({ ...buttonActive, [key]: false });
+            clearErrors(key);
+          },
+          onError: (error: any) => {
+            if (error.response.status === 400) {
+              setError(key, {
+                message: `중복된 ${key === 'nickname' ? '닉네임이' : '아이디가'} 있습니다.`,
+              });
+            }
+          },
+        },
+      );
     },
-    [buttonActive, setButtonActive, trigger, setError],
+    [buttonActive, setButtonActive, setError, checkDuplicate, clearErrors],
   );
 
   const confirmPhone = useCallback(() => {
@@ -161,7 +169,7 @@ function Join() {
             inputType="text"
             placeHolder={nicknamePlaceholder}
             buttonName={buttonActive.nickname ? '중복확인' : '확인완료'}
-            buttonEvent={() => checkDuplicate('nickname', watch('nickname'))}
+            buttonEvent={() => handleDuplicateCheck('nickname', watch('nickname'))}
             required
             active={buttonActive.nickname}
           />
@@ -175,7 +183,7 @@ function Join() {
             inputType="text"
             placeHolder={userIdPlaceholder}
             buttonName={buttonActive.user_id ? '중복확인' : '확인완료'}
-            buttonEvent={() => checkDuplicate('user_id', watch('user_id'))}
+            buttonEvent={() => handleDuplicateCheck('user_id', watch('user_id'))}
             required
             active={buttonActive.user_id}
           />

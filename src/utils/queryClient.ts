@@ -15,7 +15,7 @@ const queryClientConfig = {
       keepPreviousData: true,
     },
     mutations: {
-      retry: 1,
+      retry: 0,
     },
   },
 };

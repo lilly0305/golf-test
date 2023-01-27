@@ -44,9 +44,15 @@ const useAxios = () => {
       }
 
       try {
-        const res = await axios.post('/api/v1/user/token-refresh', {
-          refresh_token: parsedToken.refresh_token,
-        });
+        const res = await axios.post(
+          '/api/v1/user/token-refresh',
+          {
+            refresh_token: parsedToken.refresh_token,
+          },
+          {
+            headers: { Authorization: `Bearer ${parsedToken?.access_token}` },
+          },
+        );
 
         newToken = res?.data.data;
       } catch (error: any) {

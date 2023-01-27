@@ -18,6 +18,7 @@ import { nicknamePlaceholder } from '@utils/placeholder';
 import { AveScoreOptions, careerOptions, ISelectOptions } from '@components/inputs/selectOptions';
 import { Buttons } from '@components/buttons';
 import { useQueryClient } from 'react-query';
+import useCheckDuplicate from '@hooks/UserMutation';
 
 const Container = styled.div(() => ({}));
 
@@ -38,6 +39,8 @@ function UserProfile() {
 
   const [checkArr, setCheckArr] = useState<string[]>([]);
 
+  const { mutate: checkNickname } = useCheckDuplicate();
+
   const formOptions = {
     resolver: yupResolver(yupUserProfile),
     defaultValues: {
@@ -55,6 +58,7 @@ function UserProfile() {
     handleSubmit,
     setValue,
     setError,
+    watch,
     formState: { errors },
   } = useForm<IUserProfile>(formOptions);
 
@@ -85,7 +89,7 @@ function UserProfile() {
           placeHolder={nicknamePlaceholder}
           required
           buttonName="중복확인"
-          active
+          buttonEvent={() => checkNickname({ key: 'nickname', value: watch('nickname') })}
         />
 
         <InputText labelName="이름" contents="유이름" />
