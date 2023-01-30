@@ -75,7 +75,6 @@ function ChangePasswordModal({ setModal, setMessage, message }: IChangePasswordM
         }
       } catch (error: any) {
         if (error.response?.status === 400) {
-          console.log('ddd');
           setError('user_pw', { message: '기존 비밀번호가 일치하지 않습니다.' });
         }
       }
@@ -92,8 +91,6 @@ function ChangePasswordModal({ setModal, setMessage, message }: IChangePasswordM
       setTimeout(() => setMessage({ ...message, changePw: false }), 2000);
     }
   }, [message, setMessage]);
-
-  console.log(message, 'messge boolean');
 
   return (
     <ChangePwForm onSubmit={handleSubmit(changePassword)}>

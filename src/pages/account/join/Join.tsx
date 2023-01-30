@@ -99,7 +99,6 @@ function Join() {
 
   const postJoin = useCallback(async () => {
     const res = await axios.post('/api/v1/user/sign-up', joinData);
-    console.log(res);
     if (res.status === 200) {
       navigate('/join-complete');
     }
@@ -107,7 +106,6 @@ function Join() {
 
   const handleDuplicateCheck = useCallback(
     (key: string | any, value: string) => {
-      console.log('ddd');
       checkDuplicate(
         {
           key,
